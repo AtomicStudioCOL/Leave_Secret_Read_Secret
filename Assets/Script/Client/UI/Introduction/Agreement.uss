@@ -1,0 +1,44 @@
+:root{
+    --color-background_1: rgba(250, 230, 200, 1);
+    --color-background_2: #D9BA4E;
+    --color-background_3: #C6A83C;
+    --color-border: rgba(100, 60, 0, 1);
+    --color-font: rgb(100, 60, 0);
+    -unity-text-align: middle-right;
+}
+
+.Agreement, .Panel{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    padding: 5%;
+    position: relative;
+}
+
+.AgreementText, .Button {
+    padding: 5%;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    -unity-text-overflow-position: middle;
+    align-self: center;
+    white-space: normal;
+    border: 40px;
+    border-width: 5px;
+    border-radius: 10px;
+    background-color: var(--color-background_1);
+    border-color: var(--color-border);
+    color: var(--color-font);
+    font-size: 90%;
+}
+
+.Button {
+    height: 10%;
+    width: 70%;
+    bottom: 10%
+}
+
+.ButtonPress{
+    background-color: var(--color-background_3);
+    border-color: var(--color-border);
+    color: var(--color-font);
+}

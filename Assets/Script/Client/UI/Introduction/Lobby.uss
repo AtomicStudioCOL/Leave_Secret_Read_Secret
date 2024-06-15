@@ -1,0 +1,65 @@
+:root{
+    --color-background_1: rgba(250, 230, 200, 1);
+    --color-background_2: #D9BA4E;
+    --color-background_3: #C6A83C;
+    --color-border: rgba(100, 60, 0, 1);
+    --color-font: rgb(100, 60, 0);
+    -unity-text-align: middle-right;
+}
+
+.Panel {
+    display: flex;
+    height: 95%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.lobby {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    -unity-font-style: bold;
+    -unity-text-align: middle-bottom;
+    -unity-text-overflow-position: bottom;
+    align-self: center;
+}
+
+/* Inheritance */
+
+.Button, .ButtonLeft, .ButtonRight {
+    bottom: 0%;
+    position: absolute;
+    height: 10%;
+    width: 45%;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    -unity-text-overflow-position: middle;
+    align-self: center;
+    white-space: normal;
+    border: 40px;
+    border-width: 5px;
+    border-radius: 10px;
+    background-color: var(--color-background_1);
+    border-color: var(--color-border);
+    color: var(--color-font);
+}
+
+.ButtonPress{
+
+    background-color: var(--color-background_3);
+    border-color: var(--color-border);
+    color: var(--color-font);
+
+}
+
+.ButtonCenter{
+    bottom: 12%;
+}
+
+.ButtonRight{
+    right: 2%;
+}
+
+.ButtonLeft{
+    left: 2%;
+}

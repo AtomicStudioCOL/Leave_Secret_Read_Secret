@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="UnityEngine.UIElements"
+    xmlns:hr="Highrise.UI"
+    xmlns:editor="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd"
+>
+
+  <hr:UILuaView class="Welcome">
+    
+    <hr:UILabel name="_PanelWelcome" class="Panel">
+
+      <hr:UILabel name="_WelcomeMessage" class="WelcomeMessage"></hr:UILabel>
+
+      <hr:UILabel name="_LeaveSecret" class="LeaveSecret"></hr:UILabel>
+      
+      <hr:UILabel name="_ReadSecret" class="ReadSecret"></hr:UILabel>
+
+      <hr:UIButton name="_continueButton" class="Button"/>
+
+      <hr:UILabel name="_continueLabel"  picking-mode="Ignore"></hr:UILabel>
+
+    </hr:UILabel>
+
+  </hr:UILuaView>
+
+</UXML>
