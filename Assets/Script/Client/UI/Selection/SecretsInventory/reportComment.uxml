@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="UnityEngine.UIElements"
+    xmlns:hr="Highrise.UI"
+    xmlns:editor="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd"
+>
+
+  <hr:UILuaView class="report-comment">
+    <hr:UILabel name="_Panel" class="Panel" picking-mode="Ignore">
+
+      <hr:UILabel name="_Container" class="Container" picking-mode="Ignore">
+        <hr:UILabel name="_title" class="title" picking-mode="Ignore"></hr:UILabel>
+        <hr:UILabel name="_paragraph" class="paragraph" picking-mode="Ignore"></hr:UILabel>
+
+        <hr:UIButton name="_cancelButton" class="cancelButton"/>
+        <hr:UILabel name="_cancelLabel" class="cancelButton"></hr:UILabel>
+
+        <hr:UIButton name="_ReportCommentButton" class="ReportCommentButton"/>
+        <hr:UILabel name="_ReportCommentLabel" class="ReportCommentButton"></hr:UILabel>
+      </hr:UILabel>
+    </hr:UILabel>
+  </hr:UILuaView>
+
+</UXML>

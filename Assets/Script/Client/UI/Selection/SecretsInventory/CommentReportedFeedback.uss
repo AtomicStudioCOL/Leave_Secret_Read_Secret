@@ -7,7 +7,7 @@
     -unity-text-align: middle-right;
 }
 
-.read-secret-u-i {
+.comment-reported-feedback {
     display: flex;
     height: 100%;
     width: 100%;
@@ -23,12 +23,12 @@
     background-color: rgba(0, 0, 0, .1);
 }
 
-.ReadSecretText, .Button, .quitButton {
+.reportedFeedback {
     position: absolute;
     height: 30%;
     width: 100%;
-    bottom: 0%;
-    padding: 10px;
+    bottom: 40%;
+    padding: 16px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
     -unity-text-overflow-position: middle;
@@ -40,30 +40,4 @@
     border-color: var(--color-border);
     color: var(--color-font);
     font-size: 100%;
-}
-
-.Button {
-    padding: 3px;
-    height: 25%;
-    width: 40%;
-    right: 2px;
-    bottom: 2px;
-    font-size: 100%;
-}
-
-.ButtonPress{
-    background-color: var(--color-background_3);
-    border-color: var(--color-border);
-    color: var(--color-font);
-}
-
-.quitButton {
-    top: 2px;
-    left: 2px;
-    height: 8px;
-    width: 8px;
-    border-width: 3px;
-    background-color: red;
-    font-size: 100%;
-    color: white;
 }

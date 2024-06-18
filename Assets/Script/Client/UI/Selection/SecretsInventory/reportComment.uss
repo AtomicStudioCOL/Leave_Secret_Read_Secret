@@ -7,7 +7,7 @@
     -unity-text-align: middle-right;
 }
 
-.read-secret-u-i {
+.report-comment {
     display: flex;
     height: 100%;
     width: 100%;
@@ -23,12 +23,12 @@
     background-color: rgba(0, 0, 0, .1);
 }
 
-.ReadSecretText, .Button, .quitButton {
+.Container, .ReportCommentButton, .cancelButton, .title, .paragraph {
     position: absolute;
     height: 30%;
     width: 100%;
-    bottom: 0%;
-    padding: 10px;
+    bottom: 40%;
+    padding: 16px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
     -unity-text-overflow-position: middle;
@@ -42,28 +42,33 @@
     font-size: 100%;
 }
 
-.Button {
-    padding: 3px;
-    height: 25%;
-    width: 40%;
-    right: 2px;
-    bottom: 2px;
-    font-size: 100%;
+.title, .paragraph{
+    background-color: transparent;
+    border-width: 0px;
+}
+
+.title{
+    top: 0;
+    font-size: 150%;
+}
+
+.cancelButton, .ReportCommentButton {
+    top: 60%;
+    left: 27.5%;
+    height: 8px;
+    width: 8px;
+    border-width: 0px;
+    background-color: transparent;
+    font-size: 175%;
+    color: red;
+}
+
+.ReportCommentButton{
+    left: 65%;
 }
 
 .ButtonPress{
     background-color: var(--color-background_3);
     border-color: var(--color-border);
     color: var(--color-font);
-}
-
-.quitButton {
-    top: 2px;
-    left: 2px;
-    height: 8px;
-    width: 8px;
-    border-width: 3px;
-    background-color: red;
-    font-size: 100%;
-    color: white;
 }
