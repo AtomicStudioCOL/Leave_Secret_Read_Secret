@@ -7,9 +7,9 @@
     xsi:noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd"
 >
 
-  <hr:UILuaView class="lobby">
+  <hr:UILuaView class="lobby" picking-mode="Ignore">
   
-    <hr:UILabel name="_PanelLobby" class="Panel">
+    <hr:UILabel name="_PanelLobby" class="Panel" picking-mode="Ignore">
     
         <hr:UIButton name="_YourSecrectButton" class="Button"/>
 

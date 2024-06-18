@@ -1,0 +1,74 @@
+:root{
+    --color-background_1: rgba(250, 230, 200, 1);
+    --color-background_2: #D9BA4E;
+    --color-background_3: #C6A83C;
+    --color-border: rgba(100, 60, 0, 1);
+    --color-font: rgb(100, 60, 0);
+    -unity-text-align: middle-right;
+}
+
+.send-confirmation {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    padding: 5%;
+    background-color: rgba(0, 0, 0, .1);
+    position: relative;
+}
+
+.Panel {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .1);
+}
+
+.Container, .sendButton, .cancelButton, .title, .paragraph {
+    position: absolute;
+    height: 30%;
+    width: 100%;
+    bottom: 40%;
+    padding: 16px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    -unity-text-overflow-position: middle;
+    align-self: center;
+    white-space: normal;
+    border-width: 5px;
+    border-radius: 10px;
+    background-color: var(--color-background_1);
+    border-color: var(--color-border);
+    color: var(--color-font);
+    font-size: 100%;
+}
+
+.title, .paragraph{
+    background-color: transparent;
+    border-width: 0px;
+}
+
+.title{
+    top: 0;
+    font-size: 150%;
+}
+
+.cancelButton, .sendButton {
+    top: 60%;
+    left: 27.5%;
+    height: 8px;
+    width: 8px;
+    border-width: 0px;
+    background-color: transparent;
+    font-size: 175%;
+    color: red;
+}
+
+.sendButton{
+    left: 65%;
+}
+
+.ButtonPress{
+    background-color: var(--color-background_3);
+    border-color: var(--color-border);
+    color: var(--color-font);
+}

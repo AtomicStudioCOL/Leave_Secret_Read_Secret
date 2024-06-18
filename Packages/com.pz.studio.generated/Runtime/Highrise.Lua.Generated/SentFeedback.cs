@@ -16,11 +16,11 @@ using Highrise.Client;
 
 namespace Highrise.Lua.Generated
 {
-    [AddComponentMenu("Lua/ReadSecretUI")]
+    [AddComponentMenu("Lua/SentFeedback")]
     [LuaBehaviourScript(s_scriptGUID)]
-    public class ReadSecretUI : LuaBehaviourThunk
+    public class SentFeedback : LuaBehaviourThunk
     {
-        private const string s_scriptGUID = "16e17680fbd773444b772c3e3bdcb5e9";
+        private const string s_scriptGUID = "ce5d1b56f0deced4087635fca05390ff";
         public override string ScriptGUID => s_scriptGUID;
 
 
@@ -33,11 +33,6 @@ namespace Highrise.Lua.Generated
             {
                 CreateSerializedProperty(_script.GetPropertyAt(0), null),
                 CreateSerializedProperty(_script.GetPropertyAt(1), null),
-                CreateSerializedProperty(_script.GetPropertyAt(2), null),
-                CreateSerializedProperty(_script.GetPropertyAt(3), null),
-                CreateSerializedProperty(_script.GetPropertyAt(4), null),
-                CreateSerializedProperty(_script.GetPropertyAt(5), null),
-                CreateSerializedProperty(_script.GetPropertyAt(6), null),
             };
         }
     }

@@ -26,11 +26,11 @@ local _textAgreement = "Terms and Conditions of Anonymity: Anonymity: All messag
 
 -- Set text Labels UI
 
-_PanelAgreement:SetPrelocalizedText(" ", true)
+_PanelAgreement:SetPrelocalizedText(" ")
 
-_AgreementText:SetPrelocalizedText(_textAgreement, true)
+_AgreementText:SetPrelocalizedText(_textAgreement)
 
-_acceptLabel:SetPrelocalizedText("Accept", true)
+_acceptLabel:SetPrelocalizedText("Accept")
 
 -- Set Class
 
