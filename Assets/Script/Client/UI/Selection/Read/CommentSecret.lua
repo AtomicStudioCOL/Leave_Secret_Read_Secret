@@ -14,7 +14,7 @@ local _sendButton :UIButton = nil
 
 -- Select Labels UI
 --!Bind
-local _CommentContainer : UILabel = nil
+local _Container : UILabel = nil
 --!Bind
 local _title : UILabel = nil
 --!Bind
@@ -30,7 +30,7 @@ local _sendLabel : UILabel = nil
 local _textSecret = "Once I stole a cookie from the fridge. Mom still does not know. :c";
 
 -- Set text Labels UI
-_CommentContainer:SetPrelocalizedText(" ")
+_Container:SetPrelocalizedText(" ")
 
 _paragraph:SetPrelocalizedText(_textSecret)
 

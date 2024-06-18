@@ -14,7 +14,7 @@ local _text : UILabel = nil
 
 _Panel:SetPrelocalizedText(" ")
 
-_text:SetPrelocalizedText("Secret sent!")
+_text:SetPrelocalizedText("Comment sent!")
 
 function self:ClientAwake()
     _uiManager = _UIManager:GetComponent("UIManager");
