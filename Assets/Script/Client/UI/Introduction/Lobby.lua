@@ -1,13 +1,17 @@
 --!Type(UI)
 
--- UIManager
+-- Managers --
 local _UIManager = require("UIManager")
+local _EventManager = require("EventManager")
 
--- Variables for gamemanager
+-- UIs --
 local _uiManager = nil;
 local _leaveSecretUi = nil
 local _secretsInventoryUi = nil
 local _readSecretUi = nil
+
+-- scripts --
+local _chatManager = nil
 
 -- Select Labels UI
 --!Bind
@@ -54,6 +58,7 @@ end)
 _LeaveSecrectButton:RegisterPressCallback(function() 
     _uiManager.ButtonPress(_LeaveSecrectButton);
     _uiManager.DeactiveActiveGameObject(self, _leaveSecretUi);
+    _EventManager.setChat:FireServer("Secret")
 end)
 
 _ReadSecrectButton:RegisterPressCallback(function() 
@@ -64,11 +69,10 @@ end)
 function self:ClientAwake()
 
     -- Access Modular Funtion 
-    _uiManager = _UIManager:GetComponent("UIManager");
+    _uiManager = _UIManager:GetComponent(UIManager);
 
     -- Access Dependent UI
-    _leaveSecretUi = _uiManager:GetComponent("LeaveSecret")
-    _secretsInventoryUi = _uiManager:GetComponent("secretsInventory")
-    _readSecretUi = _uiManager:GetComponent("ReadSecretUI")
-        
+    _leaveSecretUi = _uiManager:GetComponent(LeaveSecret)
+    _secretsInventoryUi = _uiManager:GetComponent(secretsInventory)
+    _readSecretUi = _uiManager:GetComponent(ReadSecretUI)
 end

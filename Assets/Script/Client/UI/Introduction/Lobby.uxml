@@ -15,11 +15,11 @@
 
         <hr:UILabel name="_YourSecrectLabel"  picking-mode="Ignore"></hr:UILabel>
 
-        <hr:UIButton name="_LeaveSecrectButton" class="ButtonRight"/>
+        <hr:UIButton name="_LeaveSecrectButton" class="ButtonLeft"/>
 
         <hr:UILabel name="_LeaveSecrectLabel"  picking-mode="Ignore"></hr:UILabel>
 
-        <hr:UIButton name="_ReadSecrectButton" class="ButtonLeft"/>
+        <hr:UIButton name="_ReadSecrectButton" class="ButtonRight"/>
 
         <hr:UILabel name="_ReadSecrectLabel"  picking-mode="Ignore"></hr:UILabel>
 

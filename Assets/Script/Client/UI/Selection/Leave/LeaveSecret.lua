@@ -1,12 +1,16 @@
 --!Type(UI)
 
--- UIManager
+-- Managers --
 local _UIManager = require("UIManager")
+local _EventManager = require("EventManager")
 
--- Variables for gamemanager
+-- UIs --
 local _uiManager = nil;
 local _lobby = nil
 local _secretSendConf = nil
+
+-- scripts --
+local _chatManager = nil
 
 -- buttons
 --!Bind
@@ -52,13 +56,14 @@ end)
 _quitButton:RegisterPressCallback(function()
     _uiManager.ButtonPress(_quitButton);
     _uiManager.DeactiveActiveGameObject(self, _lobby);
+    _EventManager.setChat:FireServer("General")
 end)
 
 function self:ClientAwake()
     -- Access Modular Funtion 
-    _uiManager = _UIManager:GetComponent("UIManager");
+    _uiManager = _UIManager:GetComponent(UIManager);
 
     -- Access Dependent UI
-    _lobby = _uiManager:GetComponent("Lobby")
-    _secretSendConf = _uiManager:GetComponent("SecretSendConfirmation")
+    _lobby = _uiManager:GetComponent(Lobby)
+    _secretSendConf = _uiManager:GetComponent(SecretSendConfirmation)
 end

@@ -1,7 +1,8 @@
 --!Type(UI)
 
--- UIManager
+-- Managers --
 local _UIManager = require("UIManager")
+local _EventManager = require("EventManager")
 
 -- Variables for gamemanager
 local _uiManager = nil;
@@ -68,6 +69,7 @@ _CommentButton:Add(_CommentLabel);
 _CommentButton:RegisterPressCallback(function() 
     _uiManager.ButtonPress(_CommentButton);
     _uiManager.DeactiveActiveGameObject(self, _commentSecret)
+    _EventManager.setChat:FireServer("Secret")
 end)
 
 _reportButton:RegisterPressCallback(function() 
@@ -81,9 +83,9 @@ _quitLabel:RegisterPressCallback(function()
 end)
 
 function self:ClientAwake()
-    _uiManager = _UIManager:GetComponent("UIManager");
+    _uiManager = _UIManager:GetComponent(UIManager);
 
-    _lobby = _uiManager:GetComponent("Lobby")
-    _reportSecret = _uiManager:GetComponent("ReportSecret")
-    _commentSecret = _uiManager:GetComponent("CommentSecret")
+    _lobby = _uiManager:GetComponent(Lobby)
+    _reportSecret = _uiManager:GetComponent(ReportSecret)
+    _commentSecret = _uiManager:GetComponent(CommentSecret)
 end

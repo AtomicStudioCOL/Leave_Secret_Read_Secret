@@ -1,7 +1,8 @@
 --!Type(UI)
 
--- UIManager
+-- Manager --
 local _UIManager = require("UIManager")
+local _EventManager = require("EventManager")
 
 -- Variables for gamemanager
 local _uiManager = nil;
@@ -49,18 +50,19 @@ _sendButton:Add(_sendLabel);
 _quitButton:Add(_quitLabel)
 
 _sendButton:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_sendButton, nil);
+    _uiManager.ButtonPress(_sendButton);
     _uiManager.DeactiveActiveGameObject(nil, _sendSecretConfirmation)
 end)
 
 _quitButton:RegisterPressCallback(function()
-    _uiManager.ButtonPress(_quitButton, nil);
+    _uiManager.ButtonPress(_quitButton);
     _uiManager.DeactiveActiveGameObject(self, _secretRandom)
+    _EventManager.setChat:FireServer("General")
 end)
 
 function self:ClientAwake()
-    _uiManager = _UIManager:GetComponent("UIManager");
+    _uiManager = _UIManager:GetComponent(UIManager);
 
-    _secretRandom = _uiManager:GetComponent("SecretRanom")
-    _sendSecretConfirmation = _uiManager:GetComponent("SendConfirmation")
+    _secretRandom = _uiManager:GetComponent(SecretRandom)
+    _sendSecretConfirmation = _uiManager:GetComponent(SendConfirmation)
 end
