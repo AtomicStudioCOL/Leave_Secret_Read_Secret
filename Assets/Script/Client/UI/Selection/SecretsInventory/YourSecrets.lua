@@ -5,6 +5,8 @@ local _UIManager = require("UIManager")
 
 -- Variables for gamemanager
 local _uiManager = nil;
+local _pickedSecret = nil
+local _secretsInventory = nil
 
 -- buttons
 --!Bind
@@ -65,30 +67,45 @@ _secretBPH4:Add(_secretLPH4)
 _secretBPH5:Add(_secretLPH5)
 _quitButton:Add(_quitLabel)
 
+
+-- Select secret function
+function selectSecret()
+    _uiManager.DeactiveActiveGameObject(self, _pickedSecret);
+end
+
 _secretBPH1:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_secretBPH1, nil);
+    _uiManager.ButtonPress(_secretBPH1);
+    selectSecret()
 end)
 
 _secretBPH2:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_secretBPH2, nil);
+    _uiManager.ButtonPress(_secretBPH2);
+    selectSecret()
 end)
 
 _secretBPH3:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_secretBPH3, nil);
+    _uiManager.ButtonPress(_secretBPH3);
+    selectSecret()
 end)
 
 _secretBPH4:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_secretBPH4, nil);
+    _uiManager.ButtonPress(_secretBPH4);
+    selectSecret()
 end)
 
 _secretBPH5:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_secretBPH5, nil);
+    _uiManager.ButtonPress(_secretBPH5);
+    selectSecret()
 end)
 
 _quitButton:RegisterPressCallback(function()
-    _uiManager.ButtonPress(_quitButton, nil);
+    _uiManager.ButtonPress(_quitButton);
+    _uiManager.DeactiveActiveGameObject(self, _secretsInventory)
 end)
 
 function self:ClientAwake()
     _uiManager = _UIManager:GetComponent("UIManager");
+
+    _pickedSecret = _uiManager:GetComponent("yourPickedSecret")
+    _secretsInventory = _uiManager:GetComponent("secretsInventory")
 end

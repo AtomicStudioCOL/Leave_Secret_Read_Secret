@@ -5,6 +5,9 @@ local _UIManager = require("UIManager")
 
 -- Variables for gamemanager
 local _uiManager = nil;
+local _lobby = nil
+local _yourSecrets = nil
+local _readSecrets = nil
 
 -- buttons
 --!Bind
@@ -47,16 +50,23 @@ _quitButton:Add(_quitLabel)
 
 _ySecretsButton:RegisterPressCallback(function() 
     _uiManager.ButtonPress(_ySecretsButton, nil);
+    _uiManager.DeactiveActiveGameObject(self, _yourSecrets);
 end)
 
 _rSecretsButton:RegisterPressCallback(function() 
     _uiManager.ButtonPress(_rSecretsButton, nil);
+    _uiManager.DeactiveActiveGameObject(self, _readSecrets);
 end)
 
 _quitButton:RegisterPressCallback(function()
     _uiManager.ButtonPress(_quitButton, nil);
+    _uiManager.DeactiveActiveGameObject(self, _lobby);
 end)
 
 function self:ClientAwake()
     _uiManager = _UIManager:GetComponent("UIManager");
+
+    _lobby = _uiManager:GetComponent("Lobby")
+    _yourSecrets = _uiManager:GetComponent("YourSecrets")
+    _readSecrets = _uiManager:GetComponent("ReadSecrets")
 end

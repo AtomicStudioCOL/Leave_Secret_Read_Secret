@@ -5,6 +5,8 @@ local _UIManager = require("UIManager")
 
 -- Variables for gamemanager
 local _uiManager = nil;
+local _lobby = nil
+local _secretSendConf = nil
 
 -- buttons
 --!Bind
@@ -43,13 +45,20 @@ _sendButton:Add(_sendLabel);
 _quitButton:Add(_quitLabel)
 
 _sendButton:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_sendButton, nil);
+    _uiManager.ButtonPress(_sendButton);
+    _uiManager.DeactiveActiveGameObject(nil, _secretSendConf);
 end)
 
 _quitButton:RegisterPressCallback(function()
-    _uiManager.ButtonPress(_quitButton, nil);
+    _uiManager.ButtonPress(_quitButton);
+    _uiManager.DeactiveActiveGameObject(self, _lobby);
 end)
 
 function self:ClientAwake()
+    -- Access Modular Funtion 
     _uiManager = _UIManager:GetComponent("UIManager");
+
+    -- Access Dependent UI
+    _lobby = _uiManager:GetComponent("Lobby")
+    _secretSendConf = _uiManager:GetComponent("SecretSendConfirmation")
 end

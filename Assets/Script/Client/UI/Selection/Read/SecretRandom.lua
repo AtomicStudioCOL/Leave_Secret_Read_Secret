@@ -5,6 +5,9 @@ local _UIManager = require("UIManager")
 
 -- Variables for gamemanager
 local _uiManager = nil;
+local _lobby = nil
+local _reportSecret = nil
+local _commentSecret = nil
 
 -- buttons
 --!Bind
@@ -38,18 +41,18 @@ local _quitLabel : UILabel = nil
 
 -- Create Text Labels UI
 local _textSecret = "Once I stole a cookie from the fridge. Mom still does not know. :c";
-local _countC = "1"
-local _countR = "4"
+local _readToken = 1
+local _commentToken = 4
 
 -- Set text Labels UI
 _CommentingIcon:SetPrelocalizedText(" ")
-_CommentingCount:SetPrelocalizedText(_countC)
+_CommentingCount:SetPrelocalizedText(`{_readToken}`)
 _CommentLabel:SetPrelocalizedText("Comment")
 
 _PanelSecret:SetPrelocalizedText(" ")
 
 _readingIcon:SetPrelocalizedText(" ")
-_readingCount:SetPrelocalizedText(_countR)
+_readingCount:SetPrelocalizedText(`{_commentToken}`)
 
 _SecretText:SetPrelocalizedText(_textSecret)
 
@@ -59,24 +62,28 @@ _tokensContainer:SetPrelocalizedText(" ")
 
 _quitLabel:SetPrelocalizedText("X")
 
--- Set Class
-
-_PanelSecret:AddToClassList("Panel");
-
-_SecretText:AddToClassList("SecretText");
-
 -- Add text to Button
 _CommentButton:Add(_CommentLabel);
 
 _CommentButton:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_CommentButton, nil);
-    -- _uiManager.DeactiveActiveGameObject(self);
+    _uiManager.ButtonPress(_CommentButton);
+    _uiManager.DeactiveActiveGameObject(self, _commentSecret)
+end)
+
+_reportButton:RegisterPressCallback(function() 
+    _uiManager.ButtonPress(_reportButton);
+    _uiManager.DeactiveActiveGameObject(self, _reportSecret)
 end)
 
 _quitLabel:RegisterPressCallback(function()
-    _uiManager.ButtonPress(_quitLabel, nil);
+    _uiManager.ButtonPress(_quitLabel);
+    _uiManager.DeactiveActiveGameObject(self, _commentSecret)
 end)
 
 function self:ClientAwake()
     _uiManager = _UIManager:GetComponent("UIManager");
+
+    _lobby = _uiManager:GetComponent("Lobby")
+    _reportSecret = _uiManager:GetComponent("ReportSecret")
+    _commentSecret = _uiManager:GetComponent("CommentSecret")
 end

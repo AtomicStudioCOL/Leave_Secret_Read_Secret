@@ -554,21 +554,21 @@ GameObject:
   - component: {fileID: 1007576408}
   - component: {fileID: 1007576409}
   - component: {fileID: 1007576410}
-  - component: {fileID: 1007576411}
-  - component: {fileID: 1007576412}
-  - component: {fileID: 1007576413}
-  - component: {fileID: 1007576414}
-  - component: {fileID: 1007576415}
   - component: {fileID: 1007576416}
   - component: {fileID: 1007576417}
   - component: {fileID: 1007576418}
-  - component: {fileID: 1007576419}
-  - component: {fileID: 1007576420}
   - component: {fileID: 1007576421}
   - component: {fileID: 1007576422}
   - component: {fileID: 1007576424}
   - component: {fileID: 1007576425}
   - component: {fileID: 1007576423}
+  - component: {fileID: 1007576414}
+  - component: {fileID: 1007576413}
+  - component: {fileID: 1007576411}
+  - component: {fileID: 1007576419}
+  - component: {fileID: 1007576412}
+  - component: {fileID: 1007576415}
+  - component: {fileID: 1007576420}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged

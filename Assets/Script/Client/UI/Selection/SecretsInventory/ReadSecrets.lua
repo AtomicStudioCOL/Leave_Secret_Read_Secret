@@ -5,6 +5,8 @@ local _UIManager = require("UIManager")
 
 -- Variables for gamemanager
 local _uiManager = nil;
+local _lobby = nil
+local _readPickedSecret = nil
 
 -- buttons
 --!Bind
@@ -42,6 +44,11 @@ local _secretLPH5 : UILabel = nil
 --!Bind
 local _quitLabel : UILabel = nil
 
+-- picked secret function
+function pickedSecret()
+    _uiManager.DeactiveActiveGameObject(self, _readPickedSecret);
+end
+
 -- Set text Labels UI
 _Panel:SetPrelocalizedText(" ")
 _Container:SetPrelocalizedText(" ")
@@ -66,29 +73,38 @@ _secretBPH5:Add(_secretLPH5)
 _quitButton:Add(_quitLabel)
 
 _secretBPH1:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_secretBPH1, nil);
+    _uiManager.ButtonPress(_secretBPH1);
+    pickedSecret()
 end)
 
 _secretBPH2:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_secretBPH2, nil);
+    _uiManager.ButtonPress(_secretBPH2);
+    pickedSecret()
 end)
 
 _secretBPH3:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_secretBPH3, nil);
+    _uiManager.ButtonPress(_secretBPH3);
+    pickedSecret()
 end)
 
 _secretBPH4:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_secretBPH4, nil);
+    _uiManager.ButtonPress(_secretBPH4);
+    pickedSecret()
 end)
 
 _secretBPH5:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_secretBPH5, nil);
+    _uiManager.ButtonPress(_secretBPH5);
+    pickedSecret()
 end)
 
 _quitButton:RegisterPressCallback(function()
-    _uiManager.ButtonPress(_quitButton, nil);
+    _uiManager.ButtonPress(_quitButton);
+    _uiManager.DeactiveActiveGameObject(self, _lobby)
 end)
 
 function self:ClientAwake()
     _uiManager = _UIManager:GetComponent("UIManager");
+
+    _lobby = _uiManager:GetComponent("Lobby")
+    _readPickedSecret = _uiManager:GetComponent("ReadPickedSecret")
 end

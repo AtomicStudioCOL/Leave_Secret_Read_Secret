@@ -5,6 +5,8 @@ local _UIManager = require("UIManager")
 
 -- Variables for gamemanager
 local _uiManager = nil;
+local _lobby = nil
+local _secretRandom = nil
 
 -- buttons
 --!Bind
@@ -24,8 +26,12 @@ local _title :UILabel = nil
 --!Bind
 local _quitLabel : UILabel = nil
 
+-- token variables
+local _readToken = 5
+local _commentToken = 1
+
 -- Create Text Labels UI
-local _textReadSecret = "You have 5 read tokens and 1 comment token";
+local _textReadSecret = `You have {_readToken} read tokens and {_commentToken} comment token`;
 
 -- Set text Labels UI
 
@@ -50,13 +56,17 @@ _ReadSecretButton:Add(_ReadSecretLabel);
 
 _ReadSecretButton:RegisterPressCallback(function() 
     _uiManager.ButtonPress(_ReadSecretButton, nil);
-    -- _uiManager.DeactiveActiveGameObject(self);
+    _uiManager.DeactiveActiveGameObject(self, _secretRandom);
 end)
 
 _quitLabel:RegisterPressCallback(function()
     _uiManager.ButtonPress(_quitLabel, nil);
+    _uiManager.DeactiveActiveGameObject(self, _lobby);
 end)
 
 function self:ClientAwake()
     _uiManager = _UIManager:GetComponent("UIManager");
+
+    _lobby = _uiManager:GetComponent("Lobby")
+    _secretRandom = _uiManager:GetComponent("SecretRandom")
 end

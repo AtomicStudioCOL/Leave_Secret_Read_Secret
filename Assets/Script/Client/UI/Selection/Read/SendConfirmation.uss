@@ -2,6 +2,7 @@
     --color-background_1: rgba(250, 230, 200, 1);
     --color-background_2: #D9BA4E;
     --color-background_3: #C6A83C;
+    --color-background-darken: rgba(0, 0, 0, .5);
     --color-border: rgba(100, 60, 0, 1);
     --color-font: rgb(100, 60, 0);
     -unity-text-align: middle-right;
@@ -9,18 +10,21 @@
 
 .send-confirmation {
     display: flex;
-    height: 100%;
-    width: 100%;
+    align-self: center;
+    top: -50%;
+    height: 200%;
+    width: 400%;
     padding: 5%;
-    background-color: rgba(0, 0, 0, .1);
-    position: relative;
+    position: absolute;
+    background-color: var(--color-background-darken);
 }
 
 .Panel {
+    align-self: center;
     position: relative;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0, 0, 0, .1);
+    top: 25%;
+    height: 50%;
+    width: 25%;
 }
 
 .Container, .sendButton, .cancelButton, .title, .paragraph {

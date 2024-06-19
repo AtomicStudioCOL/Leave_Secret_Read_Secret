@@ -5,6 +5,10 @@ local _UIManager = require("UIManager")
 
 -- Variables for gamemanager
 local _uiManager = nil;
+local _lobby = nil
+local _secretRandom = nil
+local _readPickedSecret = nil
+local _reportedFeedback = nil
 
 -- buttons
 --!Bind
@@ -47,13 +51,26 @@ _PanelReportSecret:AddToClassList("Panel");
 
 -- Add text to Button
 _ReportSecretButton:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_ReportSecretButton, nil);
+    _uiManager.ButtonPress(_ReportSecretButton);
+    _uiManager.DeactiveActiveGameObject(self, _reportedFeedback)
+    _uiManager.DeactiveActiveGameObject(_readPickedSecret, nil)
+    _uiManager.DeactiveActiveGameObject(_secretRandom, nil)
+
+    Timer.After(3, function()
+        _uiManager.DeactiveActiveGameObject(_reportedFeedback, _lobby)
+    end)
 end)
 
 _cancelLabel:RegisterPressCallback(function()
-    _uiManager.ButtonPress(_cancelLabel, nil);
+    _uiManager.ButtonPress(_cancelLabel);
+    _uiManager.DeactiveActiveGameObject(self, nil)
 end)
 
 function self:ClientAwake()
     _uiManager = _UIManager:GetComponent("UIManager");
+
+    _lobby = _uiManager:GetComponent("Lobby")
+    _secretRandom = _uiManager:GetComponent("SecretRandom")
+    _readPickedSecret = _uiManager:GetComponent("ReadPickedSecret")
+    _reportedFeedback = _uiManager:GetComponent("ReprotedFeedback")
 end

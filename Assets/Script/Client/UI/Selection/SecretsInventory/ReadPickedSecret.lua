@@ -5,6 +5,9 @@ local _UIManager = require("UIManager")
 
 -- Variables for gamemanager
 local _uiManager = nil;
+local _readSecrets = nil
+local _reportSecret = nil
+local _reportComment = nil
 
 -- buttons
 --!Bind
@@ -49,6 +52,15 @@ local _quitLabel : UILabel = nil
 -- Create Text Labels UI
 local _textSecret = "Once I stole a cookie from the fridge. Mom still does not know. :c";
 
+-- report functions
+function reportCurrentSecret ()
+    _uiManager.DeactiveActiveGameObject(nil, _reportSecret)
+end
+
+function reportPickedComment()
+    _uiManager.DeactiveActiveGameObject(nil, _reportComment)
+end
+
 -- Set text Labels UI
 _Panel:SetPrelocalizedText(" ")
 _Container:SetPrelocalizedText(" ")
@@ -75,34 +87,44 @@ _commentLPH5:Add(_reportBPH5)
 _quitButton:Add(_quitLabel)
 
 _reportButton:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_reportButton, nil);
+    _uiManager.ButtonPress(_reportButton);
+    reportCurrentSecret()
 end)
 
-
 _reportBPH1:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_reportBPH1, nil);
+    _uiManager.ButtonPress(_reportBPH1);
+    reportPickedComment()
 end)
 
 _reportBPH2:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_reportBPH2, nil);
+    _uiManager.ButtonPress(_reportBPH2);
+    reportPickedComment()
 end)
 
 _reportBPH3:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_reportBPH3, nil);
+    _uiManager.ButtonPress(_reportBPH3);
+    reportPickedComment()
 end)
 
 _reportBPH4:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_reportBPH4, nil);
+    _uiManager.ButtonPress(_reportBPH4);
+    reportPickedComment()
 end)
 
 _reportBPH5:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_reportBPH5, nil);
+    _uiManager.ButtonPress(_reportBPH5);
+    reportPickedComment()
 end)
 
 _quitButton:RegisterPressCallback(function()
-    _uiManager.ButtonPress(_quitButton, nil);
+    _uiManager.ButtonPress(_quitButton);
+    _uiManager.DeactiveActiveGameObject(self, _readSecrets)
 end)
 
 function self:ClientAwake()
     _uiManager = _UIManager:GetComponent("UIManager");
+
+    _readSecrets = _uiManager:GetComponent("ReadSecrets")
+    _reportSecret = _uiManager:GetComponent("ReportSecret")
+    _reportComment = _uiManager:GetComponent("reportComment")
 end

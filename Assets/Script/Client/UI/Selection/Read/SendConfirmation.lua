@@ -5,6 +5,9 @@ local _UIManager = require("UIManager")
 
 -- Variables for gamemanager
 local _uiManager = nil;
+local _lobby = nil
+local _commentSecret = nil
+local _sentFeedback = nil
 
 -- buttons
 --!Bind
@@ -44,12 +47,23 @@ _sendLabel:SetPrelocalizedText("✓")
 -- Add text to Button
 _sendButton:RegisterPressCallback(function() 
     _uiManager.ButtonPress(_sendButton, nil);
+    _uiManager.DeactiveActiveGameObject(self, _sentFeedback)
+
+    Timer.After(2, function()
+        _uiManager.DeactiveActiveGameObject(_sentFeedback, _lobby)
+        _uiManager.DeactiveActiveGameObject(_commentSecret, nil)
+    end)
 end)
 
 _cancelLabel:RegisterPressCallback(function()
     _uiManager.ButtonPress(_cancelLabel, nil);
+    _uiManager.DeactiveActiveGameObject(self, nil)
 end)
 
 function self:ClientAwake()
     _uiManager = _UIManager:GetComponent("UIManager");
+
+    _lobby = _uiManager:GetComponent("Lobby")
+    _commentSecret = _uiManager:GetComponent("CommentSecret")
+    _sentFeedback = _uiManager:GetComponent("SentFeedback")
 end

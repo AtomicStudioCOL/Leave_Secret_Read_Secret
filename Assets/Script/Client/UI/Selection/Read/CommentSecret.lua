@@ -5,6 +5,8 @@ local _UIManager = require("UIManager")
 
 -- Variables for gamemanager
 local _uiManager = nil;
+local _secretRandom = nil
+local _sendSecretConfirmation = nil
 
 -- buttons
 --!Bind
@@ -48,12 +50,17 @@ _quitButton:Add(_quitLabel)
 
 _sendButton:RegisterPressCallback(function() 
     _uiManager.ButtonPress(_sendButton, nil);
+    _uiManager.DeactiveActiveGameObject(nil, _sendSecretConfirmation)
 end)
 
 _quitButton:RegisterPressCallback(function()
     _uiManager.ButtonPress(_quitButton, nil);
+    _uiManager.DeactiveActiveGameObject(self, _secretRandom)
 end)
 
 function self:ClientAwake()
     _uiManager = _UIManager:GetComponent("UIManager");
+
+    _secretRandom = _uiManager:GetComponent("SecretRanom")
+    _sendSecretConfirmation = _uiManager:GetComponent("SendConfirmation")
 end

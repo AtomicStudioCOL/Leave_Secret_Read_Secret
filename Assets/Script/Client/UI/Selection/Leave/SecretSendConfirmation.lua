@@ -5,6 +5,9 @@ local _UIManager = require("UIManager")
 
 -- Variables for gamemanager
 local _uiManager = nil;
+local _lobby = nil
+local _leaveSecretUi = nil
+local _feedbackSent = nil
 
 -- buttons
 --!Bind
@@ -43,13 +46,27 @@ _sendLabel:SetPrelocalizedText("✓")
 
 -- Add text to Button
 _sendButton:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_sendButton, nil);
+    _uiManager.ButtonPress(_sendButton);
+    _uiManager.DeactiveActiveGameObject(self, _feedbackSent);
+    _uiManager.DeactiveActiveGameObject(_leaveSecretUi, nil);
+
+    -- automatically disabling feedback ui and reenabling lobby ui
+    Timer.After(3, function()
+        _uiManager.DeactiveActiveGameObject(_feedbackSent, _lobby);
+    end)
 end)
 
 _cancelLabel:RegisterPressCallback(function()
-    _uiManager.ButtonPress(_cancelLabel, nil);
+    _uiManager.ButtonPress(_cancelLabel);
+    _uiManager.DeactiveActiveGameObject(self);
 end)
 
 function self:ClientAwake()
+    -- Access Modular Funtion 
     _uiManager = _UIManager:GetComponent("UIManager");
+
+    -- Access Dependent UI
+    _lobby = _uiManager:GetComponent("Lobby")
+    _leaveSecretUi = _uiManager:GetComponent("LeaveSecret")
+    _feedbackSent = _uiManager:GetComponent("SecretSentFeedback")
 end
