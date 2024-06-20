@@ -1,9 +1,12 @@
 :root{
-    --color-background_1: rgba(250, 230, 200, 1);
-    --color-background_2: #D9BA4E;
-    --color-background_3: #C6A83C;
-    --color-border: rgba(100, 60, 0, 1);
-    --color-font: rgb(100, 60, 0);
+    --color-background_1: #F7CBE9;
+    --color-background_2: #a2ddf4;
+    --color-background_3: #00ccff;
+    --color-background_3: #00ccff;
+    --color-border: #ea88d0;
+    --color-font-1: #ffffff;
+    --color-font-2: #000000;
+    --color-font-0: rgba(0,0,0,0);
     -unity-text-align: middle-right;
     font-size: 92%;
 }
@@ -16,8 +19,8 @@
     position: relative;
 }
 
-.Panel, .WelcomeMessage, .LeaveSecret, .ReadSecret, .Button {
-    position: relative;
+.Panel, .LeaveSecret, .ReadSecret, .Button {
+    /* position: relative; */
     height: 100%;
     width: 100%;
     -unity-font-style: bold;
@@ -26,39 +29,123 @@
     align-self: center;
     white-space: normal;
     border: 40px;
-    border-width: 5px;
-    border-radius: 10px;
+    border-width: 10px;
+    border-radius: 30px;
     background-color: var(--color-background_1);
     border-color: var(--color-border);
-    color: var(--color-font);
+    color: var(--color-font-1);
 }
 
-.PanelMessage, .WelcomeMessage, .LeaveSecret, .ReadSecret {
+.PanelMessage, .LeaveSecret, .ReadSecret {
     padding: 5%;
     width:90%;
     height:25%;
+    background-color: var(--color-background_2);
+}
+
+.welcomeTitle, .ReadTitle, .LeaveTitle {
+    position: relative;
+    top: 5%;
+    font-size: 250%;
 }
 
 .welcomeMessage {
-    top: 2%;
-}
-
-.LeaveSecret{
     top: 5%;
+    padding: 5%;
+    width:95%;
+    height:25%;
+    position: relative;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    -unity-text-overflow-position: middle;
+    align-self: center;
+    white-space: normal;
+    border: 40px;
+    border-width: 5px;
+    border-radius: 10px;
+    color: var(--color-font-2);
 }
 
-.ReadSecret{
-    top: 8%;
+.LeaveSecret {
+    padding-top: 30%;
+    top: 40%;
+    left: 5%;
+    width: 40%;
+    position: absolute;
+    height: 40%;
+    font-size: 60%;
+    border-color: var(--color-font-0);
+        border: 40px;
+    border-width: 5px;
+    border-radius: 15px;
+
+}
+
+.LeaveTitle{
+    top: 27%;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    -unity-text-overflow-position: middle;
+    align-self: left;
+    left: 5%;
+    width: 40%;
+    position: absolute;
+    height: 40%;
+    font-size: 150%;
+    white-space: normal;
+    border: 40px;
+    border-width: 5px;
+    border-radius: 10px;
+}
+
+.ReadTitle{
+    top: 27%;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    -unity-text-overflow-position: middle;
+    align-self: right;
+    right: 5%;
+    width: 40%;
+    position: absolute;
+    height: 40%;
+    font-size: 150%;
+    white-space: normal;
+    border: 40px;
+    border-width: 5px;
+    border-radius: 10px;
+}
+
+.ReadSecret {
+    padding-top: 30%;
+    top: 40%;
+    right: 5%;
+    position: absolute;
+    width: 40%;
+    height: 40%;
+    right: 5%;
+    font-size: 60%;
+    border-color: var(--color-font-0);
+    border: 40px;
+    border-width: 5px;
+    border-radius: 15px;
 }
 
 .Button {
-    bottom: -10%;
+    position: absolute;
+    bottom: 5%;
     height: 10%;
     width: 70%;
+    background-color: var(--color-background_3);
+    border-color: var(--color-font-1);
+    border: 40px;
+    border-width: 5px;
+    border-radius: 20px;
+    font-size: 200%;
+
 }
 
 .ButtonPress{
-    background-color: var(--color-background_3);
     border-color: var(--color-border);
     color: var(--color-font);
+    background-color: var(--color-background_2);
 }

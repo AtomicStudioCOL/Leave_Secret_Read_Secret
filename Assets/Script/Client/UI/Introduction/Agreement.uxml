@@ -12,6 +12,8 @@
     <hr:UILabel name="_PanelAgreement" class="Panel">
 
       <hr:UILabel name="_AgreementText" class="AgreementText"></hr:UILabel>
+
+      <hr:UILabel name="_AgreementTitle" class="AgreementTitle"></hr:UILabel>
       
     </hr:UILabel>
 

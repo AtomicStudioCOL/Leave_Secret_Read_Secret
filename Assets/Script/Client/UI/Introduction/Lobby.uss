@@ -1,10 +1,15 @@
 :root{
-    --color-background_1: rgba(250, 230, 200, 1);
-    --color-background_2: #D9BA4E;
-    --color-background_3: #C6A83C;
-    --color-border: rgba(100, 60, 0, 1);
-    --color-font: rgb(100, 60, 0);
-    -unity-text-align: middle-right;
+    --color_pink: #F7CBE9;
+    --color_pinkDark: #ea88d0;
+    --color_blueDark: #3671bf;
+    --color_blue: #00ccff;
+    --color_blueLight: #a2ddf4;
+    --color_greenDark: #b6d96a;
+    --color_green: #c2d918;
+    --color_black: #000000;
+    --color_white: #ffffff;
+    --color_Alpha: rgba(0,0,0,0);
+    font-size: 92%;
 }
 
 .Panel {
@@ -13,7 +18,7 @@
     width: 100%;
 }
 
-.lobby {
+.lobby, .ButtonCenter, .ButtonLeft, .ButtonRight {
     position: relative;
     height: 100%;
     width: 100%;
@@ -21,6 +26,8 @@
     -unity-text-align: middle-bottom;
     -unity-text-overflow-position: bottom;
     align-self: center;
+    align-text: center;
+    white-space: normal;
 }
 
 /* Inheritance */
@@ -30,34 +37,39 @@
     position: absolute;
     height: 10%;
     width: 30%;
+    border: 40px;
+    border-width: 5px;
+    border-radius: 25px;
+    background-color: var(--color_pink);
+    border-color: var(--color_white);
+    color: var(--color_white);
+}
+
+.ButtonPress{
+    background-color: var(--color-background_3);
+    border-color: var(--color-border);
+    color: var(--color-font);
+}
+
+.ButtonCenter{
+    background-color: var(--color_green);
+}
+
+.ButtonRight{
+    background-color: var(--color_pinkDark);
+    right: 2%;
+}
+
+.ButtonLeft{
+    background-color: var(--color_blue);
+    left: 2%;
+}
+
+.textlabel {
+    width: 100%;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
     -unity-text-overflow-position: middle;
     align-self: center;
     white-space: normal;
-    border: 40px;
-    border-width: 5px;
-    border-radius: 25px;
-    background-color: var(--color-background_1);
-    border-color: var(--color-border);
-    color: var(--color-font);
-}
-
-.ButtonPress{
-
-    background-color: var(--color-background_3);
-    border-color: var(--color-border);
-    color: var(--color-font);
-
-}
-
-.ButtonCenter{
-}
-
-.ButtonRight{
-    right: 2%;
-}
-
-.ButtonLeft{
-    left: 2%;
 }

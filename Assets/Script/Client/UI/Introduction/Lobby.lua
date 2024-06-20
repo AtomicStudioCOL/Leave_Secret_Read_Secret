@@ -39,16 +39,20 @@ local _ReadSecrectLabel : UILabel = nil
 
 _PanelLobby:SetPrelocalizedText(" ")
 
-_YourSecrectLabel:SetPrelocalizedText("Inventory")
+_YourSecrectLabel:SetPrelocalizedText("YOUR SECRETS")
 
-_LeaveSecrectLabel:SetPrelocalizedText("Leave Secret")
+_LeaveSecrectLabel:SetPrelocalizedText("LEAVE A SECRET")
 
-_ReadSecrectLabel:SetPrelocalizedText("Read Secret")
+_ReadSecrectLabel:SetPrelocalizedText("READ A SECRET")
 
 -- Add text to Button
 _YourSecrectButton:Add(_YourSecrectLabel);
 _ReadSecrectButton:Add(_ReadSecrectLabel);
 _LeaveSecrectButton:Add(_LeaveSecrectLabel);
+
+_LeaveSecrectLabel:AddToClassList("textlabel")
+_YourSecrectLabel:AddToClassList("textlabel")
+_ReadSecrectLabel:AddToClassList("textlabel")
 
 _YourSecrectButton:RegisterPressCallback(function() 
     _uiManager.ButtonPress(_YourSecrectButton);

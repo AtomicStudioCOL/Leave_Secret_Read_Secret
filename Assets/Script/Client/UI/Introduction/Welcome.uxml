@@ -11,11 +11,17 @@
     
     <hr:UILabel name="_PanelWelcome" class="Panel">
 
+      <hr:UILabel name="_WelcomeTitle" class="WelcomeTitle"></hr:UILabel>
+
       <hr:UILabel name="_WelcomeMessage" class="WelcomeMessage"></hr:UILabel>
 
       <hr:UILabel name="_LeaveSecret" class="LeaveSecret"></hr:UILabel>
       
+      <hr:UILabel name="_LeaveTitle" class="LeaveTitle"></hr:UILabel>
+      
       <hr:UILabel name="_ReadSecret" class="ReadSecret"></hr:UILabel>
+
+      <hr:UILabel name="_ReadTitle" class="ReadTitle"></hr:UILabel>
 
       <hr:UIButton name="_continueButton" class="Button"/>
 

@@ -15,9 +15,15 @@ local _PanelWelcome : UILabel = nil
 
 -- Message
 --!Bind
+local _WelcomeTitle : UILabel = nil
+--!Bind
 local _WelcomeMessage : UILabel = nil
 --!Bind
+local _LeaveTitle : UILabel = nil
+--!Bind
 local _LeaveSecret : UILabel = nil
+--!Bind
+local _ReadTitle : UILabel = nil
 --!Bind
 local _ReadSecret : UILabel = nil
 
@@ -37,17 +43,22 @@ local _textReadSecret = "1. Enter our wonderful space of secrets. 2. To read a s
 
 -- Set text Labels UI
 
+_WelcomeTitle:SetPrelocalizedText("WELCOME")
 _PanelWelcome:SetPrelocalizedText(" ")
 
 _WelcomeMessage:SetPrelocalizedText(_textWelcome)
 
+_LeaveTitle:SetPrelocalizedText("LEAVE A SECRET")
 _LeaveSecret:SetPrelocalizedText(_textLeaveSecret)
 
+_ReadTitle:SetPrelocalizedText("READ A SECRET")
 _ReadSecret:SetPrelocalizedText(_textReadSecret)
 
-_continueLabel:SetPrelocalizedText("Continue")
+_continueLabel:SetPrelocalizedText("GO IT")
 
 -- Set Class
+_WelcomeTitle:AddToClassList("welcomeTitle")
+
 _WelcomeMessage:AddToClassList("welcomeMessage")
 
 _LeaveSecret:AddToClassList("LeaveSecret")

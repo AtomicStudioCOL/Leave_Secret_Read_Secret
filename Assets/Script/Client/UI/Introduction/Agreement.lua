@@ -1,3 +1,4 @@
+
 --!Type(UI)
 
 -- UIManager
@@ -15,6 +16,9 @@ local _PanelAgreement : UILabel = nil
 local _AgreementText : UILabel = nil
 
 --!Bind
+local _AgreementTitle : UILabel = nil
+
+--!Bind
 local _acceptButton : UILabel = nil
 
 --!Bind
@@ -30,11 +34,15 @@ _PanelAgreement:SetPrelocalizedText(" ")
 
 _AgreementText:SetPrelocalizedText(_textAgreement)
 
-_acceptLabel:SetPrelocalizedText("Accept")
+_AgreementTitle:SetPrelocalizedText("AGREEMENT TEXT")
+
+_acceptLabel:SetPrelocalizedText("GO IT")
 
 -- Set Class
 
 _PanelAgreement:AddToClassList("Panel");
+
+_AgreementTitle:AddToClassList("AgreementTitle");
 
 _AgreementText:AddToClassList("AgreementText");
 

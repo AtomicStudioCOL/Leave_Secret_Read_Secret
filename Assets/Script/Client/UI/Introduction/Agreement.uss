@@ -1,10 +1,15 @@
 :root{
-    --color-background_1: rgba(250, 230, 200, 1);
-    --color-background_2: #D9BA4E;
-    --color-background_3: #C6A83C;
-    --color-border: rgba(100, 60, 0, 1);
-    --color-font: rgb(100, 60, 0);
+    --color-background_1: #F7CBE9;
+    --color-background_2: #a2ddf4;
+    --color-background_3: #00ccff;
+    --color-background_3: #00ccff;
+    --color-border: #ea88d0;
+    --color-font-1: #ffffff;
+    --color-font-2: #000000;
+    --color-font-0: rgba(0,0,0,0);
+
     -unity-text-align: middle-right;
+    font-size: 92%;
 }
 
 .Agreement, .Panel{
@@ -13,6 +18,21 @@
     width: 100%;
     padding: 5%;
     position: relative;
+    
+}
+
+.AgreementTitle {
+    color: var(--color-font-1);
+    position: absolute;
+    top: -5%;
+    font-size: 250%;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    -unity-text-overflow-position: middle;
+    align-self: center;
+    width: 70%;
+    height: 40%;
+    white-space: normal;
 }
 
 .AgreementText, .Button {
@@ -31,14 +51,28 @@
     font-size: 90%;
 }
 
+.AgreementText{
+    font-size: 80%;
+    padding-top: 50%;
+    padding-bottom: 30%;
+}
+
 .Button {
-    height: 10%;
-    width: 70%;
-    bottom: 10%
+    position: absolute;
+    bottom: 10%;
+    height: 8%;
+    width: 50%;
+    background-color: var(--color-background_3);
+    border-color: var(--color-font-1);
+    color: var(--color-font-1);
+    border: 40px;
+    border-width: 5px;
+    border-radius: 20px;
+    font-size: 200%;
 }
 
 .ButtonPress{
-    background-color: var(--color-background_3);
     border-color: var(--color-border);
     color: var(--color-font);
+    background-color: var(--color-background_2);
 }
