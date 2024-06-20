@@ -32,17 +32,24 @@ local _quitLabel : UILabel = nil
 --!Bind
 local _sendLabel : UILabel = nil
 
+local textInputPlaceholder = "Type your secret in the chat. Don't worry! It won't display on other player's chat or over your avatar's head. You'll see your secret here once you send it. To edit it, type the secret again."
+
 -- Set text Labels UI
-_Container:SetPrelocalizedText(" ")
+function setDefaultTexts()
+    _Container:SetPrelocalizedText("")
+    _title:SetPrelocalizedText("Leave a secret!")
+    _paragraph:SetPrelocalizedText("Remember that secrets are anonymous but they will be reported if it goes against community guidelines. Please be respectful!")
+    _quitLabel:SetPrelocalizedText("X")
+    _textInput:SetPrelocalizedText(textInputPlaceholder)
+    _sendLabel:SetPrelocalizedText("Send")
+end
 
-_title:SetPrelocalizedText("Leave a secret!")
-_paragraph:SetPrelocalizedText("Remember that secrets are anonymous but they will be reported if it goes against community guidelines. Please be respectful!")
+setDefaultTexts()
 
-_quitLabel:SetPrelocalizedText("X")
-
-_textInput:SetPrelocalizedText("This is a text placeholder. :3")
-
-_sendLabel:SetPrelocalizedText("Send")
+-- set secret's text --
+function setSecretText(newText)
+    _textInput:SetPrelocalizedText(newText)
+end
 
 -- Add text to Button
 _sendButton:Add(_sendLabel);
@@ -57,13 +64,19 @@ _quitButton:RegisterPressCallback(function()
     _uiManager.ButtonPress(_quitButton);
     _uiManager.DeactiveActiveGameObject(self, _lobby);
     _EventManager.setChat:FireServer("General")
+    _EventManager.setPlayerState:FireServer("secretChat", false)
 end)
 
 function self:ClientAwake()
-    -- Access Modular Funtion 
+    -- Access Modular Funtion --
     _uiManager = _UIManager:GetComponent(UIManager);
 
-    -- Access Dependent UI
+    -- Access Dependent UI --
     _lobby = _uiManager:GetComponent(Lobby)
     _secretSendConf = _uiManager:GetComponent(SecretSendConfirmation)
+
+    -- events --
+    _EventManager.setText:Connect(function(newText)
+        setSecretText(newText)
+    end)
 end

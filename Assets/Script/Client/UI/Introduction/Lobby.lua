@@ -37,13 +37,13 @@ local _ReadSecrectLabel : UILabel = nil
 
 -- Set text Labels UI
 
-_PanelLobby:SetPrelocalizedText(" ", true)
+_PanelLobby:SetPrelocalizedText(" ")
 
-_YourSecrectLabel:SetPrelocalizedText("Inventory", true)
+_YourSecrectLabel:SetPrelocalizedText("Inventory")
 
-_LeaveSecrectLabel:SetPrelocalizedText("Leave Secret", true)
+_LeaveSecrectLabel:SetPrelocalizedText("Leave Secret")
 
-_ReadSecrectLabel:SetPrelocalizedText("Read Secret", true)
+_ReadSecrectLabel:SetPrelocalizedText("Read Secret")
 
 -- Add text to Button
 _YourSecrectButton:Add(_YourSecrectLabel);
@@ -58,7 +58,9 @@ end)
 _LeaveSecrectButton:RegisterPressCallback(function() 
     _uiManager.ButtonPress(_LeaveSecrectButton);
     _uiManager.DeactiveActiveGameObject(self, _leaveSecretUi);
+    _leaveSecretUi.setDefaultTexts()
     _EventManager.setChat:FireServer("Secret")
+    _EventManager.setPlayerState:FireServer("secretChat", true)
 end)
 
 _ReadSecrectButton:RegisterPressCallback(function() 

@@ -2,6 +2,7 @@
 
 -- Managers --
 local _EventManager = require("EventManager")
+local _DataManager = require("DataManager")
 
 -- tables
 chats = {}
@@ -30,12 +31,6 @@ function setGeneralChat(player : Player)
     end
 end
 
--- Create secret channel for player
-server.PlayerConnected:Connect(function(player : Player)
-    player.CharacterChanged:Connect(function()
-        chats[player.name] = Chat:CreateChannel(`{player.name}'s secret chat.`, true, false)
-    end)
-end)
 
 -- event receivers --
 _EventManager.setChat:Connect(function(player : Player, chatToSet : string)
@@ -46,4 +41,25 @@ _EventManager.setChat:Connect(function(player : Player, chatToSet : string)
     else
         error(`Chat to set not found. Expected 'Secret' or 'General', got {chatToSet}}`)
     end
+end)
+
+server.PlayerConnected:Connect(function(player : Player)
+    player.CharacterChanged:Connect(function()
+        -- Create secret channel for player
+        chats[player.name] = Chat:CreateChannel(`{player.name}'s secret chat.`, true, false)
+        -- Register player in data manager
+        _DataManager.playerState[player.name] = {}
+        -- setting default player's data
+        _DataManager.setPlayerState(player.name, "secretChat", false)
+        _DataManager.setPlayerState(player.name, "currentMessage", "")
+    end)
+end)
+
+server.PlayerDisconnected:Connect(function(player : Player)
+    player.CharacterChanged:Connect(function()
+        -- Delete secret channel for player
+        Chat:DestroyChannel(chats[player.name])
+        -- Deletes player in data manager
+        _DataManager.playerState[player.name] = nil
+    end)
 end)

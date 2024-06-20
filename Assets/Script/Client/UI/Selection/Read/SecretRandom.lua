@@ -69,7 +69,9 @@ _CommentButton:Add(_CommentLabel);
 _CommentButton:RegisterPressCallback(function() 
     _uiManager.ButtonPress(_CommentButton);
     _uiManager.DeactiveActiveGameObject(self, _commentSecret)
+    _commentSecret.setDefaultTexts()
     _EventManager.setChat:FireServer("Secret")
+    _EventManager.setPlayerState:FireServer("secretChat", true)
 end)
 
 _reportButton:RegisterPressCallback(function() 

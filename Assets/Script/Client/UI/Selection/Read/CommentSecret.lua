@@ -30,20 +30,24 @@ local _quitLabel : UILabel = nil
 local _sendLabel : UILabel = nil
 
 -- Create Text Labels UI
-local _textSecret = "Once I stole a cookie from the fridge. Mom still does not know. :c";
+local _textSecret = "Type your secret in the chat. Don't worry! It won't display on other player's chat or over your avatar's head. You'll see your secret here once you send it. To edit it, type the secret again."
 
 -- Set text Labels UI
-_Container:SetPrelocalizedText(" ")
+function setDefaultTexts()
+    _Container:SetPrelocalizedText(" ")
+    _paragraph:SetPrelocalizedText(_textSecret)
+    _title:SetPrelocalizedText("Cookie thief. qwq")
+    _quitLabel:SetPrelocalizedText("X")
+    _textInput:SetPrelocalizedText("This is a text placeholder. :3")
+    _sendLabel:SetPrelocalizedText("Send")
+end
 
-_paragraph:SetPrelocalizedText(_textSecret)
+setDefaultTexts()
 
-_title:SetPrelocalizedText("Cookie thief. qwq")
-
-_quitLabel:SetPrelocalizedText("X")
-
-_textInput:SetPrelocalizedText("This is a text placeholder. :3")
-
-_sendLabel:SetPrelocalizedText("Send")
+-- set secret's text --
+function setSecretText(newText)
+    _textInput:SetPrelocalizedText(newText)
+end
 
 -- Add text to Button
 _sendButton:Add(_sendLabel);
@@ -65,4 +69,9 @@ function self:ClientAwake()
 
     _secretRandom = _uiManager:GetComponent(SecretRandom)
     _sendSecretConfirmation = _uiManager:GetComponent(SendConfirmation)
+
+    -- events --
+    _EventManager.setText:Connect(function(newText)
+        setSecretText(newText)
+    end)
 end
