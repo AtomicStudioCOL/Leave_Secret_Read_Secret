@@ -52,24 +52,34 @@ function setSecretText(newText)
 end
 
 -- Add text to Button
-_sendButton:Add(_sendLabel);
+_sendButton:Add(_sendLabel)
 _quitButton:Add(_quitLabel)
 
 _sendButton:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_sendButton);
-    _uiManager.DeactiveActiveGameObject(nil, _secretSendConf);
+    if _EventManager.requestPlayerState:FireServer("currentMessage") == nil then
+        _textInput:SetPrelocalizedText("No text yet! For leaving a secret, you need to actually type a secret!")
+        Timer.After(3, function()
+            if _EventManager.requestPlayerState:FireServer("currentMessage") == nil then
+                _textInput:SetEmojiPrelocalizedText(textInputPlaceholder)
+            end
+        end)
+    else
+        _uiManager.ButtonPress(_sendButton)
+        _uiManager.DeactiveActiveGameObject(nil, _secretSendConf)
+    end
 end)
 
 _quitButton:RegisterPressCallback(function()
-    _uiManager.ButtonPress(_quitButton);
+    _uiManager.ButtonPress(_quitButton)
     _uiManager.DeactiveActiveGameObject(self, _lobby);
     _EventManager.setChat:FireServer("General")
     _EventManager.setPlayerState:FireServer("secretChat", false)
+    _EventManager.setPlayerState:FireServer("currentMessage", "")
 end)
 
 function self:ClientAwake()
     -- Access Modular Funtion --
-    _uiManager = _UIManager:GetComponent(UIManager);
+    _uiManager = _UIManager:GetComponent(UIManager)
 
     -- Access Dependent UI --
     _lobby = _uiManager:GetComponent(Lobby)

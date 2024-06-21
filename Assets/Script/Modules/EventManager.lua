@@ -1,8 +1,12 @@
 --!Type(Module)
 
-testStorage = Event.new("testStorage")
-
 requestPlayerState = Event.new("requestPlayerState")
+requestSecret = Event.new("requestSecret")
+requestStorageArrayLenght = Event.new("requestStorageArrayLenght")
+requestStoragePlayerData = Event.new("requestStoragePlayerData")
+newComment = Event.new("newComment")
+newSecret = Event.new("newSecret")
 setChat = Event.new("setChat")
 setPlayerState = Event.new("setPlayerState")
+setStoragePlayerData = Event.new("setStoragePlayerData")
 setText = Event.new("setText")

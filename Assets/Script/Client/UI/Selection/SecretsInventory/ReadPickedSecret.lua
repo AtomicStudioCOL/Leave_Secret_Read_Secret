@@ -66,7 +66,7 @@ _Panel:SetPrelocalizedText(" ")
 _Container:SetPrelocalizedText(" ")
 _scrollContainer:SetPrelocalizedText(" ")
 
-_title:SetPrelocalizedText("Cookie thief. qwq")
+_title:SetPrelocalizedText("Your random secret:")
 _paragraph:SetPrelocalizedText(_textSecret)
 
 _quitLabel:SetPrelocalizedText("X")
@@ -122,9 +122,9 @@ _quitButton:RegisterPressCallback(function()
 end)
 
 function self:ClientAwake()
-    _uiManager = _UIManager:GetComponent("UIManager");
+    _uiManager = _UIManager:GetComponent(UIManager)
 
-    _readSecrets = _uiManager:GetComponent("ReadSecrets")
-    _reportSecret = _uiManager:GetComponent("ReportSecret")
-    _reportComment = _uiManager:GetComponent("reportComment")
+    _readSecrets = _uiManager:GetComponent(ReadSecrets)
+    _reportSecret = _uiManager:GetComponent(ReportSecret)
+    _reportComment = _uiManager:GetComponent(reportComment)
 end

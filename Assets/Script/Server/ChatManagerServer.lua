@@ -45,21 +45,32 @@ end)
 
 server.PlayerConnected:Connect(function(player : Player)
     player.CharacterChanged:Connect(function()
-        -- Create secret channel for player
+        -- Create secret channel for player for current session
         chats[player.name] = Chat:CreateChannel(`{player.name}'s secret chat.`, true, false)
-        -- Register player in data manager
+
+        -- Register player in data manager for current session
         _DataManager.playerState[player.name] = {}
-        -- setting default player's data
+
+        -- setting default player's data for current session
         _DataManager.setPlayerState(player.name, "secretChat", false)
         _DataManager.setPlayerState(player.name, "currentMessage", "")
+
+        -- checking if player is registered in "long term" database
+        local _hasAnyTokens = nil
+        _hasAnyTokens = _DataManager.requestStoragePlayerData(player, "readTokens")
+        if _hasAnyTokens == nil then
+            _DataManager.setStoragePlayerData(player, "readTokens", 0)
+        end
     end)
 end)
 
 server.PlayerDisconnected:Connect(function(player : Player)
     player.CharacterChanged:Connect(function()
-        -- Delete secret channel for player
+        -- Delete secret channel for player for current session
         Chat:DestroyChannel(chats[player.name])
-        -- Deletes player in data manager
+
+        -- Deletes player in data manager for current session
         _DataManager.playerState[player.name] = nil
+
     end)
 end)

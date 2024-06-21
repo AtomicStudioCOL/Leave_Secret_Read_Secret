@@ -41,9 +41,9 @@ local _tokensContainer :UILabel = nil
 local _quitLabel : UILabel = nil
 
 -- Create Text Labels UI
-local _textSecret = "Once I stole a cookie from the fridge. Mom still does not know. :c";
-local _readToken = 1
-local _commentToken = 4
+local _textSecret = "Once I stole a cookie from the fridge. Mom still does not know. :c"
+local _readToken = _EventManager.requestStoragePlayerData:FireServer("readTokens")
+local _commentToken = _EventManager.requestStoragePlayerData:FireServer("commentTokens")
 
 -- Set text Labels UI
 _CommentingIcon:SetPrelocalizedText(" ")

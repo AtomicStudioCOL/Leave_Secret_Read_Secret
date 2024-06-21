@@ -16,13 +16,6 @@ Chat.TextMessageReceivedHandler:Connect(function(channel, player, message)
     end
     --]]
 
-    _EventManager.testStorage:FireServer("test_"..player.name, {[player.name..message] = message})
-    _EventManager.testStorage:Connect(function(key, value)
-        for k, v in value do
-            print(`{key}[{k}]'s value is {v}`)
-        end
-    end)
-
     Chat:DisplayTextMessage(channel, player, message)
 
     _EventManager.requestPlayerState:FireServer("secretChat")

@@ -30,7 +30,8 @@ local _quitLabel : UILabel = nil
 local _sendLabel : UILabel = nil
 
 -- Create Text Labels UI
-local _textSecret = "Type your secret in the chat. Don't worry! It won't display on other player's chat or over your avatar's head. You'll see your secret here once you send it. To edit it, type the secret again."
+local _textSecret = "Once I stole a cookie from the fridge. Mom still does not know. :c"
+local _textInputPlaceholder = "Type your secret in the chat. Don't worry! It won't display on other player's chat or over your avatar's head. You'll see your secret here once you send it. To edit it, type the secret again."
 
 -- Set text Labels UI
 function setDefaultTexts()

@@ -104,8 +104,8 @@ _quitButton:RegisterPressCallback(function()
 end)
 
 function self:ClientAwake()
-    _uiManager = _UIManager:GetComponent("UIManager");
+    _uiManager = _UIManager:GetComponent(UIManager);
 
-    _pickedSecret = _uiManager:GetComponent("yourPickedSecret")
-    _secretsInventory = _uiManager:GetComponent("secretsInventory")
+    _pickedSecret = _uiManager:GetComponent(yourPickedSecret)
+    _secretsInventory = _uiManager:GetComponent(secretsInventory)
 end

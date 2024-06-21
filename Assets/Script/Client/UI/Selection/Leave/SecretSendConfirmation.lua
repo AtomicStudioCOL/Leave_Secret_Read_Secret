@@ -47,13 +47,16 @@ _sendLabel:SetPrelocalizedText("✓")
 
 -- Add text to Button
 _sendButton:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_sendButton);
-    _uiManager.DeactiveActiveGameObject(self, _feedbackSent);
+    _uiManager.ButtonPress(_sendButton)
+    _uiManager.DeactiveActiveGameObject(self, _feedbackSent)
+    _message = _EventManager.requestPlayerState:FireServer("currentMessage")
+    _EventManager.newSecret:FireServer(_message)
+    _EventManager.setPlayerState:FireServer("currentMessage", "")
     
     -- automatically disabling feedback ui and reenabling lobby ui
     Timer.After(3, function()
-        _uiManager.DeactiveActiveGameObject(_leaveSecretUi, nil);
-        _uiManager.DeactiveActiveGameObject(_feedbackSent, _lobby);
+        _uiManager.DeactiveActiveGameObject(_leaveSecretUi, nil)
+        _uiManager.DeactiveActiveGameObject(_feedbackSent, _lobby)
         _EventManager.setChat:FireServer("General")
     end)
 end)
