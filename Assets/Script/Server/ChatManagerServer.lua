@@ -59,6 +59,10 @@ server.PlayerConnected:Connect(function(player : Player)
                 -- If read tokens is nil it means the player is new. Setting default values
                 Storage.SetPlayerValue(player, "readTokens", 0)
                 Storage.SetPlayerValue(player, "commentTokens", 0)
+                Storage.SetPlayerValue(player, "secrets", {})
+                Storage.SetPlayerValue(player, "readSecrets", {})
+                Storage.SetPlayerValue(player, "comments", {})
+                Storage.SetPlayerValue(player, "readComments", {})
             end
         end)
     end)

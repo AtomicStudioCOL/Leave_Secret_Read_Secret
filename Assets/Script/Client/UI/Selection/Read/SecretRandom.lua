@@ -104,7 +104,7 @@ function self:ClientAwake()
         _EventManager.setStoragePlayerData:FireServer("readTokens", -1)
         _EventManager.requestStoragePlayerData:FireServer("readTokens")
         _EventManager.requestStoragePlayerData:FireServer("commentTokens")
-        _requestRandomSecret.choseRandomSecret()
+        _requestRandomSecret.choseRandomSecret(client.localPlayer)
     end
 
     -- setting event receiver

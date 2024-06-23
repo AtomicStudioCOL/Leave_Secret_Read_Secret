@@ -26,6 +26,7 @@ playerData                              dictionary      NOTE: managed with Stora
 	playerData[player].readTokens       number
 	playerData[player].readComments     array           list of IDs with secrets read by the player
     playerData[player].secrets          array           list with player's secrets IDs
+    playerData[player].readSecrets      array           list with player's read secrets IDs
 
 --]]
 
@@ -41,7 +42,7 @@ playerState = {}
 function setStoragePlayerData(player : Player, property : string, value)
     if property == "readTokens" or property == "commentTokens" then
         Storage.IncrementPlayerValue(player, property, value)
-    elseif property == "secrets" or property == "comments" then
+    elseif property == "secrets" or property == "readSecrets" or property == "comments" or property == "readComments"  then
         if type(value) ~= "number" then
             error(`Expected a number to set {property} new item's id, got {type(value)}.`)
             return
@@ -62,8 +63,8 @@ function newComment(player : Player, text, secretId)
         _newComment["reportNum"] = 0
         _newComment["secret"] = secretId
         _newComment["text"] = text
-
         commentsArray[#commentsArray + 1] = _newComment
+        setStoragePlayerData(player, "comments", _newComment.id)
         return commentsArray
     end)
 end
@@ -78,6 +79,7 @@ function newSecret(player : Player, _text : string)
         _newSecret["reportNum"] = 0
         _newSecret["text"] = _text
         secretsArray[#secretsArray + 1] = _newSecret
+        setStoragePlayerData(player, "secrets", _newSecret.id)
         return secretsArray
     end)
 end
@@ -109,10 +111,17 @@ function self:ServerAwake()
     end)
 
     _eventManager.requestStorageArrayLenght:Connect(function(player : Player, arrayName : string)
-        Storage.GetValue(arrayName, function(array)
-            _lenght = #array
-            _eventManager.requestStorageArrayLenght:FireClient(player, _lenght)
-        end)    
+        if arrayName == "Secrets" or arrayName == "Comments" then
+            Storage.GetValue(arrayName, function(array)
+                local _lenght = #array
+                _eventManager.requestStorageArrayLenght:FireClient(player, _lenght, arrayName)
+            end)
+        elseif arrayName == "secrets" or arrayName == "readSecrets" or arrayName == "comments" or arrayName == "readComments" then
+            Storage.GetPlayerValue(player, arrayName, function(array)
+                local _lenght = #array
+                _eventManager.requestStorageArrayLenght:FireClient(player, _lenght, arrayName)
+            end)
+        end
     end)
 
     _eventManager.requestStoragePlayerData:Connect(function(player : Player, propertyName : string)
