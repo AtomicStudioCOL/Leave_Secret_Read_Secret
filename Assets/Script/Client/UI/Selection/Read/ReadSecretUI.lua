@@ -3,6 +3,8 @@
 -- UIManager
 local _UIManager = require("UIManager")
 
+
+
 -- Variables for gamemanager
 local _uiManager = nil;
 local _lobby = nil
@@ -65,6 +67,7 @@ _quitLabel:RegisterPressCallback(function()
 end)
 
 function self:ClientAwake()
+    
     _uiManager = _UIManager:GetComponent("UIManager");
 
     _lobby = _uiManager:GetComponent("Lobby")

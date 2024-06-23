@@ -11,6 +11,7 @@ local _secretSendConf = nil
 
 -- scripts --
 local _chatManager = nil
+local _menssageText = nil
 
 -- buttons
 --!Bind
@@ -49,6 +50,7 @@ setDefaultTexts()
 -- set secret's text --
 function setSecretText(newText)
     _textInput:SetPrelocalizedText(newText)
+    _menssageText = newText
 end
 
 -- Add text to Button
@@ -56,16 +58,19 @@ _sendButton:Add(_sendLabel)
 _quitButton:Add(_quitLabel)
 
 _sendButton:RegisterPressCallback(function() 
-    if _EventManager.requestPlayerState:FireServer("currentMessage") == nil then
+
+    if _EventManager.requestPlayerState:FireServer("currentMessage") ~= nil then
         _textInput:SetPrelocalizedText("No text yet! For leaving a secret, you need to actually type a secret!")
         Timer.After(3, function()
             if _EventManager.requestPlayerState:FireServer("currentMessage") == nil then
-                _textInput:SetEmojiPrelocalizedText(textInputPlaceholder)
+                -- _textInput:SetEmojiPrelocalizedText(textInputPlaceholder)
+                _textInput:SetEmojiPrelocalizedText(_menssageText)                
             end
         end)
     else
         _uiManager.ButtonPress(_sendButton)
         _uiManager.DeactiveActiveGameObject(nil, _secretSendConf)
+        _EventManager.newSecret:FireServer(self, _textInput.text)
     end
 end)
 

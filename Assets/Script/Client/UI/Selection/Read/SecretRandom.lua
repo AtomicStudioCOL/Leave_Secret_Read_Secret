@@ -4,6 +4,12 @@
 local _UIManager = require("UIManager")
 local _EventManager = require("EventManager")
 
+-- Select Scripts 
+--!Header("Scripts UI")
+--!SerializeField
+local _GameManager : GameObject = nil;
+local _gameManager = nil;
+
 -- Variables for gamemanager
 local _uiManager = nil;
 local _lobby = nil
@@ -85,6 +91,10 @@ _quitLabel:RegisterPressCallback(function()
 end)
 
 function self:ClientAwake()
+
+    _gameManager = _GameManager:GetComponent("DataManager")
+    -- _gameManager.requestSecret(1)
+
     _uiManager = _UIManager:GetComponent(UIManager);
 
     _lobby = _uiManager:GetComponent(Lobby)

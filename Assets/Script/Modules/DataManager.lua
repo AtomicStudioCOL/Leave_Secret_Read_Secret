@@ -55,10 +55,8 @@ end
 
 function requestStoragePlayerData(player : Player, property : string)
     local _returnedProperty = Storage.GetPlayerValue(player, property, function(requiredProperty)
-        print(`{requiredProperty}`)
         return requiredProperty
     end)
-    print(`{_returnedProperty}`)
 end
 
 function newComment(player : Player, text, secretId)
@@ -76,7 +74,8 @@ function newComment(player : Player, text, secretId)
     end)
 end
 
-function newSecret(player : Player, text)
+function newSecret(player : Player, _text : string)
+    print(player.id)
     Storage.UpdateValue("Secrets", function(secretsArray)
         local _newSecret = {}
         _newSecret["comments"] = {}
@@ -84,16 +83,18 @@ function newSecret(player : Player, text)
         _newSecret["idPlayer"] = player.id
         _newSecret["hidden"] = false
         _newSecret["reportNum"] = 0
-        _newSecret["text"] = text
+        _newSecret["text"] = _text
         secretsArray[#secretsArray + 1] = _newSecret
         return secretsArray
     end)
 end
 
-function requestSecret(i)
+function requestSecret()
     local _secret
     Storage.GetValue("Secrets", function(secretsTable)
-        _secret = secretsTable[i]
+        _secret = secretsTable
+        print(_secret)
+        print("Testeando la lectura de secretos")
         return _secret
     end)
     return _secret
@@ -110,6 +111,7 @@ end
 
 
 function requestPlayerState(player : Player, property)
+
     if property == nil then
         return playerState[player.name]
     else
@@ -143,7 +145,7 @@ function self:ServerAwake()
         newComment(player, text, secretId)
     end)
 
-    _eventManager.newSecret:Connect(function(player, title, text)
+    _eventManager.newSecret:Connect(function(player, text)
         newSecret(player, text)
     end)
 
@@ -164,8 +166,9 @@ function self:ServerAwake()
     Storage.GetValue("Secrets", function(v)
         _secretsTable = v
         if _secretsTable == nil then
-            print("Secrets' table is nil. Setting it to secrets pool.")
+
             Storage.SetValue("Secrets", _secretsPool.premadeSecrets)
+            
         end
     end)
 
@@ -173,7 +176,6 @@ function self:ServerAwake()
     Storage.GetValue("Comments", function(v)
         _commentsTable = v
         if _commentsTable == nil then
-            print("Comments' table is nil. Setting it to an empty table.")
             Storage.SetValue("Comments", {})
         end
     end)

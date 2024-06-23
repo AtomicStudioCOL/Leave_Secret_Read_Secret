@@ -8,7 +8,11 @@ premadeSecrets = {
         hidden = false,
         reportNum = 0,
         text = 'I once stole something from a supermarket to make a prank and catch a friend lying about stuff. I put THE THING:tm: in their backpack and they said it was from their cousins. I caught him lying and my only reaction was "I KNEW IT!!!!".',
-    },
+    }
+    --[[
+    ,
+
+    
     {
         comments = {},
         id = 02,
@@ -513,4 +517,6 @@ premadeSecrets = {
         reportNum = 0,
         text = "Can we pretend that airplanes at the night sky are like shooting stars?",
     },
+    --]]
+
 }
