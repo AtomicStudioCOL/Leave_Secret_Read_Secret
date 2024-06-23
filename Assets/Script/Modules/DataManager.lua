@@ -53,16 +53,10 @@ function setStoragePlayerData(player : Player, property : string, value)
     end
 end
 
-function requestStoragePlayerData(player : Player, property : string)
-    local _returnedProperty = Storage.GetPlayerValue(player, property, function(requiredProperty)
-        return requiredProperty
-    end)
-end
-
 function newComment(player : Player, text, secretId)
     Storage.UpdateValue("Comments", function(commentsArray)
         local _newComment = {}
-        _newComment["id"] = tonumber(`{player.id}..{#commentsArray + 1}`)
+        _newComment["id"] = tonumber(`{player.id}{#commentsArray + 1}`)
         _newComment["hidden"] = false
         _newComment["playerName"] = player.name
         _newComment["reportNum"] = 0
@@ -75,11 +69,10 @@ function newComment(player : Player, text, secretId)
 end
 
 function newSecret(player : Player, _text : string)
-    print(player.id)
     Storage.UpdateValue("Secrets", function(secretsArray)
         local _newSecret = {}
         _newSecret["comments"] = {}
-        _newSecret["id"] =  tonumber(`{player.id}..{#secretsArray + 1}`)
+        _newSecret["id"] =  tonumber(`{player.id}{#secretsArray + 1}`)
         _newSecret["idPlayer"] = player.id
         _newSecret["hidden"] = false
         _newSecret["reportNum"] = 0
@@ -89,26 +82,16 @@ function newSecret(player : Player, _text : string)
     end)
 end
 
+--[[
 function requestSecret()
     local _secret
     Storage.GetValue("Secrets", function(secretsTable)
         _secret = secretsTable
-        print(_secret)
-        print("Testeando la lectura de secretos")
         return _secret
     end)
     return _secret
 end
-
-function requestStorageArratLenght(arrayName : string)
-    local _lenght
-    Storage.GetValue(arrayName, function(array)
-        _lenght = #array
-        return _lenght
-    end)
-    return _lenght
-end
-
+--]]
 
 function requestPlayerState(player : Player, property)
 
@@ -130,15 +113,23 @@ function self:ServerAwake()
     end)
 
     _eventManager.requestSecret:Connect(function(player : Player, i : number)
-        _eventManager.requestSecret:FireClient(player, requestSecret(i))
+        Storage.GetValue("Secrets", function(secretsTable)
+            local _returnedI = secretsTable[i]
+            _eventManager.requestSecret:FireClient(player, _returnedI)
+        end)    
     end)
 
     _eventManager.requestStorageArrayLenght:Connect(function(player : Player, arrayName : string)
-        _eventManager.requestStorageArrayLenght:FireClient(player, requestStorageArratLenght(arrayName))
+        Storage.GetValue(arrayName, function(array)
+            _lenght = #array
+            _eventManager.requestStorageArrayLenght:FireClient(player, _lenght)
+        end)    
     end)
 
-    _eventManager.requestStoragePlayerData:Connect(function(player : Player, property : string)
-        _eventManager.requestStoragePlayerData:FireClient(player, requestStoragePlayerData(player, property))
+    _eventManager.requestStoragePlayerData:Connect(function(player : Player, propertyName : string)
+        Storage.GetPlayerValue(player, propertyName, function(requiredProperty)
+            _eventManager.requestStoragePlayerData:FireClient(player, propertyName, requiredProperty)
+        end)
     end)
 
     _eventManager.newComment:Connect(function(player, text, secretId)

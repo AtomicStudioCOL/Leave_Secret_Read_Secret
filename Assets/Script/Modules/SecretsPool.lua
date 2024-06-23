@@ -8,11 +8,7 @@ premadeSecrets = {
         hidden = false,
         reportNum = 0,
         text = 'I once stole something from a supermarket to make a prank and catch a friend lying about stuff. I put THE THING:tm: in their backpack and they said it was from their cousins. I caught him lying and my only reaction was "I KNEW IT!!!!".',
-    }
-    --[[
-    ,
-
-    
+    },
     {
         comments = {},
         id = 02,
@@ -29,6 +25,7 @@ premadeSecrets = {
         reportNum = 0,
         text = "Not really a secret, but I got \"married\" and \"divorced\" when I was like five. I remember the girl's name but I don't remember that happening. But my mother keeps telling that to everyone. It's pretty funny ngl.",
     },
+    --[[
     {
         comments = {},
         id = 04,
@@ -223,14 +220,6 @@ premadeSecrets = {
     },
     {
         comments = {},
-        id = 027,
-        idPlayer = 0,
-        hidden = false,
-        reportNum = 0,
-        text = "I've pretended to be more experienced in relationships than I actually am.",
-    },
-    {
-        comments = {},
         id = 028,
         idPlayer = 0,
         hidden = false,
@@ -260,14 +249,6 @@ premadeSecrets = {
         hidden = false,
         reportNum = 0,
         text = "I'm scared of growing up and the responsibilities that come with it.",
-    },
-    {
-        comments = {},
-        id = 031,
-        idPlayer = 0,
-        hidden = false,
-        reportNum = 0,
-        text = "I've tried alcohol at a party and regretted it later.",
     },
     {
         comments = {},
@@ -516,6 +497,22 @@ premadeSecrets = {
         hidden = false,
         reportNum = 0,
         text = "Can we pretend that airplanes at the night sky are like shooting stars?",
+    },
+        {
+        comments = {},
+        id = 063,
+        idPlayer = 0,
+        hidden = false,
+        reportNum = 0,
+        text = "I've pretended to be more experienced in relationships than I actually am.",
+    },
+        {
+        comments = {},
+        id = 064,
+        idPlayer = 0,
+        hidden = false,
+        reportNum = 0,
+        text = "I've tried alcohol at a party and regretted it later.",
     },
     --]]
 

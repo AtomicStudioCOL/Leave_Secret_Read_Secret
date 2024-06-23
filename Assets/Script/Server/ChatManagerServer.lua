@@ -9,7 +9,6 @@ chats = {}
 
 -- activate secret chat and deactivate general chat
 function setSecretChat(player : Player)
-    print("secret chat activated")
     for k, channelContent in pairs(Chat.allChannels) do
         if channelContent.name == `{player.name}'s secret chat.` then
             Chat:AddPlayerToChannel(channelContent, player)
@@ -21,7 +20,6 @@ end
 
 -- activate general chat and deactivate secret chat
 function setGeneralChat(player : Player)
-    print("general chat activated")
     for k, channelContent in pairs(Chat.allChannels) do
         if channelContent.name == `General` then
             Chat:AddPlayerToChannel(channelContent, player)
@@ -56,11 +54,13 @@ server.PlayerConnected:Connect(function(player : Player)
         _DataManager.setPlayerState(player.name, "currentMessage", "")
 
         -- checking if player is registered in "long term" database
-        local _hasAnyTokens = nil
-        _hasAnyTokens = _DataManager.requestStoragePlayerData(player, "readTokens")
-        if _hasAnyTokens == nil then
-            _DataManager.setStoragePlayerData(player, "readTokens", 0)
-        end
+        Storage.GetPlayerValue(player, "readTokens", function(readTokens)
+            if readTokens == nil then
+                -- If read tokens is nil it means the player is new. Setting default values
+                Storage.SetPlayerValue(player, "readTokens", 0)
+                Storage.SetPlayerValue(player, "commentTokens", 0)
+            end
+        end)
     end)
 end)
 

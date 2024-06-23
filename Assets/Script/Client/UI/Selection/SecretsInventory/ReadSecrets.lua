@@ -1,14 +1,15 @@
 --!Type(UI)
 
--- UIManager
+-- Managers --
 local _UIManager = require("UIManager")
 
--- Variables for gamemanager
+-- UIs --
 local _uiManager = nil;
 local _lobby = nil
 local _readPickedSecret = nil
 
--- buttons
+
+-- buttons --
 --!Bind
 local _quitButton :UIButton = nil
 --!Bind
@@ -103,8 +104,8 @@ _quitButton:RegisterPressCallback(function()
 end)
 
 function self:ClientAwake()
-    _uiManager = _UIManager:GetComponent("UIManager");
+    _uiManager = _UIManager:GetComponent(UIManager);
 
-    _lobby = _uiManager:GetComponent("Lobby")
-    _readPickedSecret = _uiManager:GetComponent("ReadPickedSecret")
+    _lobby = _uiManager:GetComponent(Lobby)
+    _readPickedSecret = _uiManager:GetComponent(ReadPickedSecret)
 end

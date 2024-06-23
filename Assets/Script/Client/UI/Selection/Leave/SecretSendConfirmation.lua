@@ -46,15 +46,15 @@ _sendButton:Add(_sendLabel)
 _sendLabel:SetPrelocalizedText("✓")
 
 -- Add text to Button
-_sendButton:RegisterPressCallback(function() 
+_sendButton:RegisterPressCallback(function()
     _uiManager.ButtonPress(_sendButton)
+    _EventManager.requestPlayerState:FireServer("currentMessage")
+    _EventManager.setStoragePlayerData:FireServer("readTokens", 5)
     _uiManager.DeactiveActiveGameObject(self, _feedbackSent)
-    _message = _EventManager.requestPlayerState:FireServer("currentMessage")
-    _EventManager.newSecret:FireServer(_message)
-    _EventManager.setPlayerState:FireServer("currentMessage", "")
     
     -- automatically disabling feedback ui and reenabling lobby ui
     Timer.After(3, function()
+        _EventManager.setPlayerState:FireServer("currentMessage", "")    
         _uiManager.DeactiveActiveGameObject(_leaveSecretUi, nil)
         _uiManager.DeactiveActiveGameObject(_feedbackSent, _lobby)
         _EventManager.setChat:FireServer("General")
@@ -62,7 +62,7 @@ _sendButton:RegisterPressCallback(function()
 end)
 
 _cancelLabel:RegisterPressCallback(function()
-    _uiManager.ButtonPress(_cancelLabel);
+    _uiManager.ButtonPress(_cancelButton);
     _uiManager.DeactiveActiveGameObject(self);
 end)
 
@@ -74,4 +74,12 @@ function self:ClientAwake()
     _lobby = _uiManager:GetComponent(Lobby)
     _leaveSecretUi = _uiManager:GetComponent(LeaveSecret)
     _feedbackSent = _uiManager:GetComponent(SecretSentFeedback)
+
+    -- event receiver
+    _EventManager.requestPlayerState:Connect(function(currentMessage, requestedState)
+        if requestedState == "secretChat" then return end
+        _uiManager.DeactiveActiveGameObject(self, _feedbackSent)
+        _EventManager.newSecret:FireServer(currentMessage)
+        _EventManager.setPlayerState:FireServer("currentMessage", "")    
+    end)
 end

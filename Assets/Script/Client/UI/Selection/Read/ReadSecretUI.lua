@@ -2,8 +2,7 @@
 
 -- UIManager
 local _UIManager = require("UIManager")
-
-
+local _EventManager = require("EventManager")
 
 -- Variables for gamemanager
 local _uiManager = nil;
@@ -28,9 +27,14 @@ local _title :UILabel = nil
 --!Bind
 local _quitLabel : UILabel = nil
 
+initialize = function()
+    _EventManager.requestStoragePlayerData:FireServer("readTokens")
+    _EventManager.requestStoragePlayerData:FireServer("commentTokens")    
+end
+
 -- token variables
-local _readToken = 5
-local _commentToken = 1
+local _readToken
+local _commentToken
 
 -- Create Text Labels UI
 local _textReadSecret = `You have {_readToken} read tokens and {_commentToken} comment token`;
@@ -38,28 +42,15 @@ local _textReadSecret = `You have {_readToken} read tokens and {_commentToken} c
 -- Set text Labels UI
 
 _PanelReadSecret:SetPrelocalizedText(" ")
-
 _ReadSecretText:SetPrelocalizedText(_textReadSecret)
-
 _ReadSecretLabel:SetPrelocalizedText("Read Secrets")
-
 _title:SetPrelocalizedText("Read a secret!")
-
 _quitLabel:SetPrelocalizedText("X")
-
--- Set Class
-
-_PanelReadSecret:AddToClassList("Panel");
-
-_ReadSecretText:AddToClassList("ReadSecretText");
 
 -- Add text to Button
 _ReadSecretButton:Add(_ReadSecretLabel);
 
-_ReadSecretButton:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_ReadSecretButton, nil);
-    _uiManager.DeactiveActiveGameObject(self, _secretRandom);
-end)
+-- callbacks
 
 _quitLabel:RegisterPressCallback(function()
     _uiManager.ButtonPress(_quitLabel, nil);
@@ -68,8 +59,26 @@ end)
 
 function self:ClientAwake()
     
-    _uiManager = _UIManager:GetComponent("UIManager");
+    _uiManager = _UIManager:GetComponent(UIManager);
+    
+    _lobby = _uiManager:GetComponent(Lobby)
+    _secretRandom = _uiManager:GetComponent(SecretRandom)
 
-    _lobby = _uiManager:GetComponent("Lobby")
-    _secretRandom = _uiManager:GetComponent("SecretRandom")
+    -- button callback dependent of another script
+    _ReadSecretButton:RegisterPressCallback(function() 
+        _uiManager.ButtonPress(_ReadSecretButton, nil);
+        _uiManager.DeactiveActiveGameObject(self, _secretRandom);
+        _secretRandom.initialize()
+    end)
+
+    -- event receiver
+    _EventManager.requestStoragePlayerData:Connect(function(propertyName, value)
+        if propertyName == "readTokens" then
+            _readToken = value
+        elseif propertyName == "commentTokens" then
+            _commentToken = value
+        end
+        _textReadSecret = `You have {_readToken} read tokens and {_commentToken} comment token`
+        _ReadSecretText:SetPrelocalizedText(_textReadSecret)
+    end)
 end

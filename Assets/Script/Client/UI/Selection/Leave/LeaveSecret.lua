@@ -58,20 +58,9 @@ _sendButton:Add(_sendLabel)
 _quitButton:Add(_quitLabel)
 
 _sendButton:RegisterPressCallback(function() 
-
-    if _EventManager.requestPlayerState:FireServer("currentMessage") ~= nil then
-        _textInput:SetPrelocalizedText("No text yet! For leaving a secret, you need to actually type a secret!")
-        Timer.After(3, function()
-            if _EventManager.requestPlayerState:FireServer("currentMessage") == nil then
-                -- _textInput:SetEmojiPrelocalizedText(textInputPlaceholder)
-                _textInput:SetEmojiPrelocalizedText(_menssageText)                
-            end
-        end)
-    else
-        _uiManager.ButtonPress(_sendButton)
-        _uiManager.DeactiveActiveGameObject(nil, _secretSendConf)
-        _EventManager.newSecret:FireServer(self, _textInput.text)
-    end
+    -- Requests if there is any current message. Callback is in the event handler.
+    _EventManager.requestPlayerState:FireServer("currentMessage")
+    _uiManager.ButtonPress(_sendButton)
 end)
 
 _quitButton:RegisterPressCallback(function()
@@ -94,4 +83,18 @@ function self:ClientAwake()
     _EventManager.setText:Connect(function(newText)
         setSecretText(newText)
     end)
+
+    _EventManager.requestPlayerState:Connect(function(currentMessage, requestedState)
+        if requestedState == "secretChat" then return end
+        if currentMessage == "" or currentMessage == nil then
+            _textInput:SetPrelocalizedText("No text yet! For leaving a secret, you need to actually type a secret!")
+            Timer.After(3, function()
+                if currentMessage == "" or currentMessage == nil then
+                    _textInput:SetPrelocalizedText(textInputPlaceholder)                
+                end
+            end)
+        else
+            _uiManager.DeactiveActiveGameObject(nil, _secretSendConf)
+        end
+    end) 
 end

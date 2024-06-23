@@ -3,12 +3,12 @@
 -- Managers --
 local _UIManager = require("UIManager")
 local _EventManager = require("EventManager")
+local _DataManager = require("DataManager")
 
 -- Select Scripts 
 --!Header("Scripts UI")
 --!SerializeField
 local _GameManager : GameObject = nil;
-local _gameManager = nil;
 
 -- Variables for gamemanager
 local _uiManager = nil;
@@ -48,22 +48,22 @@ local _quitLabel : UILabel = nil
 
 -- Create Text Labels UI
 local _textSecret = "Once I stole a cookie from the fridge. Mom still does not know. :c"
-local _readToken = _EventManager.requestStoragePlayerData:FireServer("readTokens")
-local _commentToken = _EventManager.requestStoragePlayerData:FireServer("commentTokens")
+local _readToken
+local _commentToken
+initialize = function() end
+
 
 -- Set text Labels UI
 _CommentingIcon:SetPrelocalizedText(" ")
-_CommentingCount:SetPrelocalizedText(`{_readToken}`)
 _CommentLabel:SetPrelocalizedText("Comment")
 
 _PanelSecret:SetPrelocalizedText(" ")
 
 _readingIcon:SetPrelocalizedText(" ")
-_readingCount:SetPrelocalizedText(`{_commentToken}`)
 
 _SecretText:SetPrelocalizedText(_textSecret)
 
-_title:SetPrelocalizedText("Cookie thief. qwq")
+_title:SetPrelocalizedText("The random secret is:")
 
 _tokensContainer:SetPrelocalizedText(" ")
 
@@ -87,17 +87,37 @@ end)
 
 _quitLabel:RegisterPressCallback(function()
     _uiManager.ButtonPress(_quitLabel);
-    _uiManager.DeactiveActiveGameObject(self, _commentSecret)
+    _uiManager.DeactiveActiveGameObject(self, _lobby)
 end)
 
 function self:ClientAwake()
-
-    _gameManager = _GameManager:GetComponent("DataManager")
-    -- _gameManager.requestSecret(1)
-
+    -- setting scripts
     _uiManager = _UIManager:GetComponent(UIManager);
 
     _lobby = _uiManager:GetComponent(Lobby)
     _reportSecret = _uiManager:GetComponent(ReportSecret)
     _commentSecret = _uiManager:GetComponent(CommentSecret)
+    _requestRandomSecret = _GameManager:GetComponent(RequestRandomSecret)
+
+    -- setting initialize function
+    initialize = function()
+        _EventManager.requestStoragePlayerData:FireServer("readTokens")
+        _EventManager.requestStoragePlayerData:FireServer("commentTokens")
+        _requestRandomSecret.choseRandomSecret()
+    end
+
+    -- setting event receiver
+    _EventManager.requestSecret:Connect(function(secret)
+        _textSecret = secret.text
+        _SecretText:SetPrelocalizedText(_textSecret)
+    end)
+    _EventManager.requestStoragePlayerData:Connect(function(propertyName, value)
+        if propertyName == "readTokens" then
+            _readToken = value
+            _readingCount:SetPrelocalizedText(`{_readToken}`)
+        elseif propertyName == "commentTokens" then
+            _commentToken = value
+            _CommentingCount:SetPrelocalizedText(`{_commentToken}`)
+        end
+    end)
 end
