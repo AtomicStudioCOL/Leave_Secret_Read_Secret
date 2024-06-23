@@ -59,8 +59,8 @@ _quitButton:Add(_quitLabel)
 
 _sendButton:RegisterPressCallback(function() 
     -- Requests if there is any current message. Callback is in the event handler.
-    _EventManager.requestPlayerState:FireServer("currentMessage")
     _uiManager.ButtonPress(_sendButton)
+    _EventManager.requestPlayerState:FireServer("currentMessage")
 end)
 
 _quitButton:RegisterPressCallback(function()
@@ -85,7 +85,8 @@ function self:ClientAwake()
     end)
 
     _EventManager.requestPlayerState:Connect(function(currentMessage, requestedState)
-        if requestedState == "secretChat" then return end
+        if requestedState ~= "currentMessage" then return end
+        print(currentMessage)
         if currentMessage == "" or currentMessage == nil then
             _textInput:SetPrelocalizedText("No text yet! For leaving a secret, you need to actually type a secret!")
             Timer.After(3, function()

@@ -50,15 +50,6 @@ _sendButton:RegisterPressCallback(function()
     _uiManager.ButtonPress(_sendButton)
     _EventManager.requestPlayerState:FireServer("currentMessage")
     _EventManager.setStoragePlayerData:FireServer("readTokens", 5)
-    _uiManager.DeactiveActiveGameObject(self, _feedbackSent)
-    
-    -- automatically disabling feedback ui and reenabling lobby ui
-    Timer.After(3, function()
-        _EventManager.setPlayerState:FireServer("currentMessage", "")    
-        _uiManager.DeactiveActiveGameObject(_leaveSecretUi, nil)
-        _uiManager.DeactiveActiveGameObject(_feedbackSent, _lobby)
-        _EventManager.setChat:FireServer("General")
-    end)
 end)
 
 _cancelLabel:RegisterPressCallback(function()
@@ -77,9 +68,16 @@ function self:ClientAwake()
 
     -- event receiver
     _EventManager.requestPlayerState:Connect(function(currentMessage, requestedState)
-        if requestedState == "secretChat" then return end
+        if requestedState ~= "currentMessage" then return end
         _uiManager.DeactiveActiveGameObject(self, _feedbackSent)
         _EventManager.newSecret:FireServer(currentMessage)
-        _EventManager.setPlayerState:FireServer("currentMessage", "")    
+    
+        -- automatically disabling feedback ui and reenabling lobby ui
+        Timer.After(3, function()
+            _EventManager.setPlayerState:FireServer("currentMessage", "")    
+            _uiManager.DeactiveActiveGameObject(_leaveSecretUi, nil)
+            _uiManager.DeactiveActiveGameObject(_feedbackSent, _lobby)
+            _EventManager.setChat:FireServer("General")
+        end)
     end)
 end

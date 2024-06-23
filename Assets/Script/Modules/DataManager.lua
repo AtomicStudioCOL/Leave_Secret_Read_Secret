@@ -82,17 +82,6 @@ function newSecret(player : Player, _text : string)
     end)
 end
 
---[[
-function requestSecret()
-    local _secret
-    Storage.GetValue("Secrets", function(secretsTable)
-        _secret = secretsTable
-        return _secret
-    end)
-    return _secret
-end
---]]
-
 function requestPlayerState(player : Player, property)
 
     if property == nil then
@@ -109,7 +98,7 @@ end
 function self:ServerAwake()
     -- client to server events --
     _eventManager.requestPlayerState:Connect(function(player : Player, property)
-        _eventManager.requestPlayerState:FireClient(player, requestPlayerState(player, property))
+        _eventManager.requestPlayerState:FireClient(player, requestPlayerState(player, property), property)
     end)
 
     _eventManager.requestSecret:Connect(function(player : Player, i : number)

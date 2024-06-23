@@ -101,6 +101,7 @@ function self:ClientAwake()
 
     -- setting initialize function
     initialize = function()
+        _EventManager.setStoragePlayerData:FireServer("readTokens", -1)
         _EventManager.requestStoragePlayerData:FireServer("readTokens")
         _EventManager.requestStoragePlayerData:FireServer("commentTokens")
         _requestRandomSecret.choseRandomSecret()

@@ -65,10 +65,18 @@ function self:ClientAwake()
     _secretRandom = _uiManager:GetComponent(SecretRandom)
 
     -- button callback dependent of another script
-    _ReadSecretButton:RegisterPressCallback(function() 
+    _ReadSecretButton:RegisterPressCallback(function()
         _uiManager.ButtonPress(_ReadSecretButton, nil);
-        _uiManager.DeactiveActiveGameObject(self, _secretRandom);
-        _secretRandom.initialize()
+
+        if _readToken < 1 then
+            _ReadSecretText:SetPrelocalizedText("You need reading tokens to read secrets! Leave a secret and get five reading tokens!")
+            Timer.After(3, function()
+                _ReadSecretText:SetPrelocalizedText(`You have {_readToken} read tokens and {_commentToken} comment token`)                
+            end)
+        else
+            _uiManager.DeactiveActiveGameObject(self, _secretRandom);
+            _secretRandom.initialize()
+        end
     end)
 
     -- event receiver
