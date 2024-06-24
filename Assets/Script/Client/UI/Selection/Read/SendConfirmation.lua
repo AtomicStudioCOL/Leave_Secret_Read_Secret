@@ -34,25 +34,21 @@ local _title :UILabel = nil
 local _cancelLabel : UILabel = nil
 
 -- Set text Labels UI
-
 _Panel:SetPrelocalizedText(" ")
-
 _Container:SetPrelocalizedText(" ")
-
 _paragraph:SetPrelocalizedText("You won't be able to edit this comment in the future.")
-
 _title:SetPrelocalizedText("Send?")
+_cancelLabel:SetPrelocalizedText("X")
+_sendLabel:SetPrelocalizedText("✓")
 
 _cancelButton:Add(_cancelLabel)
-_cancelLabel:SetPrelocalizedText("X")
 _sendButton:Add(_sendLabel)
-_sendLabel:SetPrelocalizedText("✓")
 
 -- Add text to Button
 _sendButton:RegisterPressCallback(function()
     _uiManager.ButtonPress(_sendButton)
     _EventManager.requestPlayerState:FireServer("currentMessage")
-    _EventManager.setStoragePlayerData:FireServer("readTokens", 5)
+    _EventManager.setStoragePlayerData:FireServer("commentTokens", -1)
 end)
 
 _cancelLabel:RegisterPressCallback(function()
@@ -67,13 +63,15 @@ function self:ClientAwake()
     _commentSecret = _uiManager:GetComponent(CommentSecret)
     _sentFeedback = _uiManager:GetComponent(SentFeedback)
 
+
     -- event receiver
     _EventManager.requestPlayerState:Connect(function(requestedValue, requestedStateKey)
         if requestedStateKey == "currentMessage" then
+            _secretRandom.refreshTokens()
             _currentMessage = requestedValue
             _uiManager.DeactiveActiveGameObject(self, _sentFeedback)
             _EventManager.requestPlayerState:FireServer("currentSecret")
-        
+
             -- automatically disabling feedback ui
             Timer.After(3, function()
                 _EventManager.setPlayerState:FireServer("currentMessage", "")    

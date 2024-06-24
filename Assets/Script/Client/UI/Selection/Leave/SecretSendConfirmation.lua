@@ -71,6 +71,7 @@ function self:ClientAwake()
         if requestedState ~= "currentMessage" then return end
         _uiManager.DeactiveActiveGameObject(self, _feedbackSent)
         _EventManager.newSecret:FireServer(currentMessage)
+        _EventManager.requestStoragePlayerData:FireServer("secrets")
     
         -- automatically disabling feedback ui and reenabling lobby ui
         Timer.After(3, function()
@@ -79,5 +80,13 @@ function self:ClientAwake()
             _uiManager.DeactiveActiveGameObject(_feedbackSent, _lobby)
             _EventManager.setChat:FireServer("General")
         end)
+    end)
+
+    _EventManager.requestStoragePlayerData:Connect(function(requestedStateKey, secretsArray)
+        if requestedStateKey ~= "secrets" then return end
+        local _numberOfSecrets = #secretsArray + 1
+        if _numberOfSecrets == 1 or _numberOfSecrets % 5 == 0 then
+            _EventManager.setStoragePlayerData:FireServer("commentTokens", 1)
+        end
     end)
 end

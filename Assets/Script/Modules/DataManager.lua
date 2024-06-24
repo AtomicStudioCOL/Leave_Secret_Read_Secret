@@ -153,8 +153,8 @@ function self:ServerAwake()
         setStoragePlayerData(player, property, value)
     end)
 
-    _eventManager.setText:Connect(function(player : Player)
-        _eventManager.setText:FireClient(player, playerState[player.name].currentMessage)
+    _eventManager.setText:Connect(function(player : Player, target : string)
+        _eventManager.setText:FireClient(player, playerState[player.name].currentMessage, target)
     end)
 
     -- checking if data exists and generating it if it does not --

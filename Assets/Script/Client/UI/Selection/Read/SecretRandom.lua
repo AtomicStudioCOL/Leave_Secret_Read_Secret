@@ -57,6 +57,7 @@ local _currentSecret
 
 -- functions which will be called from another script --
 initialize = function() end
+refreshTokens = function() end
 
 -- Set text Labels UI
 _CommentingIcon:SetPrelocalizedText(" ")
@@ -76,8 +77,8 @@ _CommentButton:RegisterPressCallback(function()
     if _commentToken > 0 then
         _uiManager.DeactiveActiveGameObject(self, _commentSecret)
         _commentSecret.initialize()
-        _EventManager.setChat:FireServer("Secret")
-        _EventManager.setPlayerState:FireServer("secretChat", true)
+        _EventManager.setChat:FireServer("Comment")
+        _EventManager.setPlayerState:FireServer("commentChat", true)
     else
         _SecretText:SetPrelocalizedText("You have no comment tokens! You'll get one each 5 secrets you leave!")
         Timer.After(3, function()
@@ -87,18 +88,18 @@ _CommentButton:RegisterPressCallback(function()
 end)
 
 _reportButton:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_reportButton);
+    _uiManager.ButtonPress(_reportButton)
     _uiManager.DeactiveActiveGameObject(self, _reportSecret)
 end)
 
 _quitLabel:RegisterPressCallback(function()
-    _uiManager.ButtonPress(_quitLabel);
+    _uiManager.ButtonPress(_quitLabel)
     _uiManager.DeactiveActiveGameObject(self, _lobby)
 end)
 
 function self:ClientAwake()
     -- setting scripts
-    _uiManager = _UIManager:GetComponent(UIManager);
+    _uiManager = _UIManager:GetComponent(UIManager)
 
     _lobby = _uiManager:GetComponent(Lobby)
     _reportSecret = _uiManager:GetComponent(ReportSecret)
@@ -112,6 +113,12 @@ function self:ClientAwake()
         _EventManager.requestStoragePlayerData:FireServer("readTokens")
         _EventManager.requestStoragePlayerData:FireServer("commentTokens")
         _EventManager.requestSecret:FireServer(client.localPlayer)
+    end
+
+    -- refreshing tokens
+    refreshTokens = function()
+        _EventManager.requestStoragePlayerData:FireServer("readTokens")
+        _EventManager.requestStoragePlayerData:FireServer("commentTokens")
     end
 
     -- setting event receiver
