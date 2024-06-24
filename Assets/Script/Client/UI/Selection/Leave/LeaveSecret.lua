@@ -36,16 +36,7 @@ local _sendLabel : UILabel = nil
 local textInputPlaceholder = "Type your secret in the chat. Don't worry! It won't display on other player's chat or over your avatar's head. You'll see your secret here once you send it. To edit it, type the secret again."
 
 -- Set text Labels UI
-function setDefaultTexts()
-    _Container:SetPrelocalizedText("")
-    _title:SetPrelocalizedText("Leave a secret!")
-    _paragraph:SetPrelocalizedText("Remember that secrets are anonymous but they will be reported if it goes against community guidelines. Please be respectful!")
-    _quitLabel:SetPrelocalizedText("X")
-    _textInput:SetPrelocalizedText(textInputPlaceholder)
-    _sendLabel:SetPrelocalizedText("Send")
-end
-
-setDefaultTexts()
+initialize = function() end
 
 -- set secret's text --
 function setSecretText(newText)
@@ -78,6 +69,17 @@ function self:ClientAwake()
     -- Access Dependent UI --
     _lobby = _uiManager:GetComponent(Lobby)
     _secretSendConf = _uiManager:GetComponent(SecretSendConfirmation)
+
+    -- functions --
+    initialize = function()
+        _Container:SetPrelocalizedText("")
+        _title:SetPrelocalizedText("Leave a secret!")
+        _paragraph:SetPrelocalizedText("Remember that secrets are anonymous but they will be reported if it goes against community guidelines. Please be respectful!")
+        _quitLabel:SetPrelocalizedText("X")
+        _textInput:SetPrelocalizedText(textInputPlaceholder)
+        _sendLabel:SetPrelocalizedText("Send")
+    end
+    initialize()
 
     -- events --
     _EventManager.setText:Connect(function(newText)

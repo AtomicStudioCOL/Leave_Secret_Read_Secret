@@ -59,7 +59,7 @@ end)
 _LeaveSecrectButton:RegisterPressCallback(function() 
     _uiManager.ButtonPress(_LeaveSecrectButton);
     _uiManager.DeactiveActiveGameObject(self, _leaveSecretUi);
-    _leaveSecretUi.setDefaultTexts()
+    _leaveSecretUi.initialize()
     _EventManager.setChat:FireServer("Secret")
     _EventManager.setPlayerState:FireServer("secretChat", true)
 end)

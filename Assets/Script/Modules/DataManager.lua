@@ -56,6 +56,17 @@ function setStoragePlayerData(player : Player, property : string, value)
     end
 end
 
+function setCommentToSecret(secretId, commentId)
+    Storage.UpdateValue("Secrets", function(secretsArray)
+        for i, secret in ipairs(secretsArray) do
+            if secret.id == secretId then
+                secret.comments[#secret.comments + 1] = commentId
+            end
+        end
+        return secretsArray
+    end)
+end
+
 function newComment(player : Player, text, secretId)
     Storage.UpdateValue("Comments", function(commentsArray)
         local _newComment = {}
@@ -66,6 +77,7 @@ function newComment(player : Player, text, secretId)
         _newComment["secret"] = secretId
         _newComment["text"] = text
         commentsArray[#commentsArray + 1] = _newComment
+        setCommentToSecret(secretId, _newComment.id)
         setStoragePlayerData(player, "comments", _newComment.id)
         return commentsArray
     end)

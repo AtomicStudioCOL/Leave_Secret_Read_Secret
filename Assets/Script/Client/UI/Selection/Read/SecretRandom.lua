@@ -10,7 +10,7 @@ local _DataManager = require("DataManager")
 --!SerializeField
 local _GameManager : GameObject = nil;
 
--- Variables for gamemanager
+-- Scripts --
 local _uiManager = nil;
 local _lobby = nil
 local _reportSecret = nil
@@ -46,38 +46,44 @@ local _tokensContainer :UILabel = nil
 --!Bind
 local _quitLabel : UILabel = nil
 
--- Create Text Labels UI
-local _textSecret = "Once I stole a cookie from the fridge. Mom still does not know. :c"
+-- Strings --
+local _textSecret = "Getting secret!"
+local _allSecretsRead = "You have read all the secrets! Please come back some another time to get some new ones!"
 local _readToken
 local _commentToken
-initialize = function() end
 
+-- tables --
+local _currentSecret
+
+-- functions which will be called from another script --
+initialize = function() end
 
 -- Set text Labels UI
 _CommentingIcon:SetPrelocalizedText(" ")
 _CommentLabel:SetPrelocalizedText("Comment")
-
 _PanelSecret:SetPrelocalizedText(" ")
-
 _readingIcon:SetPrelocalizedText(" ")
-
 _SecretText:SetPrelocalizedText(_textSecret)
-
 _title:SetPrelocalizedText("The random secret is:")
-
 _tokensContainer:SetPrelocalizedText(" ")
-
 _quitLabel:SetPrelocalizedText("X")
 
 -- Add text to Button
 _CommentButton:Add(_CommentLabel);
 
 _CommentButton:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_CommentButton);
-    _uiManager.DeactiveActiveGameObject(self, _commentSecret)
-    _commentSecret.setDefaultTexts()
-    _EventManager.setChat:FireServer("Secret")
-    _EventManager.setPlayerState:FireServer("secretChat", true)
+    _uiManager.ButtonPress(_CommentButton)
+    if _commentToken > 0 then
+        _uiManager.DeactiveActiveGameObject(self, _commentSecret)
+        _commentSecret.initialize()
+        _EventManager.setChat:FireServer("Secret")
+        _EventManager.setPlayerState:FireServer("secretChat", true)
+    else
+        _SecretText:SetPrelocalizedText("You have no comment tokens! You'll get one each 5 secrets you leave!")
+        Timer.After(3, function()
+            _SecretText:SetPrelocalizedText(_textSecret)
+        end)
+    end
 end)
 
 _reportButton:RegisterPressCallback(function() 
@@ -101,6 +107,7 @@ function self:ClientAwake()
 
     -- setting initialize function
     initialize = function()
+        _CommentButton:RemoveFromClassList("inactive")
         _EventManager.setStoragePlayerData:FireServer("readTokens", -1)
         _EventManager.requestStoragePlayerData:FireServer("readTokens")
         _EventManager.requestStoragePlayerData:FireServer("commentTokens")
@@ -109,11 +116,15 @@ function self:ClientAwake()
 
     -- setting event receiver
     _EventManager.requestSecret:Connect(function(secret)
+        _currentSecret = secret
+        _EventManager.setPlayerState:FireServer("currentSecret", secret)
         _textSecret = secret.text
         _SecretText:SetPrelocalizedText(_textSecret)
     end)
 
     _EventManager.setText:Connect(function(text)
+        if text ~= _allSecretsRead then return end
+        _CommentButton:AddToClassList("inactive")
         _SecretText:SetPrelocalizedText(text)
         _EventManager.requestStoragePlayerData:FireServer("readTokens")
     end)

@@ -25,7 +25,6 @@ premadeSecrets = {
         reportNum = 0,
         text = "Not really a secret, but I got \"married\" and \"divorced\" when I was like five. I remember the girl's name but I don't remember that happening. But my mother keeps telling that to everyone. It's pretty funny ngl.",
     },
-    --[[
     {
         comments = {},
         id = 04,
@@ -106,6 +105,7 @@ premadeSecrets = {
         reportNum = 0,
         text = "I'm secretly a furry and a brony.",
     },
+    --[[
     {
         comments = {},
         id = 014,
