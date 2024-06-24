@@ -104,13 +104,18 @@ function self:ClientAwake()
         _EventManager.setStoragePlayerData:FireServer("readTokens", -1)
         _EventManager.requestStoragePlayerData:FireServer("readTokens")
         _EventManager.requestStoragePlayerData:FireServer("commentTokens")
-        _requestRandomSecret.choseRandomSecret(client.localPlayer)
+        _EventManager.requestSecret:FireServer(client.localPlayer)
     end
 
     -- setting event receiver
     _EventManager.requestSecret:Connect(function(secret)
         _textSecret = secret.text
         _SecretText:SetPrelocalizedText(_textSecret)
+    end)
+
+    _EventManager.setText:Connect(function(text)
+        _SecretText:SetPrelocalizedText(text)
+        _EventManager.requestStoragePlayerData:FireServer("readTokens")
     end)
     _EventManager.requestStoragePlayerData:Connect(function(propertyName, value)
         if propertyName == "readTokens" then

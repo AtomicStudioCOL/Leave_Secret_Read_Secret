@@ -51,6 +51,8 @@ function setStoragePlayerData(player : Player, property : string, value)
             idsArray[#idsArray+1] = value
             return idsArray
         end)
+    else
+        error(`Expected "secrets" || "readSecrets" || comments || readComments || readTokens || commentTokens, got {property}`)
     end
 end
 
@@ -101,13 +103,6 @@ function self:ServerAwake()
     -- client to server events --
     _eventManager.requestPlayerState:Connect(function(player : Player, property)
         _eventManager.requestPlayerState:FireClient(player, requestPlayerState(player, property), property)
-    end)
-
-    _eventManager.requestSecret:Connect(function(player : Player, i : number)
-        Storage.GetValue("Secrets", function(secretsTable)
-            local _returnedI = secretsTable[i]
-            _eventManager.requestSecret:FireClient(player, _returnedI)
-        end)    
     end)
 
     _eventManager.requestStorageArrayLenght:Connect(function(player : Player, arrayName : string)
