@@ -28,6 +28,7 @@
     font-size: 250%;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
+    white-space: normal;
     -unity-text-overflow-position: middle;
     align-self: center;
     width: 70%;

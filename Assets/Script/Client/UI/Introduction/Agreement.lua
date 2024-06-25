@@ -36,7 +36,7 @@ _AgreementText:SetPrelocalizedText(_textAgreement)
 
 _AgreementTitle:SetPrelocalizedText("AGREEMENT TEXT")
 
-_acceptLabel:SetPrelocalizedText("GO IT")
+_acceptLabel:SetPrelocalizedText("GOT IT")
 
 -- Set Class
 
@@ -57,9 +57,9 @@ end)
 function self:ClientAwake()
 
     -- Access Modular Funtion 
-    _uiManager = _UIManager:GetComponent("UIManager");
+    _uiManager = _UIManager:GetComponent(UIManager);
 
     -- Access Dependent UI  
-    _lobby  = _uiManager:GetComponent("Lobby")
+    _lobby  = _uiManager:GetComponent(Lobby)
         
 end

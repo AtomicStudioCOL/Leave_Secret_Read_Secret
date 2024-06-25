@@ -35,17 +35,18 @@ local _continueButton : UIButton = nil
 local _continueLabel : UILabel = nil
 
 -- Create Text Labels UI
-local _textWelcome = "# Hello, welcome to our wonderful space of secrets! Here you can leave your own secrets and discover the mysteries that others have shared. Prepare for an adventure full of peace and tranquility!";
+local _title = "Read this carefully before you begin"
 
-local _textLeaveSecret = "1. Enter our wonderful space of secrets. 2. Click on the ‘Leave a Secret’ button. 3. Write your message in the text box that appears. Remember, no personal data will be included, maintaining your anonymity is important to us. 4. When you’re done, click ‘Submit’. Your secret is now part of our heart!";
+local _textWelcome = "Hello! Welcome to our wonderful world of Secrets! Leave an anonymous secret for others to read, and read secrets that others have left!";
 
-local _textReadSecret = "1. Enter our wonderful space of secrets. 2. To read a secret, simply click on one of the secrets that appear on the screen. 3. If you want to leave a message of support, click on the ‘Leave a Support Message’ button.";
+local _textLeaveSecret = `All secrets you submit will be anonymous and will never be traced back to you. Gain 5 reading tokens for every secret you leave, and 1 comment token for every 3 secrets you leave. Reading tokens can be used to read other players' secrets while comment tokens can be used to leave comments on secrets. \nTo begin: \n1. Click on "Leave A Secret"\n2. Type your secret in the chat - Don't worry, others will not see what you type.\n 3.Click on "Submit" once you're done.`
+
+local _textReadSecret = `Read a Secret Column - Read Secrets and leave comments on them. Comments are not anonymous!\n1. Click on "Read a Secret"\n2. You'll see the amount of Reading Tokens and Comment Tokens you have.\n3. Click on "Read Secrets" to view a secret that other players have submitted.`
 
 -- Set text Labels UI
 
-_WelcomeTitle:SetPrelocalizedText("WELCOME")
 _PanelWelcome:SetPrelocalizedText(" ")
-
+_WelcomeTitle:SetPrelocalizedText(_title)
 _WelcomeMessage:SetPrelocalizedText(_textWelcome)
 
 _LeaveTitle:SetPrelocalizedText("LEAVE A SECRET")
@@ -54,7 +55,7 @@ _LeaveSecret:SetPrelocalizedText(_textLeaveSecret)
 _ReadTitle:SetPrelocalizedText("READ A SECRET")
 _ReadSecret:SetPrelocalizedText(_textReadSecret)
 
-_continueLabel:SetPrelocalizedText("GO IT")
+_continueLabel:SetPrelocalizedText("GOT IT")
 
 -- Set Class
 _WelcomeTitle:AddToClassList("welcomeTitle")
@@ -76,9 +77,9 @@ end)
 function self:ClientAwake()
 
     -- Access Modular Funtion 
-    _uiManager = _UIManager:GetComponent("UIManager");
+    _uiManager = _UIManager:GetComponent(UIManager);
 
     -- Access Dependent UI  
-    _agreement  = _uiManager:GetComponent("Agreement")
+    _agreement  = _uiManager:GetComponent(Agreement)
         
 end

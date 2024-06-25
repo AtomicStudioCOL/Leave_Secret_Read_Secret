@@ -45,6 +45,11 @@
 
 .welcomeTitle, .ReadTitle, .LeaveTitle {
     position: relative;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    -unity-text-overflow-position: middle;
+    align-self: center;
+    white-space: normal;
     top: 5%;
     font-size: 250%;
 }
@@ -60,29 +65,29 @@
     -unity-text-overflow-position: middle;
     align-self: center;
     white-space: normal;
-    border: 40px;
     border-width: 5px;
     border-radius: 10px;
     color: var(--color-font-2);
 }
 
 .LeaveSecret {
-    padding-top: 30%;
+    padding-top: 11%;
     top: 40%;
-    left: 5%;
-    width: 40%;
+    left: 2.5%;
+    width: 45%;
     position: absolute;
+    -unity-text-align: start-center;
+    -unity-text-overflow-position: start;
     height: 40%;
     font-size: 60%;
     border-color: var(--color-font-0);
-        border: 40px;
     border-width: 5px;
     border-radius: 15px;
-
+    font-size: 60%;
 }
 
 .LeaveTitle{
-    top: 27%;
+    top: 25%;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
     -unity-text-overflow-position: middle;
@@ -93,13 +98,12 @@
     height: 40%;
     font-size: 150%;
     white-space: normal;
-    border: 40px;
     border-width: 5px;
     border-radius: 10px;
 }
 
 .ReadTitle{
-    top: 27%;
+    top: 25%;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
     -unity-text-overflow-position: middle;
@@ -116,16 +120,17 @@
 }
 
 .ReadSecret {
-    padding-top: 30%;
+    padding-top: 11%;
     top: 40%;
-    right: 5%;
+    right: 2.5%;
     position: absolute;
-    width: 40%;
+    -unity-text-align: start-center;
+    -unity-text-overflow-position: start;
+    width: 45%;
     height: 40%;
     right: 5%;
     font-size: 60%;
     border-color: var(--color-font-0);
-    border: 40px;
     border-width: 5px;
     border-radius: 15px;
 }
@@ -137,7 +142,6 @@
     width: 70%;
     background-color: var(--color-background_3);
     border-color: var(--color-font-1);
-    border: 40px;
     border-width: 5px;
     border-radius: 20px;
     font-size: 200%;

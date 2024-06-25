@@ -85,7 +85,7 @@ function self:ClientAwake()
     _EventManager.requestStoragePlayerData:Connect(function(requestedStateKey, secretsArray)
         if requestedStateKey ~= "secrets" then return end
         local _numberOfSecrets = #secretsArray + 1
-        if _numberOfSecrets == 1 or _numberOfSecrets % 5 == 0 then
+        if _numberOfSecrets == 1 or _numberOfSecrets % 3 == 0 then
             _EventManager.setStoragePlayerData:FireServer("commentTokens", 1)
         end
     end)
