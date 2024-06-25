@@ -39,6 +39,17 @@ playerState = {}
 
 -- functions --
 
+function reportPost(typeKey : string, id)
+    Storage.UpdateValue(typeKey, function(postArray)
+        for i, post in ipairs(postArray) do
+            if post.id == id then
+                post.reportNum += 1
+            end
+        end
+        return postArray
+    end)
+end
+
 function setStoragePlayerData(player : Player, property : string, value)
     if property == "readTokens" or property == "commentTokens" then
         Storage.IncrementPlayerValue(player, property, value)
@@ -113,6 +124,10 @@ end
 
 function self:ServerAwake()
     -- client to server events --
+    _eventManager.reportPots:Connect(function(player : Player, typeKey : string, id)
+        reportPost(typeKey, id)
+    end)
+
     _eventManager.requestPlayerState:Connect(function(player : Player, property)
         _eventManager.requestPlayerState:FireClient(player, requestPlayerState(player, property), property)
     end)

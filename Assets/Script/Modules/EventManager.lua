@@ -1,6 +1,8 @@
 --!Type(Module)
 
+reportPots = Event.new("reportPost")
 requestPlayerState = Event.new("requestPlayerState")
+requestReportNum = Event.new("requestReportNum")
 requestSecret = Event.new("requestSecret")
 requestStorageArrayLenght = Event.new("requestStorageArrayLenght")
 requestStoragePlayerData = Event.new("requestStoragePlayerData")
