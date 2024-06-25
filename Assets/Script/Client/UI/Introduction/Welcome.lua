@@ -39,9 +39,9 @@ local _title = "Read this carefully before you begin"
 
 local _textWelcome = "Hello! Welcome to our wonderful world of Secrets! Leave an anonymous secret for others to read, and read secrets that others have left!";
 
-local _textLeaveSecret = `All secrets you submit will be anonymous and will never be traced back to you. Gain 5 reading tokens for every secret you leave, and 1 comment token for every 3 secrets you leave. Reading tokens can be used to read other players' secrets while comment tokens can be used to leave comments on secrets. \nTo begin: \n1. Click on "Leave A Secret"\n2. Type your secret in the chat - Don't worry, others will not see what you type.\n 3.Click on "Submit" once you're done.`
+local _textLeaveSecret =`All secrets you submit will be anonymous and will never be traced back to you. Gain 5 reading tokens for every secret you leave, and 1 comment token for every 3 secrets you leave. Reading tokens can be used to read other players' secrets while comment tokens can be used to leave comments on secrets. To begin:\n\n1. Click on "Leave A Secret"\n\n2. Type your secret in the chat - Don't worry, others will not see what you type.\n\n3.Click on "Submit" once you're done.`
 
-local _textReadSecret = `Read a Secret Column - Read Secrets and leave comments on them. Comments are not anonymous!\n1. Click on "Read a Secret"\n2. You'll see the amount of Reading Tokens and Comment Tokens you have.\n3. Click on "Read Secrets" to view a secret that other players have submitted.`
+local _textReadSecret = `Read Secrets and leave comments on them. Comments are not anonymous!\n\n1. Click on "Read a Secret"\n\n2. You'll see the amount of Reading Tokens and Comment Tokens you have.\n\n3. Click on "Read Secrets" to view a secret that other players have submitted.`
 
 -- Set text Labels UI
 

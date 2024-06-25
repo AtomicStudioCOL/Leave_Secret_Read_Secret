@@ -12,9 +12,16 @@ function choseRandomSecret(player : Player)
         local lenghtTotal = #secretsArray
         Storage.GetPlayerValue(player, "readSecrets", function(playerReadSecrets)
             Storage.GetPlayerValue(player, "secrets", function(ownSecretsArray)
-                local lenghtOwn = #ownSecretsArray
-                local lenghtRead = #playerReadSecrets
-                if lenghtTotal - lenghtOwn == lenghtRead then
+                local _reportedSecrets = {}
+                for i, secret in ipairs(secretsArray) do
+                    if secret.reportNum > 2 then
+                        _reportedSecrets[#_reportedSecrets+1] = i
+                    end
+                end
+                local _lenghtReported = #_reportedSecrets
+                local _lenghtOwn = #ownSecretsArray
+                local _lenghtRead = #playerReadSecrets
+                if lenghtTotal - _lenghtOwn - _lenghtReported == _lenghtRead then
                     _canContinue = false
                     _EventManager.setText:FireClient(player, "You have read all the secrets! Please come back some another time to get some new ones!")
                     _DataManager.setStoragePlayerData(player, "readTokens", 1)
@@ -33,10 +40,12 @@ function choseRandomSecret(player : Player)
                     if _secret.idPlayer == player.id then
                         print("chosen secret is player's secret")
                         _canContinue = false
+                    elseif _secret.reportNum > 2 then
+                        print(`chosen secret ({_secret.id}) has been reported at least three times.`)
+                        _canContinue = false
                     else
                         local _readSecret = false
                         for i, v in ipairs(playerReadSecrets) do
-                            print(`Player's read secret id is {v} and this secret's id is {_secret.id}`)
                             if v == _secret.id then
                                 print(`The player has already read this secret.`)
                                 _canContinue = false
@@ -44,14 +53,12 @@ function choseRandomSecret(player : Player)
                             end
                         end
                         if _readSecret == false then
-                            print(`The secret is unread!`)
                             _tryAgain = false
                             _canContinue = true
                         end
                     end
                 end
                 if _canContinue == false then return end
-                print("read secret will be added to player's read secrets list")
                 _DataManager.setStoragePlayerData(player, "readSecrets", _secret.id)
                 _EventManager.requestSecret:FireClient(player, _secret)
             end)

@@ -44,6 +44,11 @@ function reportPost(typeKey : string, id)
         for i, post in ipairs(postArray) do
             if post.id == id then
                 post.reportNum += 1
+                print(`{typeKey} {post.id} has {post.reportNum} report(s) now`)
+                if post.reportNum > 2 then
+                    post.hidden = true
+                    print(`{typeKey} {post.id} is hidden now`)
+                end
             end
         end
         return postArray

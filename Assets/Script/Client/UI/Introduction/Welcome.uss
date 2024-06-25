@@ -6,6 +6,7 @@
     --color-border: #ea88d0;
     --color-font-1: #ffffff;
     --color-font-2: #000000;
+    --color-font-3: #2d0b57;
     --color-font-0: rgba(0,0,0,0);
     -unity-text-align: middle-right;
     font-size: 92%;
@@ -37,10 +38,11 @@
 }
 
 .PanelMessage, .LeaveSecret, .ReadSecret {
-    padding: 5%;
+    padding: 2%;
     width:90%;
     height:25%;
     background-color: var(--color-background_2);
+    color: var(--color-font-3);
 }
 
 .welcomeTitle, .ReadTitle, .LeaveTitle {
@@ -55,7 +57,7 @@
 }
 
 .welcomeMessage {
-    top: 5%;
+    top: 0%;
     padding: 5%;
     width:95%;
     height:25%;
@@ -67,32 +69,31 @@
     white-space: normal;
     border-width: 5px;
     border-radius: 10px;
-    color: var(--color-font-2);
+    color: var(--color-font-3);
 }
 
 .LeaveSecret {
-    padding-top: 11%;
-    top: 40%;
-    left: 2.5%;
+    padding-top: 8.5%;
+    top: 37.5%;
+    left: 3%;
     width: 45%;
     position: absolute;
     -unity-text-align: start-center;
     -unity-text-overflow-position: start;
-    height: 40%;
-    font-size: 60%;
+    height: 44%;
+    font-size:67%;
     border-color: var(--color-font-0);
     border-width: 5px;
     border-radius: 15px;
-    font-size: 60%;
 }
 
 .LeaveTitle{
-    top: 25%;
+    top: 21%;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
     -unity-text-overflow-position: middle;
     align-self: left;
-    left: 5%;
+    left: 4%;
     width: 40%;
     position: absolute;
     height: 40%;
@@ -103,12 +104,12 @@
 }
 
 .ReadTitle{
-    top: 25%;
+    top: 21%;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
     -unity-text-overflow-position: middle;
     align-self: right;
-    right: 5%;
+    right: 7%;
     width: 40%;
     position: absolute;
     height: 40%;
@@ -120,16 +121,16 @@
 }
 
 .ReadSecret {
-    padding-top: 11%;
-    top: 40%;
+    padding-top: 8.5%;
+    top: 37.5%;
     right: 2.5%;
     position: absolute;
     -unity-text-align: start-center;
     -unity-text-overflow-position: start;
     width: 45%;
-    height: 40%;
-    right: 5%;
-    font-size: 60%;
+    height: 44%;
+    right: 3%;
+    font-size:67%;
     border-color: var(--color-font-0);
     border-width: 5px;
     border-radius: 15px;

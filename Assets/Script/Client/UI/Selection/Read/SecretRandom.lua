@@ -89,7 +89,7 @@ end)
 
 _reportButton:RegisterPressCallback(function() 
     _uiManager.ButtonPress(_reportButton)
-    _uiManager.DeactiveActiveGameObject(self, _reportSecret)
+    _uiManager.DeactiveActiveGameObject(nil, _reportSecret)
 end)
 
 _quitLabel:RegisterPressCallback(function()

@@ -1,9 +1,10 @@
 --!Type(UI)
 
--- UIManager
+-- Managers --
 local _UIManager = require("UIManager")
+local _EventManager = require("EventManager")
 
--- Variables for gamemanager
+-- UI Scripts --
 local _uiManager = nil;
 local _lobby = nil
 local _secretRandom = nil
@@ -45,13 +46,10 @@ _cancelLabel:SetPrelocalizedText("X")
 _ReportSecretButton:Add(_ReportSecretLabel)
 _ReportSecretLabel:SetPrelocalizedText("✓")
 
--- Set Class
-
-_PanelReportSecret:AddToClassList("Panel");
-
 -- Add text to Button
 _ReportSecretButton:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_ReportSecretButton);
+    _uiManager.ButtonPress(_ReportSecretButton)
+    _EventManager.requestPlayerState:FireServer("currentSecret")
     _uiManager.DeactiveActiveGameObject(self, _reportedFeedback)
     _uiManager.DeactiveActiveGameObject(_readPickedSecret, nil)
     _uiManager.DeactiveActiveGameObject(_secretRandom, nil)
@@ -67,10 +65,16 @@ _cancelLabel:RegisterPressCallback(function()
 end)
 
 function self:ClientAwake()
-    _uiManager = _UIManager:GetComponent("UIManager");
+    _uiManager = _UIManager:GetComponent(UIManager)
 
-    _lobby = _uiManager:GetComponent("Lobby")
-    _secretRandom = _uiManager:GetComponent("SecretRandom")
-    _readPickedSecret = _uiManager:GetComponent("ReadPickedSecret")
-    _reportedFeedback = _uiManager:GetComponent("ReprotedFeedback")
+    _lobby = _uiManager:GetComponent(Lobby)
+    _secretRandom = _uiManager:GetComponent(SecretRandom)
+    _readPickedSecret = _uiManager:GetComponent(ReadPickedSecret)
+    _reportedFeedback = _uiManager:GetComponent(ReprotedFeedback)
+
+    -- event receiver --
+    _EventManager.requestPlayerState:Connect(function(currentSecret, propertyKey)
+        if propertyKey ~= "currentSecret" then return end
+        _EventManager.reportPots:FireServer("Secrets", currentSecret.id)
+    end)
 end
