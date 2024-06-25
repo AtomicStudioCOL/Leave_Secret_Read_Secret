@@ -48,25 +48,27 @@ _ySecretsButton:Add(_ySecretsLabel);
 _rSecretsButton:Add(_rSecretsLabel);
 _quitButton:Add(_quitLabel)
 
-_ySecretsButton:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_ySecretsButton, nil);
-    _uiManager.DeactiveActiveGameObject(self, _yourSecrets);
-end)
-
-_rSecretsButton:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_rSecretsButton, nil);
-    _uiManager.DeactiveActiveGameObject(self, _readSecrets);
-end)
-
 _quitButton:RegisterPressCallback(function()
     _uiManager.ButtonPress(_quitButton, nil);
     _uiManager.DeactiveActiveGameObject(self, _lobby);
 end)
 
 function self:ClientAwake()
-    _uiManager = _UIManager:GetComponent("UIManager");
+    _uiManager = _UIManager:GetComponent(UIManager);
 
-    _lobby = _uiManager:GetComponent("Lobby")
-    _yourSecrets = _uiManager:GetComponent("YourSecrets")
-    _readSecrets = _uiManager:GetComponent("ReadSecrets")
+    _lobby = _uiManager:GetComponent(Lobby)
+    _yourSecrets = _uiManager:GetComponent(YourSecrets)
+    _readSecrets = _uiManager:GetComponent(ReadSecrets)
+
+    -- callbacks dependent of other scripts --
+    _ySecretsButton:RegisterPressCallback(function() 
+        _uiManager.ButtonPress(_ySecretsButton, nil);
+        _uiManager.DeactiveActiveGameObject(self, _yourSecrets);
+        _yourSecrets.initialize()
+    end)
+    
+    _rSecretsButton:RegisterPressCallback(function() 
+        _uiManager.ButtonPress(_rSecretsButton, nil);
+        _uiManager.DeactiveActiveGameObject(self, _readSecrets);
+    end)    
 end

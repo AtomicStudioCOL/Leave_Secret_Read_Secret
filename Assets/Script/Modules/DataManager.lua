@@ -124,6 +124,7 @@ function requestPlayerState(player : Player, property)
 end
 
 function setPlayerState(playerName, property, value)
+    playerState[playerName][property] = nil
     playerState[playerName][property] = value
 end
 
