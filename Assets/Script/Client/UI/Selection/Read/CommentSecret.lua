@@ -31,7 +31,7 @@ local _sendLabel : UILabel = nil
 
 -- Create Text Labels UI
 local _textSecret = "Here goes the secret! If you're reading this, something in the code failed! :D! I need to fix it somehow then! :D!"
-local _textInputPlaceholder = "Type your secret in the chat. Don't worry! It won't display on other player's chat or over your avatar's head. You'll see your secret here once you send it. To edit it, type the secret again."
+local _textInputPlaceholder = "Type your comment in the chat. Don't worry! It won't display on other player's chat or over your avatar's head. You'll see your secret here once you send it. To edit it, type the secret again."
 
 initialize = function() end
 

@@ -20,7 +20,7 @@
     position: relative;
 }
 
-.Panel, .LeaveSecret, .ReadSecret, .Button {
+.Panel, .LeaveSecretBox, .ReadSecretBox, .Button {
     /* position: relative; */
     height: 100%;
     width: 100%;
@@ -28,7 +28,6 @@
     -unity-text-align: middle-center;
     -unity-text-overflow-position: middle;
     align-self: center;
-    white-space: normal;
     border: 40px;
     border-width: 10px;
     border-radius: 30px;
@@ -40,8 +39,6 @@
 .PanelMessage, .LeaveSecret, .ReadSecret {
     padding: 2%;
     width:90%;
-    height:25%;
-    background-color: var(--color-background_2);
     color: var(--color-font-3);
 }
 
@@ -72,68 +69,43 @@
     color: var(--color-font-3);
 }
 
-.LeaveSecret {
-    padding-top: 8.5%;
-    top: 37.5%;
+.LeaveSecretBox, .ReadSecretBox {
+    position: absolute;
+    height: 48%;
+    width: 45%;
+    bottom: 17.5%;
+    padding: 1%;
+    background-color: var(--color-background_2);
+    border-color: var(--color-background_3);
+    border-width: 1px;
+    border-radius: 15px;
+}
+
+.LeaveSecretBox{
     left: 3%;
-    width: 45%;
-    position: absolute;
-    -unity-text-align: start-center;
-    -unity-text-overflow-position: start;
-    height: 44%;
-    font-size:67%;
-    border-color: var(--color-font-0);
-    border-width: 5px;
-    border-radius: 15px;
 }
 
-.LeaveTitle{
-    top: 21%;
-    -unity-font-style: bold;
-    -unity-text-align: middle-center;
-    -unity-text-overflow-position: middle;
-    align-self: left;
-    left: 4%;
-    width: 40%;
-    position: absolute;
-    height: 40%;
-    font-size: 150%;
-    white-space: normal;
-    border-width: 5px;
-    border-radius: 10px;
-}
-
-.ReadTitle{
-    top: 21%;
-    -unity-font-style: bold;
-    -unity-text-align: middle-center;
-    -unity-text-overflow-position: middle;
-    align-self: right;
-    right: 7%;
-    width: 40%;
-    position: absolute;
-    height: 40%;
-    font-size: 150%;
-    white-space: normal;
-    border: 40px;
-    border-width: 5px;
-    border-radius: 10px;
-}
-
-.ReadSecret {
-    padding-top: 8.5%;
-    top: 37.5%;
-    right: 2.5%;
-    position: absolute;
-    -unity-text-align: start-center;
-    -unity-text-overflow-position: start;
-    width: 45%;
-    height: 44%;
+.ReadSecretBox{
     right: 3%;
-    font-size:67%;
-    border-color: var(--color-font-0);
-    border-width: 5px;
-    border-radius: 15px;
+}
+
+.LeaveTitle, .ReadTitle {
+    top: 0%;
+    position: relative;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    -unity-text-overflow-position: middle;
+    font-size: 130%;
+}
+
+.LeaveSecret, .ReadSecret{
+    position: relative;
+    align-self: center;
+    -unity-text-align: start-center;
+    -unity-text-overflow-position: start;
+    white-space: normal;
+    font-size:71%;
+    background-color: transparent;
 }
 
 .Button {
@@ -146,7 +118,6 @@
     border-width: 5px;
     border-radius: 20px;
     font-size: 200%;
-
 }
 
 .ButtonPress{

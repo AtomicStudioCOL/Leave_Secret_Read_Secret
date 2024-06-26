@@ -50,20 +50,9 @@ function selectSecret(currentSecret)
 end
 
 _quitButton:RegisterPressCallback(function()
-    _uiManager.ButtonPress(_quitButton);
+    _uiManager.ButtonPress(_quitButton)
     _uiManager.DeactiveActiveGameObject(self, _secretsInventory)
 end)
-
--- instantiate secrets buttons function --
-local function instantiateSecretButton(i, secret)
-    print(`{secret.id} secret was sent to instantiateSecretButton function`)
-    secretButton = UIButton.new()
-    secretButton:AddToClassList("secretB")
-    _secretsScroll:Add(secretButton)
-    secretButtonLabel = UILabel.new()
-    secretButtonLabel:SetPrelocalizedText(secret.text)
-    secretButton:Add(secretButtonLabel)
-end
 
 function self:ClientAwake()
     _uiManager = _UIManager:GetComponent(UIManager)
@@ -75,6 +64,25 @@ function self:ClientAwake()
     initialize = function()
         _EventManager.requestOwnSecrets:FireServer()
         _secretsScroll:Clear()
+    end
+
+    -- instantiate secrets buttons function --
+    local function instantiateSecretButton(i, secret)
+        print(`{secret.id} secret was sent to instantiateSecretButton function`)
+        secretButton = UIButton.new()
+        secretButton:AddToClassList("secretB")
+        _secretsScroll:Add(secretButton)
+        secretButtonLabel = UILabel.new()
+        secretButtonLabel:AddToClassList("secretL")
+        secretButtonLabel:SetPrelocalizedText(secret.text)
+        secretButton:Add(secretButtonLabel)
+
+        secretButton:RegisterPressCallback(function()
+            _uiManager.ButtonPress(secretButton)
+            _EventManager.setPlayerState:FireServer("currentSecret", secret)
+            _uiManager.DeactiveActiveGameObject(self, _pickedSecret)
+            _pickedSecret.initialize()
+        end)
     end
 
     -- event receiver --

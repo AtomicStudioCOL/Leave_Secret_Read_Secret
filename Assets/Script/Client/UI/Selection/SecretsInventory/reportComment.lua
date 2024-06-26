@@ -1,17 +1,25 @@
 --!Type(UI)
 
--- UIManager
+-- Managers --
 local _UIManager = require("UIManager")
+local _EventManager = require("EventManager")
 
--- Variables for gamemanager
-local _uiManager = nil;
+-- UI scripts --
+local _uiManager = nil
 local _commentReportedFeedback = nil
+local _yourPickedSecret = nil
 
 -- buttons
 --!Bind
 local _ReportCommentButton : UIButton = nil
 --!Bind
 local _cancelButton :UIButton = nil
+
+-- secret id --
+local _commentToReportId = nil
+
+-- functions to be set on client awake --
+initialize = function() end
 
 -- Select Labels UI
 --!Bind
@@ -42,22 +50,42 @@ _ReportCommentLabel:SetPrelocalizedText("✓")
 
 -- Add text to Button
 _ReportCommentButton:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_ReportCommentButton, nil);
-    _uiManager.DeactiveActiveGameObject(self, _commentReportedFeedback);
-    
+    _uiManager.ButtonPress(_ReportCommentButton, nil)
+    _uiManager.DeactiveActiveGameObject(self, _commentReportedFeedback)
+    _EventManager.reportPots:FireServer("Comments", _commentToReportId)
+
     -- automatically disabling feedback
     Timer.After(3, function()
-        _uiManager.DeactiveActiveGameObject(_commentReportedFeedback, nil);
+        _uiManager.DeactiveActiveGameObject(_commentReportedFeedback, nil)
     end)
 end)
 
 _cancelLabel:RegisterPressCallback(function()
-    _uiManager.ButtonPress(_cancelLabel, nil);
-    _uiManager.DeactiveActiveGameObject(self, nil);
+    _commentToReportId = nil
+    _uiManager.ButtonPress(_cancelLabel, nil)
+    _uiManager.DeactiveActiveGameObject(self, nil)
 end)
 
 function self:ClientAwake()
-    _uiManager = _UIManager:GetComponent("UIManager");
+    _uiManager = _UIManager:GetComponent(UIManager)
+    _commentReportedFeedback = _uiManager:GetComponent(CommentReportedFeedback)
+    _yourPickedSecret = _uiManager:GetComponent(yourPickedSecret)
 
-    _commentReportedFeedback = _uiManager:GetComponent("CommentReportedFeedback")
+    -- functions to be called from another scripts --
+    initialize = function(comment)
+        _commentToReportId = comment.id
+        print(`comment to report has {_commentToReportId} id`)
+    end
+
+    _ReportCommentButton:RegisterPressCallback(function() 
+        _uiManager.ButtonPress(_ReportCommentButton, nil)
+        _uiManager.DeactiveActiveGameObject(self, _commentReportedFeedback)
+        _EventManager.reportPots:FireServer("Comments", _commentToReportId)
+        _yourPickedSecret.initialize()
+        
+        -- automatically disabling feedback
+        Timer.After(3, function()
+            _uiManager.DeactiveActiveGameObject(_commentReportedFeedback, nil)
+        end)
+    end)
 end

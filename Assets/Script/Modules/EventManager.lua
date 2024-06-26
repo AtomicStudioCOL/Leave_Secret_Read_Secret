@@ -17,4 +17,6 @@ setStoragePlayerData = Event.new("setStoragePlayerData")
 setText = Event.new("setText")
 
 -- Random Secret Script --
+requestReadSecrets = Event.new("requestReadSecrets")
 requestSecret = Event.new("requestSecret")
+requestSecretsComments = Event.new("requestSecretsComments")

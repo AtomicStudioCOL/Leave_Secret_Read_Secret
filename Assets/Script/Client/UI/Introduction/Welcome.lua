@@ -26,6 +26,10 @@ local _LeaveSecret : UILabel = nil
 local _ReadTitle : UILabel = nil
 --!Bind
 local _ReadSecret : UILabel = nil
+--!Bind
+local _LeaveSecretBox : UILabel = nil
+--!Bind
+local _ReadSecretBox : UILabel = nil
 
 -- Button
 --!Bind
@@ -46,6 +50,8 @@ local _textReadSecret = `Read Secrets and leave comments on them. Comments are n
 -- Set text Labels UI
 
 _PanelWelcome:SetPrelocalizedText(" ")
+_LeaveSecretBox:SetPrelocalizedText("")
+_ReadSecretBox:SetPrelocalizedText("")
 _WelcomeTitle:SetPrelocalizedText(_title)
 _WelcomeMessage:SetPrelocalizedText(_textWelcome)
 

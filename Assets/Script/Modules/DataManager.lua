@@ -40,6 +40,7 @@ playerState = {}
 -- functions --
 
 function reportPost(typeKey : string, id)
+    print(`post of class {typeKey} with {id} id entered report function`)
     Storage.UpdateValue(typeKey, function(postArray)
         for i, post in ipairs(postArray) do
             if post.id == id then

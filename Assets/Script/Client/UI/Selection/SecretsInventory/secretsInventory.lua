@@ -70,5 +70,6 @@ function self:ClientAwake()
     _rSecretsButton:RegisterPressCallback(function() 
         _uiManager.ButtonPress(_rSecretsButton, nil);
         _uiManager.DeactiveActiveGameObject(self, _readSecrets);
+        _readSecrets.initialize()
     end)    
 end
