@@ -4,11 +4,14 @@
 local _UIManager = require("UIManager")
 local _EventManager = require("EventManager")
 
--- Variables for gamemanager
-local _uiManager = nil;
+-- UI scripts --
+local _uiManager = nil
 local _lobby = nil
 local _leaveSecretUi = nil
 local _feedbackSent = nil
+
+-- bools --
+local canSend : boolean
 
 -- buttons
 --!Bind
@@ -33,11 +36,8 @@ local _cancelLabel : UILabel = nil
 -- Set text Labels UI
 
 _Panel:SetPrelocalizedText(" ")
-
 _Container:SetPrelocalizedText(" ")
-
 _paragraph:SetPrelocalizedText("You won't be able to edit this secret in the future.")
-
 _title:SetPrelocalizedText("Send?")
 
 _cancelButton:Add(_cancelLabel)
@@ -47,19 +47,20 @@ _sendLabel:SetPrelocalizedText("✓")
 
 -- Add text to Button
 _sendButton:RegisterPressCallback(function()
+    canSend = true
     _uiManager.ButtonPress(_sendButton)
     _EventManager.requestPlayerState:FireServer("currentMessage")
     _EventManager.setStoragePlayerData:FireServer("readTokens", 5)
 end)
 
 _cancelLabel:RegisterPressCallback(function()
-    _uiManager.ButtonPress(_cancelButton);
-    _uiManager.DeactiveActiveGameObject(self);
+    _uiManager.ButtonPress(_cancelButton)
+    _uiManager.DeactiveActiveGameObject(self)
 end)
 
 function self:ClientAwake()
     -- Access Modular Funtion 
-    _uiManager = _UIManager:GetComponent(UIManager);
+    _uiManager = _UIManager:GetComponent(UIManager)
 
     -- Access Dependent UI
     _lobby = _uiManager:GetComponent(Lobby)
@@ -69,6 +70,8 @@ function self:ClientAwake()
     -- event receiver
     _EventManager.requestPlayerState:Connect(function(currentMessage, requestedState)
         if requestedState ~= "currentMessage" then return end
+        if canSend == false or canSend == nil then return end
+        canSend = false
         _uiManager.DeactiveActiveGameObject(self, _feedbackSent)
         _EventManager.newSecret:FireServer(currentMessage)
         _EventManager.requestStoragePlayerData:FireServer("secrets")
@@ -82,6 +85,7 @@ function self:ClientAwake()
         end)
     end)
 
+    -- adds one comment token every three secrets sent
     _EventManager.requestStoragePlayerData:Connect(function(requestedStateKey, secretsArray)
         if requestedStateKey ~= "secrets" then return end
         local _numberOfSecrets = #secretsArray + 1

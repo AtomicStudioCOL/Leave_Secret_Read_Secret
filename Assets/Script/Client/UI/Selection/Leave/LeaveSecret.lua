@@ -13,6 +13,9 @@ local _secretSendConf = nil
 local _chatManager = nil
 local _menssageText = nil
 
+-- bools --
+local _activateConf : boolean
+
 -- buttons
 --!Bind
 local _quitButton :UIButton = nil
@@ -51,6 +54,7 @@ _quitButton:Add(_quitLabel)
 _sendButton:RegisterPressCallback(function() 
     -- Requests if there is any current message. Callback is in the event handler.
     _uiManager.ButtonPress(_sendButton)
+    _activateConf = true
     _EventManager.requestPlayerState:FireServer("currentMessage")
 end)
 
@@ -96,7 +100,8 @@ function self:ClientAwake()
                     _textInput:SetPrelocalizedText(textInputPlaceholder)                
                 end
             end)
-        else
+        elseif _activateConf == true then
+            _activateConf = false
             _uiManager.DeactiveActiveGameObject(nil, _secretSendConf)
         end
     end) 

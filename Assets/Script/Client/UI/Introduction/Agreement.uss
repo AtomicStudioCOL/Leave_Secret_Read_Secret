@@ -36,14 +36,13 @@
     white-space: normal;
     -unity-text-overflow-position: middle;
     align-self: center;
-    width: 70%;
+    width: 72.5%;
     height: 10%;
     white-space: normal;
 }
 
 .AgreementText, .Button {
     padding: 5%;
-    padding-top: 7.5%;
     -unity-font-style: bold;
     -unity-text-align: start-center;
     -unity-text-overflow-position: middle;
@@ -51,6 +50,13 @@
     white-space: normal;
     color: var(--color-font-3);
     font-size: 94%;
+}
+
+.AgreementText{
+    padding: 2%;
+    padding-top: 7.5%;
+    min-height: 500px;
+    bottom: 0;
 }
 
 .Button {

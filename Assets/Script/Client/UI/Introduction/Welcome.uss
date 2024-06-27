@@ -28,12 +28,17 @@
     -unity-text-align: middle-center;
     -unity-text-overflow-position: middle;
     align-self: center;
-    border: 40px;
     border-width: 10px;
     border-radius: 30px;
     background-color: var(--color-background_1);
     border-color: var(--color-border);
     color: var(--color-font-1);
+    overflow: scroll;
+}
+
+.PanelMessage{
+    min-height: 500px;
+    bottom: 0;
 }
 
 .PanelMessage, .LeaveSecret, .ReadSecret {
@@ -104,8 +109,11 @@
     -unity-text-align: start-center;
     -unity-text-overflow-position: start;
     white-space: normal;
+    width: 90%;
+    height: 90%;
     font-size:71%;
     background-color: transparent;
+    text-overflow: ellipsis;
 }
 
 .Button {

@@ -5,7 +5,7 @@ local _UIManager = require("UIManager")
 local _EventManager = require("EventManager")
 
 -- UIs --
-local _uiManager = nil;
+local _uiManager = nil
 local _leaveSecretUi = nil
 local _secretsInventoryUi = nil
 local _readSecretUi = nil
@@ -43,22 +43,22 @@ _LeaveSecrectLabel:SetPrelocalizedText("LEAVE A SECRET")
 _ReadSecrectLabel:SetPrelocalizedText("READ A SECRET")
 
 -- Add text to Button
-_YourSecrectButton:Add(_YourSecrectLabel);
-_ReadSecrectButton:Add(_ReadSecrectLabel);
-_LeaveSecrectButton:Add(_LeaveSecrectLabel);
+_YourSecrectButton:Add(_YourSecrectLabel)
+_ReadSecrectButton:Add(_ReadSecrectLabel)
+_LeaveSecrectButton:Add(_LeaveSecrectLabel)
 
 _LeaveSecrectLabel:AddToClassList("textlabel")
 _YourSecrectLabel:AddToClassList("textlabel")
 _ReadSecrectLabel:AddToClassList("textlabel")
 
 _YourSecrectButton:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_YourSecrectButton);
-    _uiManager.DeactiveActiveGameObject(self, _secretsInventoryUi);
+    _uiManager.ButtonPress(_YourSecrectButton)
+    _uiManager.DeactiveActiveGameObject(self, _secretsInventoryUi)
 end)
 
 _LeaveSecrectButton:RegisterPressCallback(function() 
-    _uiManager.ButtonPress(_LeaveSecrectButton);
-    _uiManager.DeactiveActiveGameObject(self, _leaveSecretUi);
+    _uiManager.ButtonPress(_LeaveSecrectButton)
+    _uiManager.DeactiveActiveGameObject(self, _leaveSecretUi)
     _leaveSecretUi.initialize()
     _EventManager.setChat:FireServer("Secret")
     _EventManager.setPlayerState:FireServer("secretChat", true)
@@ -68,7 +68,7 @@ end)
 function self:ClientAwake()
     
     -- Access Modular Funtion 
-    _uiManager = _UIManager:GetComponent(UIManager);
+    _uiManager = _UIManager:GetComponent(UIManager)
     
     -- Access Dependent UI
     _leaveSecretUi = _uiManager:GetComponent(LeaveSecret)
@@ -77,8 +77,8 @@ function self:ClientAwake()
     
     -- callback --
     _ReadSecrectButton:RegisterPressCallback(function()
-        _uiManager.ButtonPress(_ReadSecrectButton);
-        _uiManager.DeactiveActiveGameObject(self, _readSecretUi);
+        _uiManager.ButtonPress(_ReadSecrectButton)
+        _uiManager.DeactiveActiveGameObject(self, _readSecretUi)
         _readSecretUi.initialize()
     end)
 end

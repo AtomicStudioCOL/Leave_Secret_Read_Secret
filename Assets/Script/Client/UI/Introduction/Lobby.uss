@@ -40,6 +40,7 @@
     border: 40px;
     border-width: 5px;
     border-radius: 25px;
+    min-height: 70px;
     background-color: var(--color_pink);
     border-color: var(--color_white);
     color: var(--color_white);

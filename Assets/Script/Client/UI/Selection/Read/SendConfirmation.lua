@@ -10,8 +10,11 @@ local _secretRandom = nil
 local _commentSecret = nil
 local _sentFeedback = nil
 
--- variables for strings --
+-- strings --
 local _currentMessage
+
+-- bools --
+local _canSend
 
 -- buttons
 --!Bind
@@ -48,6 +51,7 @@ _sendButton:Add(_sendLabel)
 _sendButton:RegisterPressCallback(function()
     _uiManager.ButtonPress(_sendButton)
     _EventManager.requestPlayerState:FireServer("currentMessage")
+    _canSend = true
     _EventManager.setStoragePlayerData:FireServer("commentTokens", -1)
 end)
 
@@ -66,7 +70,8 @@ function self:ClientAwake()
 
     -- event receiver
     _EventManager.requestPlayerState:Connect(function(requestedValue, requestedStateKey)
-        if requestedStateKey == "currentMessage" then
+        if requestedStateKey == "currentMessage" and _canSend == true then
+            _canSend = false
             _secretRandom.refreshTokens()
             _currentMessage = requestedValue
             _uiManager.DeactiveActiveGameObject(self, _sentFeedback)

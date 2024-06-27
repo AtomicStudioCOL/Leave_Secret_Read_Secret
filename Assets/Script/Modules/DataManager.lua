@@ -92,7 +92,7 @@ function newComment(player : Player, text, secretId)
         _newComment["playerName"] = player.name
         _newComment["reportNum"] = 0
         _newComment["secret"] = secretId
-        _newComment["text"] = text
+        _newComment["text"] = `{player.name}: {text}`
         commentsArray[#commentsArray + 1] = _newComment
         setCommentToSecret(secretId, _newComment.id)
         setStoragePlayerData(player, "comments", _newComment.id)
@@ -108,7 +108,7 @@ function newSecret(player : Player, _text : string)
         _newSecret["idPlayer"] = player.id
         _newSecret["hidden"] = false
         _newSecret["reportNum"] = 0
-        _newSecret["text"] = _text
+        _newSecret["text"] = `{_text}`
         secretsArray[#secretsArray + 1] = _newSecret
         setStoragePlayerData(player, "secrets", _newSecret.id)
         return secretsArray

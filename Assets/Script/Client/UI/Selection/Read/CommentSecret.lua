@@ -9,6 +9,9 @@ local _uiManager = nil;
 local _secretRandom = nil
 local _sendCommentConfirmation = nil
 
+-- bools --
+local _activateConf : boolean
+
 -- buttons
 --!Bind
 local _quitButton :UIButton = nil
@@ -72,8 +75,6 @@ function self:ClientAwake()
                         _textInput:SetPrelocalizedText(_textInputPlaceholder)                
                     end
                 end)
-            else
-                _uiManager.DeactiveActiveGameObject(nil, _sendCommentConfirmation)
             end
         elseif requestedStateKey == "currentSecret" then
             _textSecret = requestedValue.text
@@ -83,7 +84,6 @@ function self:ClientAwake()
 
     -- functions --
     initialize = function()
-        print("initializing comment secret")
         _Container:SetPrelocalizedText(" ")
         _EventManager.requestPlayerState:FireServer("currentSecret")
         _title:SetPrelocalizedText("You're commenting the following secret:")

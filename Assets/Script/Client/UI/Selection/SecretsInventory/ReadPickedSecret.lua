@@ -18,7 +18,7 @@ local _reportButton : UIButton = nil
 
 -- scroll --
 --!Bind
-local _commentsScroll
+local _commentsScroll : UIView = nil
 
 -- Select Labels UI
 --!Bind
@@ -89,41 +89,42 @@ function self:ClientAwake()
 
     -- instantiate secrets buttons function --
     local function instantiateComments(i, comment)
-        print(`{comment.id} secret was sent to instantiatereportCommentB function`)
         commentLabel = UILabel.new()
         reportCommentB = UIButton.new()
-        commentLabel:AddToClassList("commentL")
-        reportCommentB:AddToClassList("secretB")
-        _commentsScroll:Add(commentLabel)
         commentLabel:Add(reportCommentB)
         commentLabel:SetPrelocalizedText(comment.text)
+        commentLabel:AddToClassList("commentL")
+        reportCommentB:AddToClassList("reportB")
+        print(`{_commentsScroll}`)
+        _commentsScroll:Add(commentLabel)
 
         reportCommentB:RegisterPressCallback(function()
-            _uiManager.ButtonPress(reportComment)
-            _EventManager.setPlayerState:FireServer("currentSecret", comment)
+            _uiManager.ButtonPress(reportCommentB)
             _uiManager.DeactiveActiveGameObject(nil, _reportComment)
+            _reportComment.initialize(comment)
         end)
     end
 
     -- event receiver --
     _EventManager.requestPlayerState:Connect(function(currentSecret, requestedStateKey)
         if requestedStateKey ~= "currentSecret" then return end
+        _EventManager.requestSecretsComments:FireServer(currentSecret.id)
         _textSecret = currentSecret.text
         _paragraph:SetPrelocalizedText(_textSecret)
-        
-        _EventManager.requestSecretsComments:FireServer(currentSecret.id)
     end)
 
     _EventManager.requestSecretsComments:Connect(function(commentsArray)
         table.clear(_commentsArray)
+        _commentsScroll:Clear()
         if #commentsArray < 1 then
             _scrollContainer:SetPrelocalizedText("No comments yet!")
         else
             _scrollContainer:SetPrelocalizedText("")
         end
-        for i, secret in ipairs(commentsArray) do
-            commentsArray[i] = secret
-            instantiateComments(i, commentLabel)
+        for i, comment in ipairs(commentsArray) do
+            _commentsArray[i] = comment
+            instantiateComments(i, comment)
         end
+        print(`comments received: {#_commentsArray}`)
     end)
 end

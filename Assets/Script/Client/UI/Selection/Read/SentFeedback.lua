@@ -17,5 +17,5 @@ _Panel:SetPrelocalizedText(" ")
 _text:SetPrelocalizedText("Comment sent!")
 
 function self:ClientAwake()
-    _uiManager = _UIManager:GetComponent("UIManager");
+    _uiManager = _UIManager:GetComponent(UIManager);
 end
