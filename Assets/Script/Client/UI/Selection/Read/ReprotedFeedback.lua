@@ -17,5 +17,5 @@ _PanelReportSecret:SetPrelocalizedText(" ")
 _reportedFeedback:SetPrelocalizedText("Secret reported for moderation")
 
 function self:ClientAwake()
-    _uiManager = _UIManager:GetComponent("UIManager");
+    _uiManager = _UIManager:GetComponent(UIManager);
 end

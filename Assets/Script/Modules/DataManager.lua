@@ -5,19 +5,19 @@
 secrets                                 array
 secret                                  dictionary
     secret.comments                     array           id's of the comments
-	secret.id                           number          toNumber(`{player.id}`..`{#secrets}`)
-	secret.idPlayer                     number          for moderation and avoiding taking your own secrets
+	secret.id                           string          toNumber(`{player.user.id}`..`{#secrets}`)
+	secret.idPlayer                     string          for moderation and avoiding taking your own secrets
 	secret.hidden                       bool            will turn to true if it has been reported x times
 	secret.reportNum                    number          to know how many times has a secret been reported
 	secret.text                         string
 
 comments                                array
 comment                                 dictionary
-	comment.id                          number          toNumber(`{player.id}`..`{#comments}`)
+	comment.id                          string          toNumber(`{player.user.id}`..`{#comments}`)
 	comment.hidden                      bool            will turn to true if it has been reported x times
     comment.playerName                  string
 	comment.reportNum                   number          to know how many times has a comment been reported
-    comment.secret                      number          id of the secret being commented
+    comment.secret                      string          id of the secret being commented
 	comment.text                        string
 
 playerData                              dictionary      NOTE: managed with Storage's player functions.
@@ -60,8 +60,8 @@ function setStoragePlayerData(player : Player, property : string, value)
     if property == "readTokens" or property == "commentTokens" then
         Storage.IncrementPlayerValue(player, property, value)
     elseif property == "secrets" or property == "readSecrets" or property == "comments" or property == "readComments"  then
-        if type(value) ~= "number" then
-            error(`Expected a number to set {property} new item's id, got {type(value)}.`)
+        if type(value) ~= "string" then
+            error(`Expected a string to set {property} new item's id, got {type(value)}.`)
             return
         end
         Storage.UpdatePlayerValue(player, property, function(idsArray)
@@ -87,7 +87,7 @@ end
 function newComment(player : Player, text, secretId)
     Storage.UpdateValue("Comments", function(commentsArray)
         local _newComment = {}
-        _newComment["id"] = tonumber(`{player.id}{#commentsArray + 1}`)
+        _newComment["id"] = `{player.user.id}{#commentsArray + 1}`
         _newComment["hidden"] = false
         _newComment["playerName"] = player.name
         _newComment["reportNum"] = 0
@@ -104,8 +104,8 @@ function newSecret(player : Player, _text : string)
     Storage.UpdateValue("Secrets", function(secretsArray)
         local _newSecret = {}
         _newSecret["comments"] = {}
-        _newSecret["id"] =  tonumber(`{player.id}{#secretsArray + 1}`)
-        _newSecret["idPlayer"] = player.id
+        _newSecret["id"] =  `{player.user.id}{#secretsArray + 1}`
+        _newSecret["idPlayer"] = player.user.id
         _newSecret["hidden"] = false
         _newSecret["reportNum"] = 0
         _newSecret["text"] = `{_text}`
@@ -176,6 +176,7 @@ function self:ServerAwake()
     end)
 
     _eventManager.setText:Connect(function(player : Player, target : string)
+        print(`Set text recieved. Player's current message is: {playerState[player.name].currentMessage}. Firing to {player.name}'s client.`)
         _eventManager.setText:FireClient(player, playerState[player.name].currentMessage, target)
     end)
 

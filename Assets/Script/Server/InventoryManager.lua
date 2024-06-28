@@ -8,7 +8,7 @@ function requestOwnSecrets(player : Player)
     Storage.GetValue("Secrets", function(secretsArray)
         local _ownSecrets = {}
         for i, secret in ipairs(secretsArray) do
-            if secret.idPlayer == player.id and secret.hidden == false then
+            if secret.idPlayer == player.user.id and secret.hidden == false then
                 _ownSecrets[#_ownSecrets+1] = secret
             end
         end
@@ -24,7 +24,7 @@ function requestReadSecrets(player : Player)
             for i, readId in ipairs(readSecrets) do
                 local _found = false
                 for ii, secret in ipairs(secretsArray) do
-                    if secret.id == readId and secret.hidden == false then
+                    if `{secret.id}` == readId and secret.hidden == false then
                         _readSecrets[i] = secret
                         _found = true
                     end

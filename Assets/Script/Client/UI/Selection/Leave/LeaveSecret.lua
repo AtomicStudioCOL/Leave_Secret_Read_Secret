@@ -36,7 +36,7 @@ local _quitLabel : UILabel = nil
 --!Bind
 local _sendLabel : UILabel = nil
 
-local textInputPlaceholder = "Type your secret in the chat. Don't worry! It won't display on other player's chat or over your avatar's head. You'll see your secret here once you send it. To edit it, type the secret again."
+local textInputPlaceholder = "Type your secret in the chat. Don't worry! It won't display on other player's chat or over your avatar's head. You'll see your secret here once you send it. To edit it, type the secret again. If your secret is not getting registered, reboot the game."
 
 -- Set text Labels UI
 initialize = function() end
@@ -87,6 +87,7 @@ function self:ClientAwake()
 
     -- events --
     _EventManager.setText:Connect(function(newText)
+        print(`text {newText} recived on {client.localPlayer.name}'s client.`)
         setSecretText(newText)
     end)
 

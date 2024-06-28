@@ -59,7 +59,7 @@ function choseRandomSecret(player : Player)
                     end
                 end
                 if _canContinue == false then return end
-                _DataManager.setStoragePlayerData(player, "readSecrets", _secret.id)
+                _DataManager.setStoragePlayerData(player, "readSecrets", `{_secret.id}`)
                 _EventManager.requestSecret:FireClient(player, _secret)
             end)
         end)

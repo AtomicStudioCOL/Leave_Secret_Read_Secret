@@ -67,6 +67,9 @@ server.PlayerConnected:Connect(function(player : Player)
         chats[player.name] = Chat:CreateChannel(`{player.name}'s secret chat.`, true, false)
         chats[player.name] = Chat:CreateChannel(`{player.name}'s comment chat.`, true, false)
 
+        -- sets player to general channel --
+        setGeneralChat(player)
+
         -- Register player in data manager for current session
         _DataManager.playerState[player.name] = {}
 
