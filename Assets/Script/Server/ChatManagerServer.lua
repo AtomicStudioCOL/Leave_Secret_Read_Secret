@@ -11,6 +11,7 @@ chats = {}
 function setSecretChat(player : Player)
     for k, channelContent in pairs(Chat.allChannels) do
         if channelContent.name == `{player.name}'s secret chat.` then
+            print(`{player.name} has been added to {channelContent.name} channel`)
             Chat:AddPlayerToChannel(channelContent, player)
         else
             Chat:RemovePlayerFromChannel(channelContent, player)
@@ -22,6 +23,7 @@ end
 function setCommentChat(player : Player)
     for k, channelContent in pairs(Chat.allChannels) do
         if channelContent.name == `{player.name}'s comment chat.` then
+            print(`{player.name} has been added to {channelContent.name} channel`)
             Chat:AddPlayerToChannel(channelContent, player)
         else
             Chat:RemovePlayerFromChannel(channelContent, player)
@@ -33,6 +35,7 @@ end
 function setGeneralChat(player : Player)
     for k, channelContent in pairs(Chat.allChannels) do
         if channelContent.name == `General` then
+            print(`{player.name} has been added to {channelContent.name} channel`)
             Chat:AddPlayerToChannel(channelContent, player)
         else
             Chat:RemovePlayerFromChannel(channelContent, player)
@@ -40,19 +43,23 @@ function setGeneralChat(player : Player)
     end
 end
 
+function self:ServerAwake()
+    -- creting general chat --
+    Chat:CreateChannel("General", true, false)
 
--- event receivers --
-_EventManager.setChat:Connect(function(player : Player, chatToSet : string)
-    if chatToSet == "Secret" then
-        setSecretChat(player)
-    elseif chatToSet == "Comment" then
-        setCommentChat(player)
-    elseif chatToSet == "General" then
-        setGeneralChat(player)
-    else
-        error(`Chat to set not found. Expected 'Secret' ||'Comment' || 'General', got {chatToSet}}`)
-    end
-end)
+    -- event receivers --
+    _EventManager.setChat:Connect(function(player : Player, chatToSet : string)
+        if chatToSet == "Secret" then
+            setSecretChat(player)
+        elseif chatToSet == "Comment" then
+            setCommentChat(player)
+        elseif chatToSet == "General" then
+            setGeneralChat(player)
+        else
+            error(`Chat to set not found. Expected 'Secret' ||'Comment' || 'General', got {chatToSet}}`)
+        end
+    end)
+end
 
 server.PlayerConnected:Connect(function(player : Player)
     player.CharacterChanged:Connect(function()

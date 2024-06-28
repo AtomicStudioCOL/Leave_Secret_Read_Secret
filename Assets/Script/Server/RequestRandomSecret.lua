@@ -32,7 +32,7 @@ function choseRandomSecret(player : Player)
                 local _secret
                 local _attempts = 0
                 local _tryAgain = true
-                while _tryAgain == true and _attempts < 24 do
+                while _tryAgain == true and _attempts < 100 do
                     _attempts += 1
                     _randomNum = math.random(1, lenghtTotal)
                     math.randomseed(_randomNum + _attempts)

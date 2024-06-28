@@ -15,6 +15,7 @@ local _currentMessage
 
 -- bools --
 local _canSend
+local _canNewComment
 
 -- buttons
 --!Bind
@@ -75,6 +76,7 @@ function self:ClientAwake()
             _secretRandom.refreshTokens()
             _currentMessage = requestedValue
             _uiManager.DeactiveActiveGameObject(self, _sentFeedback)
+            _canNewComment = true
             _EventManager.requestPlayerState:FireServer("currentSecret")
 
             -- automatically disabling feedback ui
@@ -84,7 +86,8 @@ function self:ClientAwake()
                 _uiManager.DeactiveActiveGameObject(_commentSecret, _secretRandom)
                 _EventManager.setChat:FireServer("General")
             end)
-        elseif requestedStateKey == "currentSecret" then
+        elseif requestedStateKey == "currentSecret" and _canNewComment == true then
+            _canNewComment = false
             _EventManager.newComment:FireServer(_currentMessage, requestedValue.id)
         end
     end)

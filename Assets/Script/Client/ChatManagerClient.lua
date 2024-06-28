@@ -16,7 +16,9 @@ Chat.TextMessageReceivedHandler:Connect(function(channel, player, message)
     end
     --]]
 
-    Chat:DisplayTextMessage(channel, player, message)
+    if channel.name == "General" then
+        Chat:DisplayTextMessage(channel, player, message)
+    end
 
     _EventManager.requestPlayerState:FireServer("secretChat")
     _EventManager.requestPlayerState:Connect(function(secretChat, requestedStateKey)

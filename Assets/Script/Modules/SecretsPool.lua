@@ -1,6 +1,6 @@
 --!Type(Module)
 
-local testId = 1
+local testId = 0
 
 premadeSecrets = {
     {
