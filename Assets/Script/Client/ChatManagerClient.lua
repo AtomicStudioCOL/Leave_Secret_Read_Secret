@@ -4,20 +4,9 @@
 local _EventManager = require("EventManager")
 local _DataManager = require("DataManager")
 
--- variables --
-local _localPlayer = client.localPlayer
-
 -- recive text
 function self:ClientAwake()
     Chat.TextMessageReceivedHandler:Connect(function(channel, player, message)
-        --[[ debugging
-        if channel.name == `{_localPlayer.name}'s secret chat.` then
-            print("Secret channel active")
-        else
-            print("general channel active")
-        end
-        --]]
-
         if channel.name == "General" then
             Chat:DisplayTextMessage(channel, player, message)
         end
