@@ -13,7 +13,7 @@ function self:ClientAwake()
         if channel.name == "General" then
             Chat:DisplayTextMessage(channel, player, message)
         else
-            Chat:DisplayTextMessage(channel, nil, nil)
+            Chat:DisplayTextMessage(channel, player, message)
             requireChatState:InvokeServer(client.localPlayer, function(chatStates)
                 if chatStates["secretChat"] == true then
                     _EventManager.setPlayerState:FireServer("currentMessage", message)
@@ -95,18 +95,18 @@ function self:ServerAwake()
 
     server.PlayerConnected:Connect(function(player : Player)
         player.CharacterChanged:Connect(function()
+            -- sets player to general channel --
+            setGeneralChat(player)
+
             -- Create secret channel for player for current session
             chats[player.name] = Chat:CreateChannel(`{player.name}'s secret chat.`, true, false)
             chats[player.name] = Chat:CreateChannel(`{player.name}'s comment chat.`, true, false)
-
-            -- sets player to general channel --
-            setGeneralChat(player)
 
             -- Register player in data manager for current session
             _DataManager.playerState[player.name] = {}
 
             -- setting default player's data for current session
-            _DataManager.setPlayerState(player.name, "secretChat", false)
+            _DataManager.setPlayerState(player.name, "secretChat", true)
             _DataManager.setPlayerState(player.name, "commentChat", false)
             _DataManager.setPlayerState(player.name, "currentMessage", "")
 

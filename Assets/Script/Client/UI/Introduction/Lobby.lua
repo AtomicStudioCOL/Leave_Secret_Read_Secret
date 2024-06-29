@@ -60,8 +60,8 @@ _LeaveSecrectButton:RegisterPressCallback(function()
     _uiManager.ButtonPress(_LeaveSecrectButton)
     _uiManager.DeactiveActiveGameObject(self, _leaveSecretUi)
     _leaveSecretUi.initialize()
-    _EventManager.setChat:FireServer("Secret")
     _EventManager.setPlayerState:FireServer("secretChat", true)
+    _EventManager.setChat:FireServer("Secret")
 end)
 
 
