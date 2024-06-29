@@ -7,6 +7,7 @@ local _UIManager : GameObject = nil;
 
 -- Variables for gamemanager
 local _uiManager = nil;
+local _EventManager = require("EventManager");
 local _agreement = nil;
 
 -- Select Labels UI
@@ -86,6 +87,12 @@ function self:ClientAwake()
     _uiManager = _UIManager:GetComponent(UIManager);
 
     -- Access Dependent UI  
-    _agreement  = _uiManager:GetComponent(Agreement)
+    _agreement  = _uiManager:GetComponent(Agreement);
+
+    _EventManager.setPlayerState:FireServer("currentMessage", "")
+
+    _EventManager.setText:FireServer("comment")
+    
+    _EventManager.setText:FireServer("secret")
         
 end
