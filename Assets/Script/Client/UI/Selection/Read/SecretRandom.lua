@@ -20,6 +20,8 @@ local _commentSecret = nil
 --!Bind
 local _CommentButton : UIButton = nil
 --!Bind
+local _NextSecretButton : UIButton = nil
+--!Bind
 local _quitButton :UIButton = nil
 --!Bind
 local _reportButton :UIButton = nil
@@ -29,6 +31,8 @@ local _reportButton :UIButton = nil
 local _CommentingIcon : UILabel = nil
 --!Bind
 local _CommentLabel : UILabel = nil
+--!Bind
+local _NextSecretLabel : UILabel = nil
 --!Bind
 local _CommentingCount : UILabel = nil
 --!Bind
@@ -54,6 +58,7 @@ local _commentToken
 
 -- tables --
 local _currentSecret
+local _secretRandom = nil
 
 -- functions which will be called from another script --
 initialize = function() end
@@ -62,6 +67,7 @@ refreshTokens = function() end
 -- Set text Labels UI
 _CommentingIcon:SetPrelocalizedText(" ")
 _CommentLabel:SetPrelocalizedText("Comment")
+_NextSecretLabel:SetPrelocalizedText("Next Secret")
 _PanelSecret:SetPrelocalizedText(" ")
 _readingIcon:SetPrelocalizedText(" ")
 _SecretText:SetPrelocalizedText(_textSecret)
@@ -69,8 +75,10 @@ _title:SetPrelocalizedText("The random secret is:")
 _tokensContainer:SetPrelocalizedText(" ")
 _quitLabel:SetPrelocalizedText("X")
 
+
 -- Add text to Button
 _CommentButton:Add(_CommentLabel);
+_NextSecretButton:Add(_NextSecretLabel);
 
 _CommentButton:RegisterPressCallback(function() 
     _uiManager.ButtonPress(_CommentButton)
@@ -81,11 +89,24 @@ _CommentButton:RegisterPressCallback(function()
         _EventManager.setChat:FireServer("Comment")
         _EventManager.setPlayerState:FireServer("commentChat", true)
     else
-        _SecretText:SetPrelocalizedText("You have no comment tokens! You'll get one each 5 secrets you leave!")
+        _SecretText:SetPrelocalizedText("You have no comment tokens! You'll get one each 3 secrets you leave!")
         Timer.After(3, function()
             _SecretText:SetPrelocalizedText(_textSecret)
         end)
     end
+end)
+
+_NextSecretButton:RegisterPressCallback(function()
+    _uiManager.ButtonPress(_NextSecretButton)
+    
+    if _readToken <= 0 then 
+        _SecretText:SetPrelocalizedText("You have no secret tokens! You'll get some each secret you leave!")
+        Timer.After(3, function()
+            _SecretText:SetPrelocalizedText(_textSecret)
+        end)
+        return
+    end
+    _secretRandom.initialize();
 end)
 
 _reportButton:RegisterPressCallback(function() 
@@ -101,6 +122,8 @@ end)
 function self:ClientAwake()
     -- setting scripts
     _uiManager = _UIManager:GetComponent(UIManager)
+
+    _secretRandom = _uiManager:GetComponent(SecretRandom)
 
     _lobby = _uiManager:GetComponent(Lobby)
     _reportSecret = _uiManager:GetComponent(ReportSecret)
