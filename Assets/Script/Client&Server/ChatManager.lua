@@ -12,17 +12,17 @@ function self:ClientAwake()
     Chat.TextMessageReceivedHandler:Connect(function(channel, player, message)
         if channel.name == "General" then
             Chat:DisplayTextMessage(channel, player, message)
+        else
+            requireChatState:InvokeServer(client.localPlayer, function(chatStates)
+                if chatStates["secretChat"] == true then
+                    _EventManager.setPlayerState:FireServer("currentMessage", message)
+                    _EventManager.setText:FireServer("secret")
+                elseif chatStates["commentChat"] == true then
+                    _EventManager.setPlayerState:FireServer("currentMessage", message)
+                    _EventManager.setText:FireServer("comment")
+                end
+            end)
         end
-
-        requireChatState:InvokeServer(client.localPlayer, function(chatStates)
-            if chatStates["secretChat"] == true then
-                _EventManager.setPlayerState:FireServer("currentMessage", message)
-                _EventManager.setText:FireServer("secret")
-            elseif chatStates["commentChat"] == true then
-                _EventManager.setPlayerState:FireServer("currentMessage", message)
-                _EventManager.setText:FireServer("comment")
-            end
-        end)
     end)
 end
 

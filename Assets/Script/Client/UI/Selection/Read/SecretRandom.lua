@@ -76,6 +76,7 @@ _CommentButton:RegisterPressCallback(function()
     _uiManager.ButtonPress(_CommentButton)
     if _commentToken > 0 then
         _uiManager.DeactiveActiveGameObject(self, _commentSecret)
+        _EventManager.setPlayerState:FireServer("currentMessage", "")
         _commentSecret.initialize()
         _EventManager.setChat:FireServer("Comment")
         _EventManager.setPlayerState:FireServer("commentChat", true)
