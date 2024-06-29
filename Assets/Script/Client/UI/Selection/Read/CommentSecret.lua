@@ -44,7 +44,7 @@ _quitButton:Add(_quitLabel)
 
 _sendButton:RegisterPressCallback(function() 
     _uiManager.ButtonPress(_sendButton);
-    _uiManager.DeactiveActiveGameObject(nil, _sendCommentConfirmation)
+    _EventManager.requestPlayerState:FireServer("currentMessage")
 end)
 
 _quitButton:RegisterPressCallback(function()
@@ -62,8 +62,9 @@ function self:ClientAwake()
     -- events --
     _EventManager.setText:Connect(function(newText, target)
         print(`text {newText} recived on {client.localPlayer.name}'s client.`)
-        if target ~= "comment" then return end
+        
         print(target)
+        if target ~= "comment" then return end
         _textInput:SetPrelocalizedText(newText)
     end)
 
@@ -76,6 +77,8 @@ function self:ClientAwake()
                         _textInput:SetPrelocalizedText(_textInputPlaceholder)                
                     end
                 end)
+            else
+                _uiManager.DeactiveActiveGameObject(nil, _sendCommentConfirmation)
             end
         elseif requestedStateKey == "currentSecret" then
             _textSecret = requestedValue.text
@@ -91,6 +94,8 @@ function self:ClientAwake()
         _quitLabel:SetPrelocalizedText("X")
         _textInput:SetPrelocalizedText(_textInputPlaceholder)
         _sendLabel:SetPrelocalizedText("Send")
+        _EventManager.setPlayerState:FireServer("secretChat", false)
+        _EventManager.setPlayerState:FireServer("commentChat", true)
     end
     initialize()
 end

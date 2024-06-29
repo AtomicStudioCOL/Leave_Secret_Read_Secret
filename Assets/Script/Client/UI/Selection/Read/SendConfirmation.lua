@@ -59,6 +59,7 @@ end)
 _cancelLabel:RegisterPressCallback(function()
     _uiManager.ButtonPress(_cancelLabel, nil);
     _uiManager.DeactiveActiveGameObject(self, nil)
+    _EventManager.setPlayerState:FireServer("currentMessage", "")
 end)
 
 function self:ClientAwake()

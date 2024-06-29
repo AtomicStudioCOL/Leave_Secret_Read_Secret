@@ -44,7 +44,7 @@ function self:ServerAwake()
     function setSecretChat(player : Player)
         for k, channelContent in pairs(Chat.allChannels) do
             if channelContent.name == `{player.name}'s secret chat.` then
-                print(`{player.name} has been added to {channelContent.name} channel`)
+                --print(`{player.name} has been added to {channelContent.name} channel`)
                 Chat:AddPlayerToChannel(channelContent, player)
             else
                 Chat:RemovePlayerFromChannel(channelContent, player)
@@ -68,7 +68,7 @@ function self:ServerAwake()
     function setGeneralChat(player : Player)
         for k, channelContent in pairs(Chat.allChannels) do
             if channelContent.name == `General` then
-                print(`{player.name} has been added to {channelContent.name} channel`)
+                --print(`{player.name} has been added to {channelContent.name} channel`)
                 Chat:AddPlayerToChannel(channelContent, player)
             else
                 Chat:RemovePlayerFromChannel(channelContent, player)
