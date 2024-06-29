@@ -1,28 +1,36 @@
 --!Type(ClientAndServer)
 
+-- events for debugging --
+local playerChannel
+
 -- Managers --
 local _EventManager = require("EventManager")
 local _DataManager = require("DataManager")
+--!SerializeField
+local _uiManager : GameObject = nil
 
--- Remote Functions --
-local requireChatState = RemoteFunction.new("requireChatState")
+-- UI's scripts --
+local _leaveSecret = nil
+local _commentSecret = nil
 
 -- client --
 function self:ClientAwake()
+    -- setting UI scripts --
+    _leaveSecret = _uiManager:GetComponent(LeaveSecret)
+    _commentSecret = _uiManager:GetComponent(CommentSecret)
+
+    Chat.
+
     Chat.TextMessageReceivedHandler:Connect(function(channel, player, message)
+        print(`{player.name}'s current channel is: {channel.name}`)
         if channel.name == "General" then
             Chat:DisplayTextMessage(channel, player, message)
-        else
-            Chat:DisplayTextMessage(channel, player, message)
-            requireChatState:InvokeServer(client.localPlayer, function(chatStates)
-                if chatStates["secretChat"] == true then
-                    _EventManager.setPlayerState:FireServer("currentMessage", message)
-                    _EventManager.setText:FireServer("secret")
-                elseif chatStates["commentChat"] == true then
-                    _EventManager.setPlayerState:FireServer("currentMessage", message)
-                    _EventManager.setText:FireServer("comment")
-                end
-            end)
+        elseif channel.name == `{player.name}'s secret chat.` then
+            _EventManager.setPlayerState:FireServer("currentMessage", message)
+            _leaveSecret.setSecretText(message)
+        elseif channel.name == `{player.name}'s comment chat.` then
+            _EventManager.setPlayerState:FireServer("currentMessage", message)
+            _commentSecret.setSecretText(message)
         end
     end)
 end
@@ -33,19 +41,11 @@ function self:ServerAwake()
     -- tables
     chats = {}
 
-    -- remote function return
-    requireChatState.OnInvokeServer = function(localPlayer)
-        local _chatStates = {}
-        _chatStates["secretChat"] = _DataManager.requestPlayerState(localPlayer, "secretChat")
-        _chatStates["commentChat"] = _DataManager.requestPlayerState(localPlayer, "commentChat")
-        return _chatStates
-    end
-
     -- activate secret chat and deactivate other chat
     function setSecretChat(player : Player)
         for k, channelContent in pairs(Chat.allChannels) do
             if channelContent.name == `{player.name}'s secret chat.` then
-                --print(`{player.name} has been added to {channelContent.name} channel`)
+                print(`{player.name} has been added to {channelContent.name} channel`)
                 Chat:AddPlayerToChannel(channelContent, player)
             else
                 Chat:RemovePlayerFromChannel(channelContent, player)
@@ -69,7 +69,7 @@ function self:ServerAwake()
     function setGeneralChat(player : Player)
         for k, channelContent in pairs(Chat.allChannels) do
             if channelContent.name == `General` then
-                --print(`{player.name} has been added to {channelContent.name} channel`)
+                print(`{player.name} has been added to {channelContent.name} channel`)
                 Chat:AddPlayerToChannel(channelContent, player)
             else
                 Chat:RemovePlayerFromChannel(channelContent, player)
@@ -77,30 +77,30 @@ function self:ServerAwake()
         end
     end
 
-        -- creting general chat --
-        Chat:CreateChannel("General", true, false)
+    -- creting general chat --
+    Chat:CreateChannel("General", true, false)
 
-        -- event receivers --
-        _EventManager.setChat:Connect(function(player : Player, chatToSet : string)
-            if chatToSet == "Secret" then
-                setSecretChat(player)
-            elseif chatToSet == "Comment" then
-                setCommentChat(player)
-            elseif chatToSet == "General" then
-                setGeneralChat(player)
-            else
-                error(`Chat to set not found. Expected 'Secret' ||'Comment' || 'General', got {chatToSet}}`)
-            end
-        end)
+    -- event receivers --
+    _EventManager.setChat:Connect(function(player : Player, chatToSet : string)
+        if chatToSet == "Secret" then
+            setSecretChat(player)
+        elseif chatToSet == "Comment" then
+            setCommentChat(player)
+        elseif chatToSet == "General" then
+            setGeneralChat(player)
+        else
+            error(`Chat to set not found. Expected 'Secret' ||'Comment' || 'General', got {chatToSet}}`)
+        end
+    end)
 
     server.PlayerConnected:Connect(function(player : Player)
         player.CharacterChanged:Connect(function()
-            -- sets player to general channel --
-            setGeneralChat(player)
-
             -- Create secret channel for player for current session
             chats[player.name] = Chat:CreateChannel(`{player.name}'s secret chat.`, true, false)
             chats[player.name] = Chat:CreateChannel(`{player.name}'s comment chat.`, true, false)
+
+            -- sets player to general channel --
+            setGeneralChat(player)
 
             -- Register player in data manager for current session
             _DataManager.playerState[player.name] = {}

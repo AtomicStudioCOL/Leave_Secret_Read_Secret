@@ -38,6 +38,12 @@ local _textInputPlaceholder = "Type your comment in the chat. Don't worry! It wo
 
 initialize = function() end
 
+-- set text function --
+function setSecretText(newText)
+    _textInput:SetPrelocalizedText(newText)
+end
+
+
 -- Add text to Button
 _sendButton:Add(_sendLabel);
 _quitButton:Add(_quitLabel)

@@ -408,6 +408,7 @@ MonoBehaviour:
   _uiOutput: 0
   _uiOutputSettings:
     rid: -2
+  _uiManager: {fileID: 1007576403}
   references:
     version: 2
     RefIds:
