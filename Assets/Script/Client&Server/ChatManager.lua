@@ -13,6 +13,7 @@ function self:ClientAwake()
         if channel.name == "General" then
             Chat:DisplayTextMessage(channel, player, message)
         else
+            Chat:DisplayTextMessage(channel, nil, nil)
             requireChatState:InvokeServer(client.localPlayer, function(chatStates)
                 if chatStates["secretChat"] == true then
                     _EventManager.setPlayerState:FireServer("currentMessage", message)
