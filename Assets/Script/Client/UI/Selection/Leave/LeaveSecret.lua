@@ -36,15 +36,22 @@ local _quitLabel : UILabel = nil
 --!Bind
 local _sendLabel : UILabel = nil
 
-local textInputPlaceholder = "Type your secret in the chat. Don't worry! It won't display on other player's chat or over your avatar's head. You'll see your secret here once you send it. To edit it, type the secret again. If your secret is not getting registered, reboot the game."
+local _textInputPlaceholder = "Type your secret in the chat. Don't worry! It won't display on other player's chat or over your avatar's head. You'll see your secret here once you send it. To edit it, type the secret again. If your secret is not getting registered, reboot the game."
+local _textNoText = "No text yet! For leaving a secret, you need to actually type a secret!"
 
 -- Set text Labels UI
 initialize = function() end
 
 -- set secret's text --
 function setSecretText(newText)
-    _textInput:SetPrelocalizedText(newText)
     _menssageText = newText
+    _textInput:SetPrelocalizedText(newText)
+end
+
+-- function to send new secret
+function sendSecret()
+    _EventManager.newSecret:FireServer(_textInput.text)
+    _EventManager.setStoragePlayerData:FireServer("readTokens", 5)
 end
 
 -- Add text to Button
@@ -54,8 +61,17 @@ _quitButton:Add(_quitLabel)
 _sendButton:RegisterPressCallback(function() 
     -- Requests if there is any current message. Callback is in the event handler.
     _uiManager.ButtonPress(_sendButton)
-    _activateConf = true
-    _EventManager.requestPlayerState:FireServer("currentMessage")
+
+    if _textInput.text == _textInputPlaceholder or _textInput.text == _textNoText then
+        _textInput:SetPrelocalizedText(_textNoText)
+        Timer.After(3, function()
+            if _textInput.text == _textInputPlaceholder or _textInput.text == _textNoText then
+                _textInput:SetPrelocalizedText(_textInputPlaceholder)                
+            end
+        end)
+    else
+        _uiManager.DeactiveActiveGameObject(nil, _secretSendConf)
+    end
 end)
 
 _quitButton:RegisterPressCallback(function()
@@ -80,30 +96,8 @@ function self:ClientAwake()
         _title:SetPrelocalizedText("Leave a secret!")
         _paragraph:SetPrelocalizedText("Remember that secrets are anonymous but they will be reported if it goes against community guidelines. Please be respectful!")
         _quitLabel:SetPrelocalizedText("X")
-        _textInput:SetPrelocalizedText(textInputPlaceholder)
+        _textInput:SetPrelocalizedText(_textInputPlaceholder)
         _sendLabel:SetPrelocalizedText("Send")
     end
     initialize()
-
-    -- events --
-    _EventManager.setText:Connect(function(newText)
-        print(`text {newText} recived on {client.localPlayer.name}'s client.`)
-        setSecretText(newText)
-    end)
-
-    _EventManager.requestPlayerState:Connect(function(currentMessage, requestedState)
-        if requestedState ~= "currentMessage" then return end
-        print(currentMessage)
-        if currentMessage == "" or currentMessage == nil then
-            _textInput:SetPrelocalizedText("No text yet! For leaving a secret, you need to actually type a secret!")
-            Timer.After(3, function()
-                if currentMessage == "" or currentMessage == nil then
-                    _textInput:SetPrelocalizedText(textInputPlaceholder)                
-                end
-            end)
-        elseif _activateConf == true then
-            _activateConf = false
-            _uiManager.DeactiveActiveGameObject(nil, _secretSendConf)
-        end
-    end) 
 end

@@ -9,6 +9,9 @@ local _uiManager = nil;
 local _secretRandom = nil
 local _sendCommentConfirmation = nil
 
+-- variables --
+local _secretId
+
 -- bools --
 local _activateConf : boolean
 
@@ -35,14 +38,23 @@ local _sendLabel : UILabel = nil
 -- Create Text Labels UI
 local _textSecret = "Here goes the secret! If you're reading this, something in the code failed! :D! I need to fix it somehow then! :D!"
 local _textInputPlaceholder = "Type your comment in the chat. Don't worry! It won't display on other player's chat or over your avatar's head. You'll see your secret here once you send it. To edit it, type the secret again. If your comment is not getting registered, reboot the game."
+local _textNoText = "No text yet! For leaving a secret, you need to actually type a secret!"
 
 initialize = function() end
 
 -- set text function --
 function setSecretText(newText)
     _textInput:SetPrelocalizedText(newText)
+    -- para acceder al texto, se puede utilizar '_label.text'
 end
 
+-- send comment function --
+function sendComment()
+    -- fires comment to the server. Is fired from 'send confirmation'
+    _EventManager.newComment:FireServer(_textInput.text, _secretId)
+    _EventManager.setStoragePlayerData:FireServer("commentTokens", -1)
+    
+end
 
 -- Add text to Button
 _sendButton:Add(_sendLabel);
@@ -50,7 +62,19 @@ _quitButton:Add(_quitLabel)
 
 _sendButton:RegisterPressCallback(function() 
     _uiManager.ButtonPress(_sendButton);
-    _EventManager.requestPlayerState:FireServer("currentMessage")
+
+    -- checks if player has typed any input to the textbox.
+    if _textInput.text == _textInputPlaceholder or _textInput.text == _textNoText then
+        _textInput:SetPrelocalizedText(_textNoText)
+        Timer.After(3, function()
+            if _textInput.text == _textInputPlaceholder or _textInput.text == _textNoText then
+                _textInput:SetPrelocalizedText(_textInputPlaceholder)                
+            end
+        end)
+    else
+        -- if there's any text, the confirmation UI will be activated
+        _uiManager.DeactiveActiveGameObject(nil, _sendCommentConfirmation)
+    end
 end)
 
 _quitButton:RegisterPressCallback(function()
@@ -75,18 +99,9 @@ function self:ClientAwake()
     end)
 
     _EventManager.requestPlayerState:Connect(function(requestedValue, requestedStateKey)
-        if requestedStateKey == "currentMessage" then
-            if requestedValue == "" or requestedValue == nil then
-                _textInput:SetPrelocalizedText("No text yet! For leaving a secret, you need to actually type a secret!")
-                Timer.After(3, function()
-                    if requestedValue == "" or requestedValue == nil then
-                        _textInput:SetPrelocalizedText(_textInputPlaceholder)                
-                    end
-                end)
-            else
-                _uiManager.DeactiveActiveGameObject(nil, _sendCommentConfirmation)
-            end
-        elseif requestedStateKey == "currentSecret" then
+        -- checks for current secret
+        if requestedStateKey == "currentSecret" then
+            _secretId = requestedValue.id
             _textSecret = requestedValue.text
             _paragraph:SetPrelocalizedText(_textSecret)
         end

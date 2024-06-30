@@ -19,17 +19,15 @@ function self:ClientAwake()
     _leaveSecret = _uiManager:GetComponent(LeaveSecret)
     _commentSecret = _uiManager:GetComponent(CommentSecret)
 
-    Chat.
-
     Chat.TextMessageReceivedHandler:Connect(function(channel, player, message)
         print(`{player.name}'s current channel is: {channel.name}`)
         if channel.name == "General" then
             Chat:DisplayTextMessage(channel, player, message)
         elseif channel.name == `{player.name}'s secret chat.` then
-            _EventManager.setPlayerState:FireServer("currentMessage", message)
+            Chat:DisplayTextMessage(channel, player, message)
             _leaveSecret.setSecretText(message)
         elseif channel.name == `{player.name}'s comment chat.` then
-            _EventManager.setPlayerState:FireServer("currentMessage", message)
+            Chat:DisplayTextMessage(channel, player, message)
             _commentSecret.setSecretText(message)
         end
     end)

@@ -45,14 +45,6 @@ _cancelLabel:SetPrelocalizedText("X")
 _sendButton:Add(_sendLabel)
 _sendLabel:SetPrelocalizedText("✓")
 
--- Add text to Button
-_sendButton:RegisterPressCallback(function()
-    canSend = true
-    _uiManager.ButtonPress(_sendButton)
-    _EventManager.requestPlayerState:FireServer("currentMessage")
-    _EventManager.setStoragePlayerData:FireServer("readTokens", 5)
-end)
-
 _cancelLabel:RegisterPressCallback(function()
     _uiManager.ButtonPress(_cancelButton)
     _uiManager.DeactiveActiveGameObject(self)
@@ -67,23 +59,19 @@ function self:ClientAwake()
     _leaveSecretUi = _uiManager:GetComponent(LeaveSecret)
     _feedbackSent = _uiManager:GetComponent(SecretSentFeedback)
 
-    -- event receiver
-    _EventManager.requestPlayerState:Connect(function(currentMessage, requestedState)
-        if requestedState ~= "currentMessage" then return end
-        if canSend == false or canSend == nil then return end
-        canSend = false
+    -- send button
+    _sendButton:RegisterPressCallback(function()
+        _uiManager.ButtonPress(_sendButton)
+        _leaveSecretUi.sendSecret()
         _uiManager.DeactiveActiveGameObject(self, _feedbackSent)
-        _EventManager.newSecret:FireServer(currentMessage)
-        _EventManager.requestStoragePlayerData:FireServer("secrets")
-    
+
         -- automatically disabling feedback ui and reenabling lobby ui
         Timer.After(3, function()
-            _EventManager.setPlayerState:FireServer("currentMessage", "")    
             _uiManager.DeactiveActiveGameObject(_leaveSecretUi, nil)
             _uiManager.DeactiveActiveGameObject(_feedbackSent, _lobby)
             _EventManager.setChat:FireServer("General")
         end)
-    end)
+    end)    
 
     -- adds one comment token every three secrets sent
     _EventManager.requestStoragePlayerData:Connect(function(requestedStateKey, secretsArray)
