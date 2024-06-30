@@ -180,10 +180,19 @@ function self:ServerAwake()
         setStoragePlayerData(player, property, value)
     end)
 
+    -- Cambios 
+
     _eventManager.setText:Connect(function(player : Player, target : string)
         print(`Set text recieved. Player's current message is: {playerState[player.name].currentMessage}. Firing to {player.name}'s client.`)
         _eventManager.setText:FireClient(player, playerState[player.name].currentMessage, target)
     end)
+
+    --[[
+            _eventManager.setText:Connect(function(player : Player, target : string)
+            print(`Set text recieved. Player's current message is: {playerState[player.name].currentMessage}. Firing to {player.name}'s client.`)
+            _eventManager.setText:FireClient(player, playerState[player.name].currentMessage, target)
+        end)
+    --]]
 
     -- checking if data exists and generating it if it does not --
     local _secretsTable = nil
