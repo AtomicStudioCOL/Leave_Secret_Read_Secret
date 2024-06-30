@@ -14,7 +14,7 @@ local _leaveSecret = nil
 local _commentSecret = nil
 
 -- client --
-function self:ClientAwake()
+function self:ClientStart()
     -- setting UI scripts --
     _leaveSecret = _uiManager:GetComponent(LeaveSecret)
     _commentSecret = _uiManager:GetComponent(CommentSecret)
@@ -22,14 +22,15 @@ function self:ClientAwake()
     Chat.TextMessageReceivedHandler:Connect(function(channel, player, message)
         print(`{player.name}'s current channel is: {channel.name}`)
         if channel.name == "General" then
-            Chat:DisplayTextMessage(channel, player, message)
+            Chat:DisplayTextMessage(channel, player, `{message} line 25`)
         elseif channel.name == `{player.name}'s secret chat.` then
-            Chat:DisplayTextMessage(channel, player, message)
+            Chat:DisplayTextMessage(channel, player, `{message} line 27`)
             _leaveSecret.setSecretText(message)
         elseif channel.name == `{player.name}'s comment chat.` then
-            Chat:DisplayTextMessage(channel, player, message)
+            Chat:DisplayTextMessage(channel, player, `{message} line 30`)
             _commentSecret.setSecretText(message)
         end
+        Chat:DisplayTextMessage(channel, player, `{message} line 33`)
     end)
 end
 
