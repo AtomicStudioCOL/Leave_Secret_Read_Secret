@@ -25,17 +25,15 @@ function self:ClientStart()
     _commentSecret = _uiManager:GetComponent(CommentSecret)
 
     Chat.TextMessageReceivedHandler:Connect(function(channel, player, message)
-            Chat:DisplayTextMessage(channel, player,`{player.name}'s current channel is: {channel.name}`)
-        if channel.name == "General" then
-            Chat:DisplayTextMessage(channel, player, `{message} line 25`)
+        
+        if channel.name == "All" then
+            Chat:DisplayTextMessage(channel, player, `{message}`)
         elseif channel.name == `{player.name}'s secret chat.` then
-            Chat:DisplayTextMessage(channel, player, `{message} line 27`)
             _leaveSecret.setSecretText(message)
         elseif channel.name == `{player.name}'s comment chat.` then
-            Chat:DisplayTextMessage(channel, player, `{message} line 30`)
             _commentSecret.setSecretText(message)
         end
-        Chat:DisplayTextMessage(channel, player, `{message} line 33`)
+
     end)
 end
 
@@ -55,7 +53,7 @@ function self:ServerStart()
                 Chat:RemovePlayerFromChannel(channelContent, player)
             end
         end
-        --[[
+        ---[[
 
         Chat:RemovePlayerFromChannel(_chatGeneral,  player)
         Chat:RemovePlayerFromChannel(_chatComment,  player)
