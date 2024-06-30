@@ -134,7 +134,7 @@ function setPlayerState(playerName, property, value)
     playerState[playerName][property] = value
 end
 
-function self:ServerAwake()
+function self:ServerStart()
     -- client to server events --
     _eventManager.reportPots:Connect(function(player : Player, typeKey : string, id)
         reportPost(typeKey, id)

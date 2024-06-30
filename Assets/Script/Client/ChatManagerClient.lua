@@ -4,8 +4,10 @@
 local _EventManager = require("EventManager")
 local _DataManager = require("DataManager")
 
+
+--[[
 -- recive text
-function self:ClientAwake()
+function self:ClientStart()
     Chat.TextMessageReceivedHandler:Connect(function(channel, player, message)
         if channel.name == "General" then
             Chat:DisplayTextMessage(channel, player, message)
@@ -32,3 +34,4 @@ function self:ClientAwake()
         end)
     end)
 end
+--]]

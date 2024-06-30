@@ -13,6 +13,11 @@ local _uiManager : GameObject = nil
 local _leaveSecret = nil
 local _commentSecret = nil
 
+
+local _chatSecret = nil;
+local _chatComment = nil;
+local _chatGeneral = nil;
+
 -- client --
 function self:ClientStart()
     -- setting UI scripts --
@@ -20,7 +25,7 @@ function self:ClientStart()
     _commentSecret = _uiManager:GetComponent(CommentSecret)
 
     Chat.TextMessageReceivedHandler:Connect(function(channel, player, message)
-        print(`{player.name}'s current channel is: {channel.name}`)
+            Chat:DisplayTextMessage(channel, player,`{player.name}'s current channel is: {channel.name}`)
         if channel.name == "General" then
             Chat:DisplayTextMessage(channel, player, `{message} line 25`)
         elseif channel.name == `{player.name}'s secret chat.` then
@@ -36,7 +41,7 @@ end
 
 -- server --
 
-function self:ServerAwake()
+function self:ServerStart()
     -- tables
     chats = {}
 
@@ -50,34 +55,55 @@ function self:ServerAwake()
                 Chat:RemovePlayerFromChannel(channelContent, player)
             end
         end
+        --[[
+
+        Chat:RemovePlayerFromChannel(_chatGeneral,  player)
+        Chat:RemovePlayerFromChannel(_chatComment,  player)
+        Chat:AddPlayerToChannel(_chatSecret, player)
+        --]]
+
     end
 
     -- activate comment chat and deactivate other chat
     function setCommentChat(player : Player)
-        for k, channelContent in pairs(Chat.allChannels) do
-            if channelContent.name == `{player.name}'s comment chat.` then
-                print(`{player.name} has been added to {channelContent.name} channel`)
-                Chat:AddPlayerToChannel(channelContent, player)
-            else
-                Chat:RemovePlayerFromChannel(channelContent, player)
+            for k, channelContent in pairs(Chat.allChannels) do
+                if channelContent.name == `{player.name}'s comment chat.` then
+                    print(`{player.name} has been added to {channelContent.name} channel`)
+                    Chat:AddPlayerToChannel(channelContent, player)
+                else
+                    Chat:RemovePlayerFromChannel(channelContent, player)
+                end
             end
-        end
+        --[[
+
+        Chat:AddPlayerToChannel(_chatComment, player)
+        Chat:RemovePlayerFromChannel(_chatSecret,  player)
+        Chat:RemovePlayerFromChannel(_chatGeneral,  player)
+        --]]
+
     end
 
     -- activate general chat and deactivate other chat
     function setGeneralChat(player : Player)
-        for k, channelContent in pairs(Chat.allChannels) do
-            if channelContent.name == `General` then
-                print(`{player.name} has been added to {channelContent.name} channel`)
-                Chat:AddPlayerToChannel(channelContent, player)
-            else
-                Chat:RemovePlayerFromChannel(channelContent, player)
+        ---[[
+            for k, channelContent in pairs(Chat.allChannels) do
+                if channelContent.name == `All` then
+                    print(`{player.name} has been added to {channelContent.name} channel`)
+                    Chat:AddPlayerToChannel(channelContent, player)
+                else
+                    Chat:RemovePlayerFromChannel(channelContent, player)
+                end
             end
-        end
+            --[[
+            Chat:RemovePlayerFromChannel(_chatComment,  player)
+            Chat:RemovePlayerFromChannel(_chatSecret,  player)
+            Chat:AddPlayerToChannel(_chatGeneral, player)
+            --]]
+
     end
 
     -- creting general chat --
-    Chat:CreateChannel("General", true, false)
+    -- Chat:CreateChannel("General", true, false)
 
     -- event receivers --
     _EventManager.setChat:Connect(function(player : Player, chatToSet : string)
@@ -95,11 +121,21 @@ function self:ServerAwake()
     server.PlayerConnected:Connect(function(player : Player)
         player.CharacterChanged:Connect(function()
             -- Create secret channel for player for current session
-            chats[player.name] = Chat:CreateChannel(`{player.name}'s secret chat.`, true, false)
-            chats[player.name] = Chat:CreateChannel(`{player.name}'s comment chat.`, true, false)
+
+            _chatSecret = Chat:CreateChannel(`{player.name}'s secret chat.`, true, false, 0);
+            _chatComment = Chat:CreateChannel(`{player.name}'s comment chat.`, true, false, 0);
+            _chatGeneral = Chat:CreateChannel("All", true, false, 0);
+
+            chats[player.name] = _chatSecret;
+            chats[player.name] = _chatComment;
+            -- chats[player.name] = Chat:CreateChannel(`{player.name}'s secret chat.`, true, false)
+            -- chats[player.name] = Chat:CreateChannel(`{player.name}'s comment chat.`, true, false)
 
             -- sets player to general channel --
-            setGeneralChat(player)
+            -- setGeneralChat(player)
+		    Chat:AddPlayerToChannel(_chatSecret, player)
+		    Chat:AddPlayerToChannel(_chatComment, player)
+		    -- Chat:AddPlayerToChannel(_generalChannel, player)
 
             -- Register player in data manager for current session
             _DataManager.playerState[player.name] = {}
