@@ -45,7 +45,6 @@ initialize = function() end
 -- set text function --
 function setSecretText(newText)
     _textInput:SetPrelocalizedText(newText)
-    -- para acceder al texto, se puede utilizar '_label.text'
 end
 
 -- send comment function --

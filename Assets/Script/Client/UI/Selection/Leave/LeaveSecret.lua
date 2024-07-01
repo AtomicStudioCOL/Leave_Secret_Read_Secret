@@ -78,8 +78,6 @@ _quitButton:RegisterPressCallback(function()
     _uiManager.ButtonPress(_quitButton)
     _uiManager.DeactiveActiveGameObject(self, _lobby);
     _EventManager.setChat:FireServer("General")
-    -- _EventManager.setPlayerState:FireServer("secretChat", false)
-    -- _EventManager.setPlayerState:FireServer("currentMessage", "")
 end)
 
 function self:ClientStart()

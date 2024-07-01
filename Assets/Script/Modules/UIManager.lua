@@ -32,7 +32,6 @@ function ButtonPress(_Button)
 
     Timer.After(.1, function() 
         _Button:RemoveFromClassList("ButtonPress")
-        --_Button:AddToClassList("Button")
     end)
 
 end
