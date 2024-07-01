@@ -9,7 +9,7 @@ local _DataManager = require("DataManager")
 function choseRandomSecret(player : Player)
     local _canContinue = true
     Storage.GetValue("Secrets", function(secretsArray)
-        local lenghtTotal = #secretsArray
+        local _lenghtTotal = #secretsArray
         Storage.GetPlayerValue(player, "readSecrets", function(playerReadSecrets)
             Storage.GetPlayerValue(player, "secrets", function(ownSecretsArray)
                 local _reportedSecrets = {}
@@ -21,7 +21,8 @@ function choseRandomSecret(player : Player)
                 local _lenghtReported = #_reportedSecrets
                 local _lenghtOwn = #ownSecretsArray
                 local _lenghtRead = #playerReadSecrets
-                if lenghtTotal - _lenghtOwn - _lenghtReported == _lenghtRead then
+                print(`{player.name} has read {_lenghtRead} secrets out of {_lenghtTotal - _lenghtOwn - _lenghtReported} available secrets`)
+                if _lenghtTotal - _lenghtOwn - _lenghtReported == _lenghtRead then
                     _canContinue = false
                     _EventManager.setText:FireClient(player, "You have read all the secrets! Please come back some another time to get some new ones!")
                     _DataManager.setStoragePlayerData(player, "readTokens", 1)
@@ -34,10 +35,10 @@ function choseRandomSecret(player : Player)
                 local _tryAgain = true
                 while _tryAgain == true and _attempts < 100 do
                     _attempts += 1
-                    _randomNum = math.random(1, lenghtTotal)
+                    _randomNum = math.random(1, _lenghtTotal)
                     math.randomseed(_randomNum + _attempts)
                     _secret = secretsArray[_randomNum]
-                    if _secret.idPlayer == player.id then
+                    if _secret.idPlayer == player.user.id then
                         print("chosen secret is player's secret")
                         _canContinue = false
                     elseif _secret.reportNum > 2 then
