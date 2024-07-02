@@ -2,6 +2,8 @@
 
 -- Inventory Manager --
 requestOwnSecrets = Event.new("requestOwnSecrets")
+requestSecret = Event.new("requestSecret")
+requestSecretsComments = Event.new("requestSecretsComments")
 
 -- Data Manager --
 reportPots = Event.new("reportPost")
@@ -18,5 +20,4 @@ setText = Event.new("setText")
 
 -- Random Secret Script --
 requestReadSecrets = Event.new("requestReadSecrets")
-requestSecret = Event.new("requestSecret")
-requestSecretsComments = Event.new("requestSecretsComments")
+requestLakeSecret = Event.new("requestLakeSecret")

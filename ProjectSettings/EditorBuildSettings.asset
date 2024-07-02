@@ -8,4 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Template/Scenes/Room.unity
     guid: 3d97b014f52721147ba461f2a8133078
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: cf0d1c149128aaf4a91b2d9efc5eb9b6,
+      type: 2}

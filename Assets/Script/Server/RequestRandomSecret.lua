@@ -4,8 +4,7 @@
 local _EventManager = require("EventManager")
 local _DataManager = require("DataManager")
 
--- Functions --
-
+-- Full random secret for player --
 function choseRandomSecret(player : Player)
     local _canContinue = true
     Storage.GetValue("Secrets", function(secretsArray)
@@ -67,8 +66,22 @@ function choseRandomSecret(player : Player)
     end)
 end
 
+-- Cropped random secret for lake --
+local lastSeed
+
+function requestLakeSecret(player)
+    Storage.GetValue("Secrets", function(secretsArray)
+        local _randomNum = math.random(1, #secretsArray)
+        lastSeed = math.randomseed(_randomNum * math.random(1, 666))
+        _EventManager.requestLakeSecret:FireClient(player, secretsArray[_randomNum])
+    end)
+end
+
 function self:ServerAwake()
     _EventManager.requestSecret:Connect(function(player : Player)
         choseRandomSecret(player)
+    end)
+    _EventManager.requestLakeSecret:Connect(function(player : Player)
+        requestLakeSecret(player)
     end)
 end

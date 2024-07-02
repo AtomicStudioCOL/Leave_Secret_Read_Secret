@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 53
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 258248712, guid: a215bd465061e3c4abe0b86c7c8c3d14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _assetMappings:
+  - Guid: 445e901a89e5726409daee539a3eb297
+    StoreId: 66269b8f486f5fbcfabe6634
+    Name: Rocks 07
+    ThumbnailUrl: https://d4v5j9dz6t9fz.cloudfront.net/web_uploads/world_builder_assets/647622d2106a74bac609d8ea/66269b8f486f5fbcfabe6634/18f06cfcda8_0.jpg
+  - Guid: c23ce0377bc94ad49ad58c4e56e884a4
+    StoreId: 66269ab8486f5fbcfabe6632
+    Name: Rocks 06
+    ThumbnailUrl: https://d4v5j9dz6t9fz.cloudfront.net/web_uploads/world_builder_assets/647622d2106a74bac609d8ea/66269ab8486f5fbcfabe6632/18f06cf48d8_0.jpg
+  - Guid: d0879a74b7c68af4481c8f3a9855de06
+    StoreId: 66269aa2486f5fbcfabe6630
+    Name: Rocks 05
+    ThumbnailUrl: https://d4v5j9dz6t9fz.cloudfront.net/web_uploads/world_builder_assets/647622d2106a74bac609d8ea/66269aa2486f5fbcfabe6630/18f06ceb468_0.jpg
+  - Guid: 57236868c526e9b47aea3d7cd515a49c
+    StoreId: 66269a98486f5fbcfabe662e
+    Name: Rocks 04
+    ThumbnailUrl: https://d4v5j9dz6t9fz.cloudfront.net/web_uploads/world_builder_assets/647622d2106a74bac609d8ea/66269a98486f5fbcfabe662e/18f06cdf8e8_0.jpg
+  - Guid: 71fad4e2517f71b488d197ae2b14fe20
+    StoreId: 66269a65486f5fbcfabe662c
+    Name: Rocks 03
+    ThumbnailUrl: https://d4v5j9dz6t9fz.cloudfront.net/web_uploads/world_builder_assets/647622d2106a74bac609d8ea/66269a65486f5fbcfabe662c/18f06cdcdf0_0.jpg
+  - Guid: e7ce2ee17ad381d49abbdcb15d221d0f
+    StoreId: 66269a5c486f5fbcfabe662a
+    Name: Rocks 02
+    ThumbnailUrl: https://d4v5j9dz6t9fz.cloudfront.net/web_uploads/world_builder_assets/647622d2106a74bac609d8ea/66269a5c486f5fbcfabe662a/18f06cd7be8_0.jpg
+  - Guid: fa0cf425ec70bdd4ab6e90468e4f57a8
+    StoreId: 66269a52486f5fbcfabe6628
+    Name: Rocks 01
+    ThumbnailUrl: https://d4v5j9dz6t9fz.cloudfront.net/web_uploads/world_builder_assets/647622d2106a74bac609d8ea/66269a52486f5fbcfabe6628/18f06ccace0_0.jpg

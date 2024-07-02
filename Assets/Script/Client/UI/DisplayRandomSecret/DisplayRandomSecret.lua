@@ -22,36 +22,23 @@ local _PanelRandomSecret : UILabel = nil
 
 -- Message
 --!Bind
-local _RandomSecretTitle : UILabel = nil
-
---!Bind
 local _RandomSecretMessage : UILabel = nil
 
-initialize = function()
-    _EventManager.requestStoragePlayerData:FireServer("readTokens")
-    _EventManager.requestStoragePlayerData:FireServer("commentTokens")    
-end
-
 _PanelRandomSecret:SetPrelocalizedText("")
-
-_RandomSecretTitle:SetPrelocalizedText("Secrets Tree")
 
 _RandomSecretMessage:SetPrelocalizedText("Check out the secrets and support ...")
 
 function self:ClientAwake()
-        -- setting scripts
-        
-        _uiManager = _UIManager:GetComponent(UIManager)
+    -- setting scripts
+    _uiManager = _UIManager:GetComponent(UIManager)
+    _secretRandom = _uiManager:GetComponent(SecretRandom)
 
-        _secretRandom = _uiManager:GetComponent(SecretRandom)
+    _EventManager.requestLakeSecret:FireServer()
+    Timer.Every(210, function() _EventManager.requestLakeSecret:FireServer() end)
 
-        _requestRandomSecret = _GameManager:GetComponent(RequestRandomSecret)
-
-
-    _EventManager.requestSecret:Connect(function(secret)
+    _EventManager.requestLakeSecret:Connect(function(secret)
 
         _currentSecret = secret
-        _EventManager.setPlayerState:FireServer("currentSecret", secret)
 
         local _textSecret = ""
         local count = 0
