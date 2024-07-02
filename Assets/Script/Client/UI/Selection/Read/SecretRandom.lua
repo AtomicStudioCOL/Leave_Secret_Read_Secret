@@ -104,9 +104,9 @@ _NextSecretButton:RegisterPressCallback(function()
         Timer.After(3, function()
             _SecretText:SetPrelocalizedText(_textSecret)
         end)
-        return
+    else
+        _secretRandom.initialize();
     end
-    _secretRandom.initialize();
 end)
 
 _reportButton:RegisterPressCallback(function() 
@@ -161,6 +161,7 @@ function self:ClientAwake()
     end)
     
     _EventManager.requestStoragePlayerData:Connect(function(propertyName, value)
+        if value == nil then return end
         if propertyName == "readTokens" then
             _readToken = value
             _readingCount:SetPrelocalizedText(`{_readToken}`)

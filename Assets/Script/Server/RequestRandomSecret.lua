@@ -8,10 +8,27 @@ local _DataManager = require("DataManager")
 function choseRandomSecret(player : Player)
     local _canContinue = true
     Storage.GetValue("Secrets", function(secretsArray)
+        if secretsArray == nil then
+            print(`Secrets array is nil. Returning empty and refounding used tokens. (RequestRandomSecret.lua)`)
+            _DataManager.setStoragePlayerData(player, "readTokens", 1)
+            return
+        end
+
         local _lenghtTotal = #secretsArray
         Storage.GetPlayerValue(player, "readSecrets", function(playerReadSecrets)
+            if playerReadSecrets == nil then
+                print(`Player read secrets is nil. Returning empty and refounding used tokens. (RequestRandomSecret.lua)`)
+                _DataManager.setStoragePlayerData(player, "readTokens", 1)
+                return
+            end
+
             Storage.GetPlayerValue(player, "secrets", function(ownSecretsArray)
-                local _reportedSecrets = {}
+                if ownSecretsArray == nil then
+                    print(`Own secrets array is nil. Returning empty and refounding used tokens. (RequestRandomSecret.lua)`)
+                    _DataManager.setStoragePlayerData(player, "readTokens", 1)
+                    return
+                end
+                        local _reportedSecrets = {}
                 for i, secret in ipairs(secretsArray) do
                     if secret.reportNum > 2 then
                         _reportedSecrets[#_reportedSecrets+1] = i
@@ -32,8 +49,11 @@ function choseRandomSecret(player : Player)
                 local _secret
                 local _attempts = 0
                 local _tryAgain = true
-                while _tryAgain == true and _attempts < 100 do
+                while _tryAgain == true and _attempts < 10000 do
                     _attempts += 1
+                    if _attempts == 100 or _attempts == 1000 or _attempts == 10000 then
+                        print(`Attempt num {_attempts}.`)
+                    end
                     _randomNum = math.random(1, _lenghtTotal)
                     math.randomseed(_randomNum + _attempts)
                     _secret = secretsArray[_randomNum]
@@ -46,7 +66,7 @@ function choseRandomSecret(player : Player)
                     else
                         local _readSecret = false
                         for i, v in ipairs(playerReadSecrets) do
-                            if v == _secret.id then
+                            if `{v}` == `{_secret.id}` then
                                 print(`The player has already read this secret.`)
                                 _canContinue = false
                                 _readSecret = true
@@ -55,6 +75,7 @@ function choseRandomSecret(player : Player)
                         if _readSecret == false then
                             _tryAgain = false
                             _canContinue = true
+                            print(`Getting a secret took {_attempts} attempts. Chosen secret is {_secret.id}`)
                         end
                     end
                 end
