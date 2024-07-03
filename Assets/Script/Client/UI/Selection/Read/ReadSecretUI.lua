@@ -1,10 +1,10 @@
 --!Type(UI)
 
--- UIManager
+-- Managers --
 local _UIManager = require("UIManager")
 local _EventManager = require("EventManager")
 
--- Variables for gamemanager
+-- UI scripts --
 local _uiManager = nil;
 local _lobby = nil
 local _secretRandom = nil

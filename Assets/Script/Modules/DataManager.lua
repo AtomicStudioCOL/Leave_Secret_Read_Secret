@@ -65,11 +65,6 @@ function setStoragePlayerData(player : Player, property : string, value)
             return
         end
         Storage.UpdatePlayerValue(player, property, function(idsArray)
-
-            print(property)
-
-            print(idsArray)
-
             idsArray[#idsArray+1] = value
             return idsArray
         end)

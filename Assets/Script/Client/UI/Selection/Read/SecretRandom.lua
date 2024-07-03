@@ -60,6 +60,9 @@ local _commentToken
 local _currentSecret
 local _secretRandom = nil
 
+-- bools --
+local _nextDebounce = false
+
 -- functions which will be called from another script --
 initialize = function() end
 refreshTokens = function() end
@@ -98,6 +101,9 @@ end)
 
 _NextSecretButton:RegisterPressCallback(function()
     _uiManager.ButtonPress(_NextSecretButton)
+
+    if _nextDebounce == true then return end
+    _nextDebounce = true
     
     if _readToken <= 0 then 
         _SecretText:SetPrelocalizedText("You have no secret tokens! You'll get some each secret you leave!")
@@ -107,6 +113,8 @@ _NextSecretButton:RegisterPressCallback(function()
     else
         _secretRandom.initialize();
     end
+
+    Timer.After(1, function() _nextDebounce = false end)
 end)
 
 _reportButton:RegisterPressCallback(function() 
