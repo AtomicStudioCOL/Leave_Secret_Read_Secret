@@ -63,6 +63,7 @@ function self:ClientAwake()
     _sendButton:RegisterPressCallback(function()
         _uiManager.ButtonPress(_sendButton)
         _leaveSecretUi.sendSecret()
+        _EventManager.requestStoragePlayerData:FireServer("secrets")
         _uiManager.DeactiveActiveGameObject(self, _feedbackSent)
 
         -- automatically disabling feedback ui and reenabling lobby ui
@@ -78,7 +79,10 @@ function self:ClientAwake()
         if requestedStateKey ~= "secrets" then return end
         local _numberOfSecrets = #secretsArray + 1
         if _numberOfSecrets == 1 or _numberOfSecrets % 3 == 0 then
+            print(`added one secret token to {client.localPlayer.name}.`)
             _EventManager.setStoragePlayerData:FireServer("commentTokens", 1)
+        else
+            print(`Player needs to leave {_numberOfSecrets % 3} more secrets to get a coment token.`)
         end
     end)
 end
